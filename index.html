@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Nativo El Plomo · Reporte de rendimiento · Julio 2026</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#ffffff; --ink:#12151a; --muted:#5b6472;
+    --line:#e3e7ed; --accent:#2f6df6; --good:#0f8a5f; --bad:#c8342b;
+    --warn:#b5741a; --chip:#eef1f6;
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1116; --panel:#161b22; --ink:#e7ecf3; --muted:#9aa5b4;
+      --line:#262d38; --accent:#5b8dff; --good:#3fbd88; --bad:#f2645a;
+      --warn:#e0a44a; --chip:#1e242e;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:32px 20px 80px}
+  header.top{margin-bottom:28px}
+  .eyebrow{
+    display:inline-block; font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--muted); background:var(--chip); border:1px solid var(--line);
+    padding:5px 11px; border-radius:999px; margin-bottom:14px;
+  }
+  h1{font-size:clamp(26px,4.2vw,38px); line-height:1.15; margin:0 0 8px; letter-spacing:-.02em}
+  .sub{color:var(--muted); margin:0; font-size:15px}
+  h2{
+    font-size:20px; letter-spacing:-.01em; margin:44px 0 6px;
+    padding-top:22px; border-top:1px solid var(--line);
+  }
+  h2:first-of-type{border-top:none; padding-top:0}
+  .lead{color:var(--muted); margin:0 0 18px; font-size:15px; max-width:70ch}
+  .panel{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:20px;
+  }
+
+  /* KPI grid */
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin:18px 0 8px}
+  .kpi{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px 17px}
+  .kpi .label{font-size:12.5px; color:var(--muted); margin-bottom:7px; letter-spacing:.01em}
+  .kpi .val{font-size:26px; font-weight:650; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+  .kpi .delta{margin-top:7px; font-size:13px; font-variant-numeric:tabular-nums}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--muted)}
+  .kpi .prev{color:var(--muted); font-size:12px; margin-top:2px}
+  .kpi.hero{outline:2px solid var(--accent); outline-offset:-2px}
+
+  /* tables */
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:var(--radius); background:var(--panel)}
+  table{border-collapse:collapse; width:100%; min-width:640px; font-size:14.5px}
+  th,td{padding:11px 14px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left; white-space:normal; min-width:170px}
+  thead th{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted);
+    font-weight:600; background:var(--chip); border-bottom:1px solid var(--line);
+  }
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr.total td{font-weight:650; background:var(--chip)}
+  td{font-variant-numeric:tabular-nums}
+  .tag{display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; border:1px solid var(--line); background:var(--chip); color:var(--muted); margin-left:6px; vertical-align:1px}
+  .tag.win{color:var(--good); border-color:color-mix(in srgb,var(--good) 35%,transparent)}
+  .tag.loss{color:var(--bad); border-color:color-mix(in srgb,var(--bad) 35%,transparent)}
+  .bar{height:6px; border-radius:3px; background:var(--accent); opacity:.85; display:block; margin-top:5px}
+
+  /* callouts */
+  .note{
+    border-left:3px solid var(--accent); background:var(--panel); border-radius:0 10px 10px 0;
+    padding:14px 18px; margin:16px 0; border-top:1px solid var(--line);
+    border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+  .note.warn{border-left-color:var(--warn)}
+  .note.good{border-left-color:var(--good)}
+  .note h3{margin:0 0 5px; font-size:15px; letter-spacing:-.01em}
+  .note p{margin:0; font-size:14.5px; color:var(--muted)}
+  .note p + p{margin-top:8px}
+
+  /* recs */
+  ol.recs{padding-left:0; list-style:none; counter-reset:r; margin:16px 0 0}
+  ol.recs li{
+    counter-increment:r; position:relative; padding:14px 16px 14px 52px;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); margin-bottom:10px;
+  }
+  ol.recs li::before{
+    content:counter(r); position:absolute; left:16px; top:14px;
+    width:24px; height:24px; border-radius:50%; background:var(--accent); color:#fff;
+    font-size:13px; font-weight:650; display:grid; place-items:center;
+  }
+  ol.recs strong{display:block; margin-bottom:2px}
+  ol.recs span{color:var(--muted); font-size:14.5px}
+
+  svg{display:block; width:100%; height:auto}
+  .legend{display:flex; gap:18px; flex-wrap:wrap; font-size:13px; color:var(--muted); margin-top:12px}
+  .legend i{display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:6px; vertical-align:-1px}
+
+  footer{margin-top:52px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); font-size:13px}
+  footer code{background:var(--chip); padding:2px 6px; border-radius:5px; font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <span class="eyebrow">Reporte de rendimiento · Meta Ads</span>
+    <h1>Nativo El Plomo</h1>
+    <p class="sub">Periodo 1 – 31 de julio de 2026 · comparado contra junio 2026 · valores en CLP</p>
+  </header>
+
+  <h2>Resumen ejecutivo</h2>
+  <p class="lead">
+    Julio fue un mes claramente mejor que junio: se invirtió menos y se generaron más leads.
+    La inversión bajó 9,3% y los leads subieron 26,7%, llevando el costo por lead de $6.685 a $4.787.
+  </p>
+
+  <div class="kpis">
+    <div class="kpi hero">
+      <div class="label">Costo por lead</div>
+      <div class="val">$4.787</div>
+      <div class="delta up">▼ 28,4%</div>
+      <div class="prev">Junio: $6.685</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Leads (formulario)</div>
+      <div class="val">285</div>
+      <div class="delta up">▲ 26,7%</div>
+      <div class="prev">Junio: 225</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Inversión</div>
+      <div class="val">$1.364.205</div>
+      <div class="delta up">▼ 9,3%</div>
+      <div class="prev">Junio: $1.504.102</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPM</div>
+      <div class="val">$5.104</div>
+      <div class="delta up">▼ 24,2%</div>
+      <div class="prev">Junio: $6.731</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CPC</div>
+      <div class="val">$488</div>
+      <div class="delta up">▼ 21,7%</div>
+      <div class="prev">Junio: $623</div>
+    </div>
+    <div class="kpi">
+      <div class="label">CTR</div>
+      <div class="val">1,05%</div>
+      <div class="delta flat">▼ 2,8%</div>
+      <div class="prev">Junio: 1,08%</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Alcance <span style="font-weight:400">(cuentas de Meta)</span></div>
+      <div class="val">64.047</div>
+      <div class="delta flat">▲ 1,7%</div>
+      <div class="prev">Junio: 62.965</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Frecuencia</div>
+      <div class="val">4,17</div>
+      <div class="delta down">▲ 17,5%</div>
+      <div class="prev">Junio: 3,55</div>
+    </div>
+  </div>
+
+  <div class="note good">
+    <h3>De dónde vino la mejora</h3>
+    <p>
+      Casi toda del abaratamiento del medio — el CPM cayó 24,2% y el CPC 21,7% — y no de mejor
+      creatividad a nivel agregado, ya que el CTR quedó prácticamente plano (−2,8%).
+      Dicho eso, el promedio mensual esconde un quiebre importante a partir del 22 de julio.
+    </p>
+  </div>
+
+  <h2>Evolución semanal</h2>
+  <p class="lead">
+    El mes no fue parejo. Hay un punto de inflexión claro en la semana del 22 de julio, donde el CTR
+    sube y el costo por lead se parte a la mitad.
+  </p>
+
+  <div class="panel">
+    <svg viewBox="0 0 800 300" role="img" aria-label="Leads y costo por lead por semana de julio 2026">
+      <!-- grid -->
+      <g stroke="var(--line)" stroke-width="1">
+        <line x1="50" y1="20"  x2="740" y2="20"/>
+        <line x1="50" y1="80"  x2="740" y2="80"/>
+        <line x1="50" y1="140" x2="740" y2="140"/>
+        <line x1="50" y1="200" x2="740" y2="200"/>
+        <line x1="50" y1="260" x2="740" y2="260"/>
+      </g>
+      <!-- y axis left: leads -->
+      <g fill="var(--muted)" font-size="11" text-anchor="end">
+        <text x="42" y="24">120</text>
+        <text x="42" y="84">90</text>
+        <text x="42" y="144">60</text>
+        <text x="42" y="204">30</text>
+        <text x="42" y="264">0</text>
+      </g>
+      <!-- y axis right: CPL -->
+      <g fill="var(--muted)" font-size="11" text-anchor="start">
+        <text x="748" y="24">$7.000</text>
+        <text x="748" y="144">$3.500</text>
+        <text x="748" y="264">$0</text>
+      </g>
+      <!-- bars: leads -->
+      <g fill="var(--accent)" opacity=".82">
+        <rect x="89"  y="148" width="60" height="112" rx="4"/>
+        <rect x="227" y="230" width="60" height="30"  rx="4"/>
+        <rect x="365" y="120" width="60" height="140" rx="4"/>
+        <rect x="503" y="48"  width="60" height="212" rx="4"/>
+        <rect x="641" y="184" width="60" height="76"  rx="4"/>
+      </g>
+      <!-- bar value labels -->
+      <g fill="var(--ink)" font-size="12" font-weight="650" text-anchor="middle">
+        <text x="119" y="141">56</text>
+        <text x="257" y="223">15</text>
+        <text x="395" y="113">70</text>
+        <text x="533" y="41">106</text>
+        <text x="671" y="177">38</text>
+      </g>
+      <!-- line: CPL -->
+      <polyline fill="none" stroke="var(--bad)" stroke-width="2.5"
+                stroke-linejoin="round" stroke-linecap="round"
+                points="119,49.5 257,76 395,39.4 533,150.1 671,125"/>
+      <g fill="var(--bad)">
+        <circle cx="119" cy="49.5"  r="4.5"/>
+        <circle cx="257" cy="76"    r="4.5"/>
+        <circle cx="395" cy="39.4"  r="4.5"/>
+        <circle cx="533" cy="150.1" r="4.5"/>
+        <circle cx="671" cy="125"   r="4.5"/>
+      </g>
+      <!-- x labels -->
+      <g fill="var(--muted)" font-size="11.5" text-anchor="middle">
+        <text x="119" y="280">1–7 jul</text>
+        <text x="257" y="280">8–14 jul</text>
+        <text x="395" y="280">15–21 jul</text>
+        <text x="533" y="280">22–28 jul</text>
+        <text x="671" y="280">29–31 jul</text>
+        <text x="671" y="293" font-size="10">(3 días)</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>Leads (eje izquierdo)</span>
+      <span><i style="background:var(--bad)"></i>Costo por lead (eje derecho)</span>
+    </div>
+  </div>
+
+  <div class="scroll" style="margin-top:16px">
+    <table>
+      <thead>
+        <tr><th>Semana</th><th>Inversión</th><th>Impresiones</th><th>CTR</th><th>CPC</th><th>Leads</th><th>CPL</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 – 7 jul</td><td>$343.839</td><td>63.029</td><td>0,92%</td><td>$590</td><td>56</td><td>$6.140</td></tr>
+        <tr><td>8 – 14 jul</td><td>$80.500</td><td>16.421</td><td>0,81%</td><td>$605</td><td>15</td><td>$5.367</td></tr>
+        <tr><td>15 – 21 jul</td><td>$450.524</td><td>86.138</td><td>0,85%</td><td>$613</td><td>70</td><td>$6.436</td></tr>
+        <tr><td>22 – 28 jul <span class="tag win">mejor semana</span></td><td>$339.779</td><td>77.193</td><td>1,24%</td><td>$355</td><td>106</td><td>$3.205</td></tr>
+        <tr><td>29 – 31 jul <span class="tag">3 días</span></td><td>$149.563</td><td>24.479</td><td>1,59%</td><td>$385</td><td>38</td><td>$3.936</td></tr>
+        <tr class="total"><td>Total julio</td><td>$1.364.205</td><td>267.260</td><td>1,05%</td><td>$488</td><td>285</td><td>$4.787</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note good">
+    <h3>El 22 de julio hay un punto de inflexión</h3>
+    <p>
+      El CTR pasa de ~0,85% a 1,24% y luego a 1,59%, y el costo por lead cae de $6.436 a $3.205.
+      Esa sola semana concentró 106 de los 285 leads del mes, con menos inversión que la semana
+      anterior. Coincide con la entrada del creativo <strong>Reel Deptos General</strong>.
+    </p>
+  </div>
+
+  <div class="note warn">
+    <h3>La semana del 8 al 14 casi no hubo entrega</h3>
+    <p>
+      $80.500 contra $343.839 de la semana previa: una caída del 77%, equivalente a unos 3 días de
+      pauta a ritmo normal. No hay errores de entrega registrados en la cuenta, así que apunta a una
+      pausa manual, un tope de presupuesto o un tema de facturación.
+    </p>
+    <p>
+      Conviene confirmar qué pasó: si fue involuntario, se perdieron del orden de 45 a 50 leads a los
+      costos vigentes en ese momento.
+    </p>
+  </div>
+
+  <h2>Rendimiento por anuncio</h2>
+  <p class="lead">
+    Acá está el hallazgo principal del mes: el presupuesto está mal repartido entre los creativos.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Anuncio</th><th>Inversión</th><th>% presup.</th><th>CTR</th><th>CPC</th><th>Leads</th><th>% leads</th><th>CPL</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Reel Deptos General <span class="tag win">mejor CPL</span><span class="bar" style="width:29.3%"></span></td>
+          <td>$400.180</td><td>29,3%</td><td>1,41%</td><td>$342</td><td>128</td><td>44,9%</td><td>$3.126</td>
+        </tr>
+        <tr>
+          <td>Carrusel Inversionista <span class="tag loss">peor CPL</span><span class="bar" style="width:39.1%"></span></td>
+          <td>$533.226</td><td>39,1%</td><td>0,88%</td><td>$740</td><td>77</td><td>27,0%</td><td>$6.925</td>
+        </tr>
+        <tr>
+          <td>Carrusel Deptos General<span class="bar" style="width:22.1%"></span></td>
+          <td>$301.017</td><td>22,1%</td><td>0,83%</td><td>$450</td><td>57</td><td>20,0%</td><td>$5.281</td>
+        </tr>
+        <tr>
+          <td>Carrusel Deptos<span class="bar" style="width:5.7%"></span></td>
+          <td>$77.447</td><td>5,7%</td><td>1,11%</td><td>$704</td><td>12</td><td>4,2%</td><td>$6.454</td>
+        </tr>
+        <tr>
+          <td>Carrusel Deptos General 2 Julio<span class="bar" style="width:3.7%"></span></td>
+          <td>$50.755</td><td>3,7%</td><td>1,03%</td><td>$419</td><td>11</td><td>3,9%</td><td>$4.614</td>
+        </tr>
+        <tr>
+          <td>Carrusel Deptos General 1 Julio<span class="bar" style="width:0.5%"></span></td>
+          <td>$1.580</td><td>0,1%</td><td>1,30%</td><td>$395</td><td>0</td><td>0%</td><td>—</td>
+        </tr>
+        <tr class="total"><td>Total</td><td>$1.364.205</td><td>100%</td><td>1,05%</td><td>$488</td><td>285</td><td>100%</td><td>$4.787</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <h3>El presupuesto está invertido respecto al rendimiento</h3>
+    <p>
+      <strong>Carrusel Inversionista se llevó el 39,1% de la inversión y entregó solo el 27,0% de los
+      leads</strong>, a un CPL de $6.925 — 2,2 veces más caro que el mejor anuncio. Es el que más gasta
+      y el que peor convierte.
+    </p>
+    <p>
+      <strong>Reel Deptos General hizo lo contrario</strong>: con el 29,3% del presupuesto trajo el
+      44,9% de los leads, a $3.126.
+    </p>
+    <p>
+      Como referencia de magnitud: si la inversión del Carrusel Inversionista hubiera rendido al CPL
+      del Reel, esos $533.226 habrían dado alrededor de 171 leads en vez de 77. No es trasladable 1:1
+      —el algoritmo no escala de forma lineal y el público inversionista es distinto— pero la dirección
+      es inequívoca: <strong>el formato video está funcionando bastante mejor que el carrusel en esta
+      cuenta</strong>. Los tres carruseles «Deptos» confirman el patrón, con CTR entre 0,83% y 1,11%.
+    </p>
+  </div>
+
+  <h2>Estructura y observaciones operativas</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Punto</th><th style="text-align:left">Estado</th></tr></thead>
+      <tbody>
+        <tr><td>Campaña activa</td><td style="text-align:left">Una sola: <strong>CP | Departamentos - Formulario</strong> (objetivo OUTCOME_LEADS). Concentra el 100% de la inversión.</td></tr>
+        <tr><td>Campaña pausada</td><td style="text-align:left"><strong>CP | Oficinas - Formulario</strong> — sin actividad en julio. Si el producto oficinas sigue en venta, hoy no tiene pauta.</td></tr>
+        <tr><td>Conjunto activo</td><td style="text-align:left">Uno solo, llamado <strong>«Mayo»</strong>. Se corrió julio sobre un conjunto rotulado mayo: no afecta el rendimiento, pero complica la lectura histórica.</td></tr>
+        <tr><td>Errores de entrega</td><td style="text-align:left">Ninguno. Sin rechazos, problemas de facturación ni entidades bloqueadas.</td></tr>
+        <tr><td>Frecuencia</td><td style="text-align:left">4,17 y subiendo. El alcance creció 1,7% mientras las impresiones subieron 19,6%: se está mostrando más avisos al mismo grupo.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note warn">
+    <h3>La saturación es el techo más cercano de la cuenta</h3>
+    <p>
+      Con ~64.000 cuentas de Meta alcanzadas en Región Metropolitana y una frecuencia de 4,17, el
+      inventario disponible se está agotando. Si el alcance no crece, el CPM va a empezar a subir y
+      se revierte buena parte de la ganancia de eficiencia lograda en julio.
+    </p>
+  </div>
+
+  <h2>Recomendaciones</h2>
+  <ol class="recs">
+    <li>
+      <strong>Redistribuir presupuesto del Carrusel Inversionista hacia el Reel Deptos General.</strong>
+      <span>Es la palanca de mayor impacto inmediato. Conviene bajarlo gradualmente (30–40%) en vez de
+      apagarlo, para no reiniciar la fase de aprendizaje del conjunto.</span>
+    </li>
+    <li>
+      <strong>Producir más variantes en formato Reel.</strong>
+      <span>Es el único creativo con CTR sobre 1,4% y el que sostiene la mejora de fin de mes.
+      Los carruseles están todos por debajo de 1,11%.</span>
+    </li>
+    <li>
+      <strong>Auditar la caída de entrega del 8 al 14 de julio.</strong>
+      <span>Identificar la causa para descartar que se repita en agosto.</span>
+    </li>
+    <li>
+      <strong>Atacar la frecuencia.</strong>
+      <span>Ampliar públicos o sumar exclusiones, porque el CPM va a subir si el alcance no crece.</span>
+    </li>
+    <li>
+      <strong>Renombrar el conjunto «Mayo» y definir convención de nombres.</strong>
+      <span>Hacerlo antes de que la cuenta acumule más historia y la lectura se vuelva confusa.</span>
+    </li>
+  </ol>
+
+  <footer>
+    <p>
+      Datos obtenidos vía Meta Ads MCP desde la cuenta publicitaria <code>1353066589755978</code>
+      (Nativo El Plomo). Métrica de resultado: <em>Leads (formulario)</em>, ventana de atribución por
+      defecto. Alcance expresado en cuentas de Meta. Moneda: peso chileno (CLP).
+    </p>
+    <p>Documento interno — contiene datos de rendimiento de cliente.</p>
+  </footer>
+
+</div>
+</body>
+</html>
