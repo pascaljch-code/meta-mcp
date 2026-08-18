@@ -9,6 +9,8 @@ estático en Vercel.
 |---|---|
 | `index.html` | Reporte de rendimiento — Nativo El Plomo, julio 2026 |
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
+| `docs/google-ads/PLAN-GESTION.md` | Plan de gestión recurrente y escalado de cuentas de Google Ads (inmobiliaria + ecommerce) |
+| `.claude/skills/google-ads-inmobiliaria/` | Skill operativo: rutinas diaria/semanal/mensual, escalado, tracking, diagnóstico y auto-actualización |
 
 ## Despliegue
 
