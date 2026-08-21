@@ -11,6 +11,7 @@ estático en Vercel.
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
 | `docs/paid-media/PLAN-LEAD-GEN.md` | Plan de gestión y escalado para cuentas de lead gen (inmobiliaria, servicios, B2B) |
 | `docs/paid-media/PLAN-ECOMMERCE.md` | Plan de gestión y escalado para ecommerce y retail (beauty, fashion, multicategoría) |
+| `docs/paid-media/FICHA-CUENTA.md` | Plantilla de aterrizaje por cliente: identidad, economía, fase vigente, señal, línea base y guardarraíles |
 | `.claude/skills/paid-media/` | Skill operativo transversal Google Ads + Meta Ads: rutinas, escalado, señal, diagnóstico, entregables y auto-actualización. Modo solo lectura |
 
 ## Despliegue

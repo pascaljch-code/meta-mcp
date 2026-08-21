@@ -6,6 +6,10 @@ inmobiliarias y proyectos, servicios profesionales, B2B. Plataformas: Google Ads
 Para ecommerce y retail, ver `PLAN-ECOMMERCE.md`. La operación diaria/semanal detallada vive en el skill
 `.claude/skills/paid-media/`.
 
+> **Cómo se usa.** Este documento es la **pauta base**: no cambia por cliente. Lo que se ajusta por
+> cuenta es la ficha (`FICHA-CUENTA.md`): vertical, economía, fase vigente, línea base y guardarraíles.
+> Base + ficha = el plan concreto de ese cliente en ese mes.
+
 > **Modo solo lectura.** Este plan se ejecuta extrayendo información de las cuentas y entregando
 > propuestas. Los cambios los aplica el equipo del cliente o el gestor, nunca el asistente.
 
