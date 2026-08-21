@@ -9,8 +9,9 @@ estático en Vercel.
 |---|---|
 | `index.html` | Reporte de rendimiento — Nativo El Plomo, julio 2026 |
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
-| `docs/google-ads/PLAN-GESTION.md` | Plan de gestión recurrente y escalado de cuentas de Google Ads (inmobiliaria + ecommerce) |
-| `.claude/skills/google-ads-inmobiliaria/` | Skill operativo: rutinas diaria/semanal/mensual, escalado, tracking, diagnóstico y auto-actualización |
+| `docs/paid-media/PLAN-LEAD-GEN.md` | Plan de gestión y escalado para cuentas de lead gen (inmobiliaria, servicios, B2B) |
+| `docs/paid-media/PLAN-ECOMMERCE.md` | Plan de gestión y escalado para ecommerce y retail (beauty, fashion, multicategoría) |
+| `.claude/skills/paid-media/` | Skill operativo transversal Google Ads + Meta Ads: rutinas, escalado, señal, diagnóstico, entregables y auto-actualización. Modo solo lectura |
 
 ## Despliegue
 
