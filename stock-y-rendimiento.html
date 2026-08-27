@@ -185,6 +185,8 @@ td.pos{color:var(--ok);font-weight:600} td.neg{color:var(--stop);font-weight:600
 <nav class="toc"><h2>Contenido</h2><ol>
 <li><a href="#acceso">El acceso a Shopify</a></li>
 <li><a href="#cruce">El cruce stock × campañas</a></li>
+<li><a href="#margen">El margen real y el punto de equilibrio</a></li>
+<li><a href="#profundidad">Profundidad de stock</a></li>
 <li><a href="#sync">Un problema de sincronización</a></li>
 <li><a href="#ruido">Cuánto de esto es ruido</a></li>
 <li><a href="#semana">Sobre «esta semana mejoró»</a></li>
@@ -240,7 +242,114 @@ llegó el guante y se habilitaron los sets.</p>
 <p>Hoy hay <strong>siete sets de b.tan disponibles</strong>. Son los productos de mayor ticket del portafolio
 estrella y ninguna campaña activa los está empujando en particular.</p></div>
 </section>
-<section id="sync"><h2><span class="num">03</span>Un problema de sincronización que sí cuesta plata</h2>
+<section id="margen"><h2><span class="num">03</span>El margen real cambia la vara</h2>
+<p class="lead">El informe de inventario trae el costo de artículo de siete productos. Con eso se puede calcular por primera vez el punto de equilibrio real de la cuenta, en vez de suponerlo.</p>
+<div class="scroll"><table>
+<thead><tr><th>Producto</th><th>Precio</th><th>Costo</th><th>Contribución neta</th><th>Margen</th></tr></thead>
+<tbody>
+<tr><td>Gel Glow Your Own Way 473 ml</td><td class="num">$24.990</td><td class="num">$5.500</td><td class="num">$15.500</td><td class="num">74%</td></tr>
+<tr><td>Gel Glow Your Own Way Next Level</td><td class="num">$24.990</td><td class="num">$5.500</td><td class="num">$15.500</td><td class="num">74%</td></tr>
+<tr><td>Aceite Bronceador Tropic Like It's Hot</td><td class="num">$24.990</td><td class="num">$5.335</td><td class="num">$15.665</td><td class="num">75%</td></tr>
+<tr><td>Guante Aplicador Espalda</td><td class="num">$14.990</td><td class="num">$3.190</td><td class="num">$9.407</td><td class="num">75%</td></tr>
+<tr><td>Guante Aplicador Cuerpo</td><td class="num">$13.490</td><td class="num">$3.190</td><td class="num">$8.146</td><td class="num">72%</td></tr>
+<tr><td>Bruma Gimme The Glow Down</td><td class="num">$19.990</td><td class="num">$5.335</td><td class="num">$11.463</td><td class="num">68%</td></tr>
+<tr><td>Aceite Acelerador Tanned AF</td><td class="num">$19.990</td><td class="num">$5.335</td><td class="num">$11.463</td><td class="num">68%</td></tr>
+</tbody></table></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Margen bruto</div><div class="v">72%</div><div class="n">neto de IVA</div></div>
+<div class="kpi hi"><div class="k">ROAS de equilibrio</div><div class="v">1,65</div><div class="n">solo costo de producto</div></div>
+<div class="kpi"><div class="k">ROAS de la cuenta</div><div class="v">1,59</div><div class="n">74 días</div></div>
+<div class="kpi"><div class="k">Diferencia</div><div class="v">−4%</div><div class="n">bajo el equilibrio</div></div>
+</div>
+<div class="note stop"><h4>La cuenta está apenas por debajo del punto de equilibrio</h4>
+<p>Con 72% de margen bruto, cada $100 de venta bruta dejan $60,5 después de IVA y costo de producto. Eso fija el
+ROAS de equilibrio en <strong>1,65</strong>. La cuenta lleva 74 días en <strong>1,59</strong>.</p>
+<p>Y esto es solo contra el costo del producto: no incluye despacho, comisión de pasarela, ni el costo de operar.
+Con esos, el equilibrio real está más arriba.</p>
+<p>Corrijo lo que te dije antes: yo había supuesto un margen de 50–60% y concluí que la cuenta estaba «en torno
+al equilibrio». Con el margen real de 72% la vara queda en 1,65, y la cuenta está debajo. La conclusión de fondo
+no cambia, pero ahora tiene un número exacto contra el cual medir.</p></div>
+<div class="scroll"><table>
+<thead><tr><th>Campaña</th><th>ROAS</th><th>vs. equilibrio 1,65</th></tr></thead>
+<tbody>
+<tr><td>Liquidación Mine.Tan</td><td class="num">3,99</td><td class="pos">rentable</td></tr>
+<tr><td>Ventas - 20K</td><td class="num">3,58</td><td class="pos">rentable</td></tr>
+<tr><td>Gráficas | General - Copia</td><td class="num">3,13</td><td class="pos">rentable</td></tr>
+<tr><td><strong>Catálogo | Ventas</strong></td><td class="num">2,04</td><td class="pos">rentable</td></tr>
+<tr><td>Gráficas | General</td><td class="num">1,69</td><td class="pos">al filo</td></tr>
+<tr><td>BTAN - Ventas</td><td class="num">1,59</td><td class="neg">pierde</td></tr>
+<tr><td>BFRESH - Ventas</td><td class="num">1,34</td><td class="neg">pierde</td></tr>
+<tr><td>Interacción IG</td><td class="num">0,00</td><td class="neg">pierde todo</td></tr>
+</tbody></table></div>
+<p>Cuatro campañas están sobre la línea y cuatro debajo. Las cuatro de abajo se llevaron el 42% del presupuesto
+del periodo.</p>
+<div class="note warn"><h4>Falta el costo de 75 de los 93 productos</h4>
+<p>Solo 18 filas del informe traen costo cargado. Sin eso no se puede calcular margen por producto ni decidir
+cuáles conviene empujar. Cargar el costo en Shopify para el portafolio autobronceante — son unos 25 SKUs — es
+media hora de trabajo que habilita todo el análisis de rentabilidad por producto.</p></div>
+</section>
+<section id="profundidad"><h2><span class="num">04</span>La profundidad de stock es el problema, no el quiebre</h2>
+<p class="lead">Acá está la respuesta a la «carencia de stock dentro del mes»: no es que los productos falten a comienzos de mes, es que el stock fino se agota en días.</p>
+<figure><p class="fig-title">Unidades disponibles por producto</p>
+<p class="fig-sub">Portafolio autobronceante que el catálogo publica hoy. Fuente: export de inventario de Shopify.</p>
+<div class="bars">
+<div class="br"><span class="bn" style="font-size:13.5px">Guante Aplicador de Cuerpo</span><span class="bt"><span class="bf" style="width:100.0%;background:var(--ok)"></span></span><span class="bv">99 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">I Want The Darkest Tan Possible · mousse</span><span class="bt"><span class="bf" style="width:87.9%;background:var(--ok)"></span></span><span class="bv">87 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Gel Glow Your Own Way Shimmer</span><span class="bt"><span class="bf" style="width:43.4%;background:var(--ok)"></span></span><span class="bv">43 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Tanned AF · mousse</span><span class="bt"><span class="bf" style="width:41.4%;background:var(--ok)"></span></span><span class="bv">41 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Gel Glow Your Own Way</span><span class="bt"><span class="bf" style="width:27.3%;background:var(--ok)"></span></span><span class="bv">27 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Just Glow With It · gotas</span><span class="bt"><span class="bf" style="width:24.2%;background:var(--ok)"></span></span><span class="bv">24 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Bruma Gimme The Glow Down</span><span class="bt"><span class="bf" style="width:20.2%;background:var(--ok)"></span></span><span class="bv">20 u. profundo</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Aceite Acelerador Tanned AF</span><span class="bt"><span class="bf" style="width:11.1%;background:var(--bronze)"></span></span><span class="bv">11 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Mousse Wonder Tan</span><span class="bt"><span class="bf" style="width:11.1%;background:var(--bronze)"></span></span><span class="bv">11 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Mousse Moroccan</span><span class="bt"><span class="bf" style="width:11.1%;background:var(--bronze)"></span></span><span class="bv">11 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Mousse Coconut Water</span><span class="bt"><span class="bf" style="width:11.1%;background:var(--bronze)"></span></span><span class="bv">11 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Perfect Bronze Set</span><span class="bt"><span class="bf" style="width:6.1%;background:var(--bronze)"></span></span><span class="bv">6 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Guante Espalda</span><span class="bt"><span class="bf" style="width:6.1%;background:var(--bronze)"></span></span><span class="bv">6 u. </span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Gel Glow Your Own Way Next Level</span><span class="bt"><span class="bf" style="width:4.0%;background:var(--stop)"></span></span><span class="bv">4 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Plump up the bronze</span><span class="bt"><span class="bf" style="width:4.0%;background:var(--stop)"></span></span><span class="bv">4 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Erase, Tan, Repeat</span><span class="bt"><span class="bf" style="width:4.0%;background:var(--stop)"></span></span><span class="bv">4 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Bruma Facial Rose</span><span class="bt"><span class="bf" style="width:3.0%;background:var(--stop)"></span></span><span class="bv">3 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Illuminating Glow Drops</span><span class="bt"><span class="bf" style="width:3.0%;background:var(--stop)"></span></span><span class="bv">3 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Glow Butter</span><span class="bt"><span class="bf" style="width:3.0%;background:var(--stop)"></span></span><span class="bv">3 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Invisible Glow Dark · gel</span><span class="bt"><span class="bf" style="width:3.0%;background:var(--stop)"></span></span><span class="bv">3 u. crítico</span></div>
+<div class="br"><span class="bn" style="font-size:13.5px">Bronzed Drops</span><span class="bt"><span class="bf" style="width:2.0%;background:var(--stop)"></span></span><span class="bv">2 u. crítico</span></div>
+</div>
+<figcaption>Verde: 20 unidades o más. Bronce: entre 5 y 19. Rojo: 4 o menos.</figcaption></figure>
+<div class="kpis">
+<div class="kpi"><div class="k">Stock profundo (20+)</div><div class="v">7 SKUs</div><div class="n">341 unidades</div></div>
+<div class="kpi hi"><div class="k">Stock crítico (≤4)</div><div class="v">8 SKUs</div><div class="n">26 unidades en total</div></div>
+<div class="kpi"><div class="k">Del portafolio publicado</div><div class="v">38%</div><div class="n">está a días de agotarse</div></div>
+</div>
+<div class="note stop"><h4>Un producto estrella está en stock crítico</h4>
+<p><strong>El Gel Glow Your Own Way Next Level tiene 4 unidades disponibles</strong>, de las cuales 2 ya están
+comprometidas. Es uno de los dos geles que mencionas como producto permanente, y a la velocidad de venta actual
+se agota en cuestión de días si la campaña lo empuja.</p>
+<p>Lo mismo con Invisible Glow Dark (3), Glow Butter (3), Bruma Rose (3), Illuminating Glow Drops (3) y Bronzed
+Drops (2 disponibles de 4 en bodega, con 2 comprometidas). Toda la línea MineTan está en el límite — y es
+justamente la que está con 40% de descuento en el sitio.</p></div>
+<div class="note ok"><h4>Los siete que sí aguantan pauta</h4>
+<p>Guante de cuerpo (99), I Want The Darkest Tan Possible (87), Gel Shimmer (43), Mousse Tanned AF (41), Gel
+Glow Your Own Way (27), Just Glow With It (24) y Bruma Gimme The Glow Down (20). Son 341 unidades entre siete
+SKUs: casi el 93% del inventario del portafolio.</p>
+<p>Esos siete deberían llevar el peso del presupuesto. Los otros pueden estar en el catálogo —el algoritmo los
+mostrará a quien corresponda— pero no deberían ser el centro de ninguna creatividad ni de ninguna campaña
+dedicada.</p></div>
+<div class="err"><h3>Y una discrepancia que hay que revisar hoy</h3>
+<p class="ev">6 sets que el catálogo de Meta publica como disponibles y que en Shopify tienen 0 unidades</p>
+<p>Son <em>Set Glow Your Own Way Shimmer</em>, <em>Set Glow Your Own Way Next Level</em>, <em>Set Glow Reset
+&amp; Repeat Medio</em>, <em>Set Glow Reset &amp; Repeat Intenso</em>, <em>Set Autobronceante Mousse Tanned
+AF</em> y <em>Set Autobronceante I Want The Darkest Tan Possible</em>. Todos aparecen con inventario en cero en
+una ubicación y sin seguimiento de inventario en la otra.</p>
+<p>Puede ser lo normal —si son packs armados a pedido, Shopify no les lleva inventario propio y se venden
+mientras haya componentes—, o puede ser que estén configurados para seguir vendiéndose sin stock. La diferencia
+importa: en el primer caso está todo bien; en el segundo estás pautando productos que no se pueden despachar, y
+eso termina en cancelaciones.</p>
+<p><strong>El Perfect Bronze Set de MineTan sí tiene 6 unidades reales</strong>, así que el problema es
+específico de cómo están configurados los sets de b.tan. Vale la pena revisar uno en Shopify y confirmar cuál de
+los dos casos es.</p></div>
+</section>
+<section id="sync"><h2><span class="num">05</span>Un problema de sincronización que sí cuesta plata</h2>
 <p class="lead">Esto lo encontré revisando la integración de Shopify con el catálogo, y es accionable hoy.</p>
 <div class="err"><h3>Los webhooks de Shopify no están registrados</h3>
 <p class="ev">has_webhooks_registered: false · última sync 10:53 · próxima 19:12 — cerca de 8 horas de intervalo</p>
@@ -262,7 +371,7 @@ la persona vio.</p>
 <p>Se revisa en Commerce Manager, en la sección de eventos del catálogo. Suele ser desajuste entre el ID de
 variante y el ID de producto que manda el tema de Shopify.</p></div>
 </section>
-<section id="ruido"><h2><span class="num">04</span>Cuánto de la inconsistencia es simplemente ruido</h2>
+<section id="ruido"><h2><span class="num">06</span>Cuánto de la inconsistencia es simplemente ruido</h2>
 <p class="lead">Antes de atribuirle todo al stock, hay que descontar el azar. Y el azar acá pesa mucho.</p>
 <div class="kpis">
 <div class="kpi"><div class="k">Compras por día</div><div class="v">1,20</div><div class="n">promedio de 74 días</div></div>
@@ -298,7 +407,7 @@ existía.</p></div>
 <p>Y este cálculo es para <em>toda la cuenta junta</em>. Repartido entre siete campañas, ninguna alcanza a
 producir una señal legible en ninguna ventana.</p>
 </section>
-<section id="semana"><h2><span class="num">05</span>Sobre «esta semana mejoró el rendimiento»</h2>
+<section id="semana"><h2><span class="num">07</span>Sobre «esta semana mejoró el rendimiento»</h2>
 <p class="lead">Tengo que decírtelo derecho: en los datos de la cuenta publicitaria, todavía no se ve.</p>
 <div class="scroll"><table>
 <thead><tr><th>Periodo</th><th>Inversión</th><th>Por día</th><th>Compras</th><th>Valor</th><th>ROAS</th><th>Costo/compra</th></tr></thead>
@@ -320,8 +429,8 @@ peor ni esta es mejor: son indistinguibles.</li>
 <p>Lo que sí cambió de forma medible y verificable es el catálogo: cuatro sets nuevos disponibles. El efecto en
 ventas hay que leerlo a fin de la próxima semana, no hoy.</p>
 </section>
-<section id="estructura"><h2><span class="num">06</span>Cómo estructurarlo cuando el stock es inestable</h2>
-<p class="lead">El objetivo es que un quiebre no tumbe la campaña ni obligue a intervenir.</p>
+<section id="estructura"><h2><span class="num">08</span>Cómo estructurarlo cuando el stock es inestable</h2>
+<p class="lead">El objetivo es que un quiebre no tumbe la campaña ni obligue a intervenir, y que el presupuesto se apoye en el inventario que aguanta.</p>
 <ol class="steps">
 <li><strong>Que el conjunto de productos filtre por disponibilidad, siempre</strong>
 <span>Un conjunto dinámico con <code>availability: in stock</code> saca y devuelve productos solo, sin tocar la
@@ -331,6 +440,11 @@ debería apuntar a un conjunto estático de SKUs.</span></li>
 <span>«Bronceado sin sol» agrupa geles, mousses, brumas, gotas, cremas graduales, sets y guantes de b.tan y
 MineTan: 22 SKUs con 12% de quiebre. Segmentar por marca es lo que dejó a BFRESH pautando contra un catálogo
 medio caído. La marca no es una promesa para el comprador; el resultado sí.</span></li>
+<li><strong>Que la creatividad hable de los siete productos con stock profundo</strong>
+<span>El catálogo puede publicar los 22, pero los anuncios, los ángulos y las imágenes deberían construirse
+sobre Guante, Darkest Tan Possible, Gel Shimmer, Mousse Tanned AF, Gel Glow Your Own Way, Just Glow With It y
+Bruma Gimme The Glow Down. Son el 93% del inventario. Empujar un SKU de 3 unidades es comprar tráfico para
+agotarlo en dos días y quedar con el anuncio corriendo en vacío.</span></li>
 <li><strong>Los sets adentro del mismo conjunto, no aparte</strong>
 <span>Hay siete sets de b.tan disponibles y son el mayor ticket del portafolio. El catálogo los va a mostrar a
 quien tenga más probabilidad de comprarlos, sin que haya que adivinar quién es.</span></li>
@@ -346,7 +460,7 @@ ruido es lo que ha impedido que cualquier campaña acumule aprendizaje.</span></
 ROAS 3,58 y 3,99. Mantenlo como capa de eventos sobre una base siempre activa, no en reemplazo de ella.</span></li>
 </ol>
 </section>
-<section id="lunes"><h2><span class="num">07</span>Qué pedirle al reporte del lunes</h2>
+<section id="lunes"><h2><span class="num">09</span>Qué pedirle al reporte del lunes</h2>
 <p class="lead">Para que sirva de serie histórica y no solo de foto, necesita estos campos.</p>
 <div class="scroll"><table>
 <thead><tr><th>Campo</th><th>Para qué</th></tr></thead>
