@@ -1,4 +1,4 @@
-<title>Diagnóstico del Catálogo A+</title>
+<title>Auditoría B.Wild 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -143,290 +143,376 @@ a{color:var(--bronze)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 </style>
 <style>
-.err{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:18px 20px; margin-bottom:12px;
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin:20px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--mono);font-size:23px;font-variant-numeric:tabular-nums;margin-top:6px;letter-spacing:-.02em}
+.kpi .n{font-size:13px;color:var(--muted);margin-top:3px}
+.kpi.hi{border-color:color-mix(in srgb,var(--bronze) 45%,var(--line))}
+.err{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:18px 20px;margin-bottom:12px;
   border-left:3px solid var(--stop)}
-.err.good{border-left-color:var(--ok)}
-.err h3{margin:0 0 4px; font-size:18px}
-.err .ev{font-family:var(--mono); font-size:12.5px; color:var(--bronze); letter-spacing:.02em; margin:0 0 9px;
-  font-variant-numeric:tabular-nums}
-.err p{margin:0; font-size:15.5px}
-.err p+p{margin-top:9px}
-.funnel{display:grid; gap:7px; margin:18px 0}
-.fr{display:grid; grid-template-columns:150px 1fr 92px; align-items:center; gap:12px; font-size:14.5px}
-.fr .fn{font-family:var(--sans)}
-.fr .fb{height:22px; border-radius:4px; background:linear-gradient(90deg,var(--bronze),var(--glow)); min-width:3px}
-.fr .fv{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; font-size:13.5px}
-.step-sub{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
-  display:block; margin:26px 0 10px}
+.err.good{border-left-color:var(--ok)} .err.warn{border-left-color:var(--warn)}
+.err h3{margin:0 0 4px;font-size:18px}
+.err .ev{font-family:var(--mono);font-size:12.5px;color:var(--bronze);margin:0 0 10px;font-variant-numeric:tabular-nums}
+.err p{margin:0;font-size:15.5px} .err p+p{margin-top:9px}
+figure{margin:22px 0 0}
+figcaption{font-size:14px;color:var(--muted);margin-top:10px;max-width:68ch}
+.fig-title{font-family:var(--display);font-weight:600;font-size:17px;margin:0 0 3px}
+.fig-sub{font-size:13.5px;color:var(--muted);margin:0 0 14px}
+.chart{width:100%;height:auto;overflow:visible}
+.step-sub{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  display:block;margin:28px 0 10px}
+td.pos{color:var(--ok);font-weight:600} td.neg{color:var(--stop);font-weight:600}
 </style>
 <div class="wrap">
 <header class="hero">
-  <span class="eyebrow">B.Wild · Meta Ads · Auditoría</span>
-  <h1>Por qué el catálogo A+ no rindió</h1>
-  <p class="dek">Qué se hizo mal en las campañas de catálogo de la cuenta, con el número que lo prueba en cada
-  caso, y el paso a paso para construir los públicos del conjunto de retargeting antes de relanzar.</p>
+  <span class="eyebrow">B.Wild 2026 · Meta Ads · Auditoría de rendimiento</span>
+  <h1>Dónde se está yendo la plata</h1>
+  <p class="dek">74 días de datos desglosados por día, campaña, conjunto, anuncio, edad y sexo. Qué está
+  funcionando de verdad, qué está drenando el presupuesto, y el paso a paso para armar los públicos del
+  conjunto de retargeting.</p>
 </header>
 <div class="gradbar" role="presentation"></div>
 <div class="meta-line">
-  <span>Cuenta 689161317392308</span><span>Píxel 10050739041672658</span>
-  <span>Últimos 90 días</span><span>CLP</span><span>27 de agosto de 2026</span>
+  <span>Cuenta 3294209047428250</span><span>10 jun – 27 ago 2026</span>
+  <span>12.997 filas</span><span>13 campañas</span><span>CLP</span>
 </div>
 <nav class="toc"><h2>Contenido</h2><ol>
-<li><a href="#alcance">La cuenta vigente, esta semana</a></li>
-<li><a href="#errores">Los seis errores</a></li>
-<li><a href="#contraste">Lo que sí funcionó</a></li>
-<li><a href="#aritmetica">La aritmética del retargeting</a></li>
-<li><a href="#nativo">El retargeting correcto para catálogo</a></li>
-<li><a href="#publicos">Paso a paso: crear los públicos</a></li>
+<li><a href="#numeros">Los números</a></li>
+<li><a href="#quiebre">El quiebre del 29 de julio</a></li>
+<li><a href="#fugas">Las tres fugas</a></li>
+<li><a href="#catalogo">El catálogo es lo que funciona</a></li>
+<li><a href="#probado">Lo que la cuenta ya probó</a></li>
+<li><a href="#plan">El plan, con montos</a></li>
+<li><a href="#nativo">Retargeting de catálogo</a></li>
+<li><a href="#publicos">Paso a paso: los públicos</a></li>
 <li><a href="#conjunto">Configurar el conjunto</a></li>
-<li><a href="#checklist">Antes de relanzar</a></li>
 </ol></nav>
-<section id="alcance"><h2><span class="num">01</span>Lo que está pasando en la cuenta vigente</h2>
-<p class="lead">B.Wild 2026 (3294209047428250) no está habilitada para el MCP, así que estos números vienen del administrador de anuncios, no de la API. Ventana: 21 al 27 de agosto de 2026, siete días.</p>
-<div class="kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0">
-<div class="card"><div class="tag"><span>Inversión · 7 días</span></div><p class="copy" style="font-size:24px;font-family:var(--mono)">$211.806</p></div>
-<div class="card"><div class="tag"><span>Compras</span></div><p class="copy" style="font-size:24px;font-family:var(--mono)">7</p></div>
-<div class="card"><div class="tag"><span>Costo por compra real</span></div><p class="copy" style="font-size:24px;font-family:var(--mono)">$30.258</p></div>
-<div class="card"><div class="tag"><span>Campañas activas</span></div><p class="copy" style="font-size:24px;font-family:var(--mono)">6</p></div>
+<section id="numeros"><h2><span class="num">01</span>Los números de la cuenta</h2>
+<p class="lead">Todo lo que sigue sale del export. Verifiqué la semana del 21 al 27 de agosto contra tu captura del administrador: $213.513 contra $211.806 y 7 compras en ambos. Los datos cuadran.</p>
+<div class="kpis">
+<div class="kpi hi"><div class="k">Inversión · 74 días</div><div class="v">$1.797.924</div><div class="n">$24.296 por día</div></div>
+<div class="kpi"><div class="k">Compras</div><div class="v">89</div><div class="n">8,4 por semana</div></div>
+<div class="kpi"><div class="k">Valor generado</div><div class="v">$2.866.799</div><div class="n">ticket $32.211</div></div>
+<div class="kpi hi"><div class="k">ROAS</div><div class="v">1,59</div><div class="n">costo por compra $20.201</div></div>
 </div>
+<p>Con un ticket promedio de $32.211 y un costo por compra de $20.201, cada venta deja $12.010 antes de
+costo de producto. Si el margen bruto de B.Wild está en el 50–60% habitual del rubro, la cuenta está trabajando
+en torno al punto de equilibrio: no está perdiendo plata de forma catastrófica, pero tampoco está financiando
+su propio crecimiento.</p>
 <div class="scroll"><table>
-<thead><tr><th>Campaña</th><th>Presup./día</th><th>Gastado</th><th>Alcance</th><th>Frec.</th><th>CPM</th><th>Compras</th><th>Costo/compra</th></tr></thead>
+<thead><tr><th>Campaña</th><th>Inversión</th><th>% cuenta</th><th>Compras</th><th>Valor</th><th>ROAS</th><th>Costo/compra</th><th>Días</th></tr></thead>
 <tbody>
-<tr><td>Liquidación Mine.Tan</td><td class="num">$7.000</td><td class="num">$37.586</td><td class="num">4.571</td><td class="num">2,88</td><td class="num">$2.859</td><td class="num">4</td><td class="num">$9.397</td></tr>
-<tr><td>BTAN - Ventas</td><td class="num">$6.000</td><td class="num">$37.201</td><td class="num">4.107</td><td class="num">1,75</td><td class="num">$5.176</td><td class="num">3</td><td class="num">$12.400</td></tr>
-<tr><td>BFRESH - Ventas</td><td class="num">$6.000</td><td class="num">$37.625</td><td class="num">5.142</td><td class="num">1,65</td><td class="num">$4.440</td><td class="num">0</td><td class="num">—</td></tr>
-<tr><td>Mousse Autobronceante - Ventas</td><td class="num">$5.000</td><td class="num">$31.161</td><td class="num">1.995</td><td class="num">2,34</td><td class="num">$6.664</td><td class="num">0</td><td class="num">—</td></tr>
-<tr><td>Geles Autobronceantes - Ventas</td><td class="num">$6.000</td><td class="num">$11.403</td><td class="num">1.450</td><td class="num">1,49</td><td class="num">$5.289</td><td class="num">0</td><td class="num">—</td></tr>
-<tr><td>Interacción IG | B.Wild</td><td class="num">$5.000</td><td class="num">$34.107</td><td class="num">29.469</td><td class="num">1,20</td><td class="num">$966</td><td class="num">0</td><td class="num">1.697 visitas a $20</td></tr>
-<tr><td>CAT_Autobronceantes_Ventas_2609</td><td class="num">$5.000</td><td class="num">$0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">0</td><td class="num">conjuntos desactivados</td></tr>
+<tr><td>Interacción IG | B.Wild</td><td class="num">$372.715</td><td class="num">20,7%</td><td class="num">0</td><td class="num">$0</td><td class="num neg">0,00</td><td class="num">—</td><td class="num">74</td></tr>
+<tr><td>Gráficas | General</td><td class="num">$346.476</td><td class="num">19,3%</td><td class="num">19</td><td class="num">$584.352</td><td class="num">1,69</td><td class="num">$18.236</td><td class="num">56</td></tr>
+<tr><td><strong>Catálogo | Ventas</strong></td><td class="num">$333.716</td><td class="num">18,6%</td><td class="num">22</td><td class="num">$680.688</td><td class="num pos">2,04</td><td class="num">$15.169</td><td class="num">71</td></tr>
+<tr><td>BTAN - Ventas</td><td class="num">$181.223</td><td class="num">10,1%</td><td class="num">9</td><td class="num">$287.911</td><td class="num">1,59</td><td class="num">$20.136</td><td class="num">25</td></tr>
+<tr><td>BFRESH - Ventas</td><td class="num">$146.707</td><td class="num">8,2%</td><td class="num">7</td><td class="num">$196.970</td><td class="num">1,34</td><td class="num">$20.958</td><td class="num">25</td></tr>
+<tr><td>Gráficas | General - Copia</td><td class="num">$145.662</td><td class="num">8,1%</td><td class="num">13</td><td class="num">$455.361</td><td class="num pos">3,13</td><td class="num">$11.205</td><td class="num">23</td></tr>
+<tr><td>Ventas - 20K</td><td class="num">$127.771</td><td class="num">7,1%</td><td class="num">13</td><td class="num">$457.181</td><td class="num pos">3,58</td><td class="num">$9.829</td><td class="num">5</td></tr>
+<tr><td>Liquidación Mine.Tan</td><td class="num">$38.042</td><td class="num">2,1%</td><td class="num">4</td><td class="num">$151.667</td><td class="num pos">3,99</td><td class="num">$9.510</td><td class="num">7</td></tr>
+<tr><td>Body Sticks Lanzamiento</td><td class="num">$34.195</td><td class="num">1,9%</td><td class="num">1</td><td class="num">$35.666</td><td class="num">1,04</td><td class="num">$34.195</td><td class="num">5</td></tr>
+<tr><td>Mousse Autobronceante - Ventas</td><td class="num">$31.398</td><td class="num">1,7%</td><td class="num">0</td><td class="num">$0</td><td class="num neg">0,00</td><td class="num">—</td><td class="num">7</td></tr>
+<tr><td>Ventas - 20K - Copia</td><td class="num">$26.708</td><td class="num">1,5%</td><td class="num">1</td><td class="num">$17.003</td><td class="num neg">0,64</td><td class="num">$26.708</td><td class="num">2</td></tr>
+<tr><td>Geles Autobronceantes - Ventas</td><td class="num">$11.837</td><td class="num">0,7%</td><td class="num">0</td><td class="num">$0</td><td class="num neg">0,00</td><td class="num">—</td><td class="num">3</td></tr>
+<tr><td>Catálogo A+</td><td class="num">$1.474</td><td class="num">0,1%</td><td class="num">0</td><td class="num">$0</td><td class="num neg">0,00</td><td class="num">—</td><td class="num">1</td></tr>
 </tbody></table></div>
-<div class="note stop"><h4>El 54% de la inversión de la semana no produjo una sola compra</h4>
-<p><strong>$80.189</strong> se fueron en Geles, Mousse y BFRESH sin registrar compras, y <strong>$34.107</strong>
-más en una campaña de interacción que compró 1.697 visitas de perfil. Las siete compras de la semana salieron de
-las otras dos campañas, que gastaron <strong>$74.787</strong> a $9.397 y $12.400 por compra.</p>
-<p>Dicho de otra forma: las campañas que funcionan están a un costo por compra sano, y el costo por compra
-promedio de la cuenta es $30.258 porque hay tres campañas y una de interacción diluyéndolo.</p></div>
-<div class="note stop"><h4>Las campañas se están comprando las mismas personas</h4>
-<p>La suma de los alcances de las seis campañas activas da <strong>46.734 personas</strong>. El alcance real de la
-cuenta en la misma semana es <strong>41.677</strong>. Esas 5.057 personas de diferencia son gente que vio anuncios
-de más de una campaña: B.Wild está compitiendo contra sí misma en la subasta y pagando el sobreprecio.</p>
-<p>Se nota en el CPM: la campaña que menos compite por su público paga $2.859 y la más encerrada paga $6.664, por
-el mismo tipo de audiencia.</p></div>
-<div class="note warn"><h4>Ninguna campaña puede salir de aprendizaje</h4>
-<p>Siete compras semanales repartidas entre cinco campañas de venta son <strong>1,4 compras por campaña por
-semana</strong>. Meta necesita del orden de 50 por conjunto para cerrar la fase de aprendizaje. No es que las
-campañas estén rindiendo mal: es que están estructuradas para no poder aprender nunca.</p></div>
-<div class="note"><h4>Dos cosas para revisar hoy mismo</h4>
-<p><strong>CAT_Autobronceantes_Ventas_2609</strong> está creada con $5.000 diarios pero con los conjuntos
-desactivados: lleva $0 gastados y no entrega.</p>
-<p><strong>«Ventas - 20K» y «Ventas - 20K - Copia»</strong> están desactivadas pero conservan $25.000 diarios cada
-una. Si alguien las enciende sin mirar, son $50.000 al día.</p></div>
 </section>
-<section id="errores"><h2><span class="num">02</span>La causa: cómo está estructurada la cuenta</h2>
-<p class="lead">Los mismos seis errores aparecen en las campañas de la cuenta antigua, que sí puedo leer por API. La estructura de B.Wild 2026 los repite uno por uno — la tabla de arriba es el resultado.</p>
-<div class="err"><h3>1. El presupuesto se repartió entre conjuntos que no alcanzaban a comprar</h3><p class="ev">«TOFU - Autobronceadores»: conjunto «Mujeres» $49.858 → ROAS 2,35 · conjunto «A+» $30.467 → 0 compras</p>
-<p>Dos conjuntos en la misma campaña, peleando el mismo presupuesto. Uno convirtió a ROAS 2,35 y el otro se gastó $30.467 sin una sola compra. Como el presupuesto era por conjunto, Meta no pudo mover plata del que no funcionaba al que sí.</p>
-<p>El patrón se repite en toda la cuenta: hay conjuntos con presupuestos de $879, $3.000 y $5.000 diarios. Con un CPM de $4.000–6.000 y un costo por compra real de $13.000–23.000, un conjunto de $3.000 al día tarda entre cinco y ocho días en conseguir <strong>una</strong> compra. Meta necesita alrededor de 50 por semana para salir de la fase de aprendizaje. Nunca sale.</p>
-</div>
-<div class="err"><h3>2. El retargeting corrió sobre audiencias que no tenían gente</h3><p class="ev">«Rmkt»: $0 gastados, nunca entregó · «Rmkt - Copia»: $9.729 para llegar a 280 personas, frecuencia 5,7, 0 compras</p>
-<p>Es el error más caro de los seis, porque además hace parecer que el retargeting «no funciona».</p>
-<p>«Rmkt - Copia» alcanzó 280 personas y les mostró el anuncio 5,7 veces cada una: $34,7 por persona alcanzada. Su conjunto gemelo, «Rmkt», nunca llegó a entregar. Las ocho audiencias de retargeting basadas en el píxel (Visitantes 30 días, Carro Abandonado 14 días, Compradores 30 y 180 días, y las demás) aparecen en la API por debajo del umbral de 1.000 usuarios que Meta exige para entregar, mientras que las basadas en listas (Klaviyo, Shopify) y la de catálogo aparecen sobre ese umbral.</p>
-<p>Revisé la regla de «Visitantes 30 días S/compra» y está bien escrita: apunta al píxel correcto, retención de 30 días, excluye compradores. El problema no es la regla, es el tamaño. Confírmalo en el Administrador de públicos antes de reutilizarlas — el punto 04 explica por qué la aritmética del sitio dice lo mismo.</p>
-</div>
-<div class="err"><h3>3. Se le exigió ROAS a una campaña que estaba optimizada a otra cosa</h3><p class="ev">«Ventas | Formulario Pre-cyber» → ROAS 0,77, pero su resultado optimizado era registro completado: 71 registros a $2.906</p>
-<p>Esta campaña no rindió mal: hizo exactamente lo que se le pidió. Estaba optimizada a <code>CompleteRegistration</code> y consiguió 71 registros a $2.906 cada uno, un costo razonable para captar base de datos antes de un Cyber.</p>
-<p>Al mirarla en la misma tabla que las de venta, aparece con ROAS 0,77 y contamina la lectura de toda la cuenta. Si el promedio de «lo que rinde el catálogo» se calculó incluyéndola, el diagnóstico de partida ya estaba mal.</p>
-</div>
-<div class="err"><h3>4. Frecuencia alta sobre públicos chicos, en todas las campañas</h3><p class="ev">Frecuencias de 3,11 · 3,24 · 3,43 y 5,71 con alcances de 280 a 17.994 personas</p>
-<p>Ninguna campaña de la cuenta baja de frecuencia 2. «Catálogo 2026» llegó a 4.559 personas y les mostró el anuncio 3,4 veces; el retargeting llegó a 5,7.</p>
-<p>Frecuencia alta con alcance chico significa que el público efectivo es más pequeño que el presupuesto que se le está poniendo encima. El costo sube porque se compite contra uno mismo por las mismas personas, y el rendimiento cae por saturación. Es la misma conclusión del punto 1 vista desde el otro lado.</p>
-</div>
-<div class="err"><h3>5. Campañas creadas que nunca entregaron, y duplicados sin apagar</h3><p class="ev">$0 gastados en «DDM Sets», «Aniversario B.Wild», «Black Sale Marzo», «Prospecting 1» y dos campañas «AC | 14 Días»</p>
-<p>Cinco campañas y varios conjuntos que se crearon, se dejaron activos y nunca gastaron un peso. Hay además dos campañas de carro abandonado idénticas y conjuntos llamados «Rmkt - Copia» y «Ad set 1 Catálogo - Copia».</p>
-<p>No cuesta dinero directo, pero sí cuesta lectura: la cuenta tiene 21 campañas de las que 7 gastaron. Cuando hay que decidir qué apagar, ese ruido hace que se apague lo equivocado.</p>
-</div>
-<div class="err"><h3>6. El conjunto de productos del catálogo dejaba fuera dos tercios del portafolio</h3><p class="ev">El set dinámico «Autobronceantes en stock» captura 7 de 22 productos disponibles</p>
-<p>Ya lo vimos al armar el banco de copys: el filtro usa <code>product_type = "autobronceante"</code>, un valor exacto que en el feed solo tienen 7 productos. Mousses, brumas, gotas, cremas graduales y sets quedan fuera.</p>
-<p>En una campaña de catálogo esto es directamente rendimiento perdido: el algoritmo elige qué producto mostrarle a cada persona, y se le está dando un tercio de las opciones. Con menos productos que rotar, además, sube la frecuencia — que es el error 4.</p>
-</div>
-</section>
-<section id="contraste"><h2><span class="num">03</span>Lo que sí funcionó</h2>
-<p class="lead">La cuenta tiene una prueba de que el catálogo A+ sí rinde en este negocio, y dice exactamente qué hacer distinto.</p>
-<div class="err good"><h3>«Broad A+ | Compras» — ROAS 2,57</h3>
-<p class="ev">$350.447 en un solo conjunto · 26 compras · $13.479 por compra · 277 agregados al carro</p>
-<p>Es la campaña del Cyber de junio. Un solo conjunto de anuncios, amplio, con todo el presupuesto encima.
-Gastó seis veces más que «Catálogo 2026» y consiguió trece veces más compras a un costo 41% menor.</p>
-<p>La diferencia no fue la creatividad ni el público: fue que el presupuesto estuvo concentrado en un lugar el
-tiempo suficiente para que el algoritmo aprendiera. Ese es el modelo a repetir, con el descuento de que corrió
-en semana de Cyber y la intención de compra estaba inflada.</p></div>
+<section id="quiebre"><h2><span class="num">02</span>El quiebre del 29 de julio</h2>
+<p class="lead">El 29 de julio arrancan BTAN - Ventas y BFRESH - Ventas. El 21 y el 25 de agosto se suman Mousse y Geles. Ahí es donde la cuenta se parte.</p>
+<figure><p class="fig-title">ROAS por semana</p>
+<p class="fig-sub">Cada barra es una semana. Debajo, cuántas campañas gastaron esa semana.</p>
+<svg class="chart" viewBox="0 0 920 300" role="img" aria-label="ROAS semanal de junio a agosto de 2026">
+<line x1="52" y1="167.2" x2="904" y2="167.2" stroke="var(--line)" stroke-width="1"/>
+<text x="43" y="171.2" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--muted)">1,0</text>
+<line x1="52" y1="98.5" x2="904" y2="98.5" stroke="var(--line)" stroke-width="1"/>
+<text x="43" y="102.5" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--muted)">2,0</text>
+<line x1="52" y1="29.8" x2="904" y2="29.8" stroke="var(--line)" stroke-width="1"/>
+<text x="43" y="33.8" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--muted)">3,0</text>
+<line x1="52" y1="126.7" x2="904" y2="126.7" stroke="var(--bronze)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".75"/>
+<text x="904" y="119.7" text-anchor="end" font-size="11" font-family="var(--mono)" fill="var(--bronze)">promedio de la cuenta 1,59</text>
+<g><title>8 jun: ROAS 0.73 · 4 campañas · $55.292</title>
+<rect x="64.8" y="185.8" width="45.4" height="50.2" rx="4" fill="var(--bronze)" opacity=".45"/>
+<text x="87.5" y="178.8" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">0,73</text></g>
+<text x="87.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">8 jun</text>
+<text x="87.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">4</text>
+<g><title>15 jun: ROAS 1.25 · 3 campañas · $100.818</title>
+<rect x="135.8" y="150.1" width="45.4" height="85.9" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="158.5" y="143.1" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,25</text></g>
+<text x="158.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">15 jun</text>
+<text x="158.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">3</text>
+<g><title>22 jun: ROAS 1.15 · 3 campañas · $126.086</title>
+<rect x="206.8" y="156.9" width="45.4" height="79.1" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="229.5" y="149.9" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,15</text></g>
+<text x="229.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">22 jun</text>
+<text x="229.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">3</text>
+<g><title>29 jun: ROAS 1.12 · 3 campañas · $110.471</title>
+<rect x="277.8" y="159.0" width="45.4" height="77.0" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="300.5" y="152.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,12</text></g>
+<text x="300.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">29 jun</text>
+<text x="300.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">3</text>
+<g><title>6 jul: ROAS 2.19 · 3 campañas · $110.196</title>
+<rect x="348.8" y="85.4" width="45.4" height="150.6" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="371.5" y="78.4" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">2,19</text></g>
+<text x="371.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">6 jul</text>
+<text x="371.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">3</text>
+<g><title>13 jul: ROAS 1.69 · 4 campañas · $165.056</title>
+<rect x="419.8" y="119.8" width="45.4" height="116.2" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="442.5" y="112.8" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,69</text></g>
+<text x="442.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">13 jul</text>
+<text x="442.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">4</text>
+<g><title>20 jul: ROAS 2.94 · 6 campañas · $295.040</title>
+<rect x="490.8" y="33.9" width="45.4" height="202.1" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="513.5" y="26.9" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">2,94</text></g>
+<text x="513.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">20 jul</text>
+<text x="513.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">6</text>
+<g><title>27 jul: ROAS 2.33 · 6 campañas · $65.221</title>
+<rect x="561.8" y="75.8" width="45.4" height="160.2" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="584.5" y="68.8" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">2,33</text></g>
+<text x="584.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">27 jul</text>
+<text x="584.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">6</text>
+<g><title>3 ago: ROAS 1.12 · 6 campañas · $239.698</title>
+<rect x="632.8" y="159.0" width="45.4" height="77.0" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="655.5" y="152.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,12</text></g>
+<text x="655.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">3 ago</text>
+<text x="655.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">6</text>
+<g><title>10 ago: ROAS 1.01 · 7 campañas · $195.589</title>
+<rect x="703.8" y="166.6" width="45.4" height="69.4" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="726.5" y="159.6" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,01</text></g>
+<text x="726.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">10 ago</text>
+<text x="726.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">7</text>
+<g><title>17 ago: ROAS 1.25 · 7 campañas · $214.472</title>
+<rect x="774.8" y="150.1" width="45.4" height="85.9" rx="4" fill="var(--bronze)" opacity="1"/>
+<text x="797.5" y="143.1" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,25</text></g>
+<text x="797.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">17 ago</text>
+<text x="797.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">7</text>
+<g><title>24 ago: ROAS 1.32 · 7 campañas · $119.985</title>
+<rect x="845.8" y="145.2" width="45.4" height="90.8" rx="4" fill="var(--bronze)" opacity=".45"/>
+<text x="868.5" y="138.2" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">1,32</text></g>
+<text x="868.5" y="253.0" text-anchor="middle" font-size="11" fill="var(--muted)">24 ago</text>
+<text x="868.5" y="272.0" text-anchor="middle" font-size="11.5" font-family="var(--mono)" fill="var(--ink)">7</text>
+<line x1="52" y1="236" x2="904" y2="236" stroke="var(--line)" stroke-width="1.5"/>
+<text x="43" y="272.0" text-anchor="end" font-size="10.5" font-family="var(--mono)" fill="var(--muted)">camp.</text>
+</svg>
+<figcaption>Las dos barras atenuadas son semanas parciales (la primera empieza el 10 de junio, la última corta el 27 de agosto). Desde que la cuenta pasa de 6 a 7 campañas simultáneas, el 3 de agosto, ninguna semana vuelve a superar ROAS 1,32.</figcaption></figure>
 <div class="scroll"><table>
-<thead><tr><th>Campaña</th><th>Inversión</th><th>Compras</th><th>Costo por compra</th><th>ROAS</th><th>Frec.</th></tr></thead>
+<thead><tr><th>Periodo</th><th>Días</th><th>Inversión</th><th>Por día</th><th>Compras</th><th>ROAS</th><th>Costo/compra</th></tr></thead>
 <tbody>
-<tr><td>Ventas | Cyber Junio — «Broad A+»</td><td class="num">$350.447</td><td class="num">26</td><td class="num">$13.479</td><td class="num">2,57</td><td class="num">3,24</td></tr>
-<tr><td>TOFU Autobronceadores — «Mujeres»</td><td class="num">$49.858</td><td class="num">3</td><td class="num">$16.619</td><td class="num">2,35</td><td class="num">2,41</td></tr>
-<tr><td>TOFU Autobronceadores — «A+»</td><td class="num">$30.467</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">2,03</td></tr>
-<tr><td>Catálogo 2026 — «A+»</td><td class="num">$45.901</td><td class="num">2</td><td class="num">$22.951</td><td class="num">1,03</td><td class="num">3,11</td></tr>
-<tr><td>Catálogo 2026 — «Rmkt - Copia»</td><td class="num">$9.729</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">5,71</td></tr>
+<tr><td>10 jun – 28 jul</td><td class="num">49</td><td class="num">$999.515</td><td class="num">$20.398</td><td class="num">60</td><td class="num pos">1,93</td><td class="num">$16.659</td></tr>
+<tr><td>29 jul – 27 ago</td><td class="num">30</td><td class="num">$798.409</td><td class="num">$26.614</td><td class="num">29</td><td class="num neg">1,17</td><td class="num">$27.531</td></tr>
 </tbody></table></div>
-<p style="margin-top:14px">Los dos conjuntos que convirtieron son los dos que recibieron más de $49.000. Los tres
-que no convirtieron recibieron menos de $46.000 repartidos entre varios. No es coincidencia.</p>
+<div class="note stop"><h4>Se invirtió 30% más por día y se ganó 39% menos por cada peso</h4>
+<p>El costo por compra subió de $16.659 a $27.531 — un 65% más caro. En el mismo mes en que se sumaron cuatro
+campañas nuevas segmentadas por marca y por formato, la cuenta pasó a necesitar casi el doble de inversión para
+conseguir la misma venta.</p>
+<p>No es estacionalidad ni saturación de audiencia: es que el mismo presupuesto quedó repartido entre siete
+campañas que compiten por las mismas personas en la misma subasta.</p></div>
 </section>
-<section id="aritmetica"><h2><span class="num">04</span>La aritmética del retargeting</h2>
-<p class="lead">Antes de crear públicos hay que saber cuánta gente hay realmente. Estos son los eventos del píxel entre el 31 de julio y el 27 de agosto — 27 días.</p>
-<div class="funnel">
-<div class="fr"><span class="fn">PageView</span><span class="fb" style="width:100.00%"></span><span class="fv">28.955</span></div>
-<div class="fr"><span class="fn">ViewContent</span><span class="fb" style="width:33.81%"></span><span class="fv">9.791</span></div>
-<div class="fr"><span class="fn">AddToCart</span><span class="fb" style="width:2.97%"></span><span class="fv">861</span></div>
-<div class="fr"><span class="fn">InitiateCheckout</span><span class="fb" style="width:1.14%"></span><span class="fv">331</span></div>
-<div class="fr"><span class="fn">AddPaymentInfo</span><span class="fb" style="width:0.47%"></span><span class="fv">136</span></div>
-<div class="fr"><span class="fn">Purchase</span><span class="fb" style="width:0.30%"></span><span class="fv">56</span></div>
-</div>
-<p>El píxel está sano: disparó por última vez hoy, tiene el evento de navegador y el de servidor activos, y
-cookies de origen habilitadas. El problema nunca fue de medición.</p>
+<section id="fugas"><h2><span class="num">03</span>Las tres fugas</h2>
+<p class="lead">Suman $563.320 en 74 días. Es el 31,3% de todo lo invertido, y produjo una sola compra.</p>
+<div class="err"><h3>1. La campaña de interacción es el mayor gasto de la cuenta</h3>
+<p class="ev">Interacción IG | B.Wild · $372.715 · 74 días · 0 compras · 20,7% del presupuesto total</p>
+<p>Es la campaña que más plata recibió en todo el periodo, corrió los 74 días sin interrupción y no registró
+una sola compra. Compró visitas al perfil de Instagram a $20 cada una.</p>
+<p>Sus tres anuncios principales — «Ping Pong» ($119.435), «IG A todas nos ha pasado» ($112.204) y
+«IG PING PONG» ($64.471) — suman $296.110 sin una compra. Y tienen los mejores CTR de la cuenta:
+6,07% y 3,41%. Son buen contenido; no son publicidad de venta.</p>
+<p>Si el objetivo es construir marca, la conversación es otra y el presupuesto debería estar declarado como tal.
+Si el objetivo es vender, esos $5.037 diarios llevan 74 días en el lugar equivocado.</p></div>
+<div class="err"><h3>2. Un cuarto del gasto va a edades que no compran</h3>
+<p class="ev">18-24 y 65+ · $115.022 · 1 compra · ROAS 0,18 — contra ROAS 1,69 del tramo 25-64</p>
+<p>El tramo 18-24 se llevó $63.658 y dejó una compra: costo por compra de $63.658, más de tres veces el
+promedio de la cuenta. El tramo 65+ se llevó $51.364 y no dejó ninguna.</p>
+<p>El público que sí compra está concentrado y es consistente: mujeres de 45-54 (ROAS 1,83), 25-34 (1,67) y
+35-44 (1,65). Los hombres, en total, $93.178 con ROAS 1,17.</p></div>
+<div class="err warn"><h3>3. Campañas que gastan sin llegar a una compra</h3>
+<p class="ev">Mousse $31.398 · Geles $11.837 · Catálogo A+ $1.474 · Vaytiare UGC $23.542</p>
+<p>Mousse Autobronceante lleva 7 días y $31.398 sin compras, con el CPM más caro de la cuenta ($6.665). Geles
+Autobronceantes lleva 3 días y $11.837, también sin compras.</p>
+<p>Puede ser que necesiten más tiempo. Pero con 8,4 compras semanales en toda la cuenta repartidas hoy entre
+siete campañas, ninguna va a acumular la señal para demostrarlo — es el mismo problema del punto 02, no un
+problema de estas campañas en particular.</p></div>
+</section>
+<section id="catalogo"><h2><span class="num">04</span>El catálogo es lo que mejor funciona</h2>
+<p class="lead">Esta es la corrección más importante al diagnóstico de partida.</p>
+<div class="err good"><h3>Catálogo | Ventas — ROAS 2,04 sostenido durante 71 días</h3>
+<p class="ev">$333.716 · 22 compras · $680.688 · costo por compra $15.169</p>
+<p>Es la campaña con mejor ROAS entre las que corrieron con volumen sostenido, y la única que se mantuvo
+prendida casi todo el periodo. Su costo por compra es 25% más bajo que el promedio de la cuenta.</p>
+<p>Un solo anuncio, «En Stock», produjo las 22 compras con ROAS 2,07 en 71 días. Es el anuncio más rentable de
+la cuenta en volumen.</p></div>
+<p>Y las campañas que se crearon para reemplazarlo, segmentando el mismo catálogo por marca y por formato,
+rinden peor que él:</p>
 <div class="scroll"><table>
-<thead><tr><th>Público candidato</th><th>Eventos en 27 días</th><th>Personas estimadas</th><th>¿Sirve como conjunto propio?</th></tr></thead>
+<thead><tr><th>Enfoque</th><th>Inversión</th><th>Compras</th><th>ROAS</th><th>Costo/compra</th></tr></thead>
 <tbody>
-<tr><td>Vieron producto · 30 días</td><td class="num">9.791</td><td class="num">~4.000 – 6.000</td><td>Sí</td></tr>
-<tr><td>Agregaron al carro · 30 días</td><td class="num">861</td><td class="num">~500 – 700</td><td>No, queda bajo el mínimo de 1.000</td></tr>
-<tr><td>Agregaron al carro · 14 días</td><td class="num">~450</td><td class="num">~250 – 400</td><td>No</td></tr>
-<tr><td>Iniciaron pago · 30 días</td><td class="num">331</td><td class="num">~200 – 300</td><td>No</td></tr>
-<tr><td>Compradores · 180 días</td><td class="num">~370</td><td class="num">~350</td><td>No, pero sirve para excluir</td></tr>
+<tr><td><strong>Catálogo | Ventas</strong> — un catálogo, sin segmentar</td><td class="num">$333.716</td><td class="num">22</td><td class="num pos">2,04</td><td class="num">$15.169</td></tr>
+<tr><td>BTAN + BFRESH + Mousse + Geles — segmentado por marca y formato</td><td class="num">$371.165</td><td class="num">16</td><td class="num neg">1,31</td><td class="num">$23.198</td></tr>
 </tbody></table></div>
-<div class="note stop"><h4>Esta es la razón de fondo del error 2</h4>
-<p>Un carro abandonado de 14 días tiene entre 250 y 400 personas. Meta exige 1.000 para entregar. Por eso «Rmkt»
-gastó $0 y su copia terminó bombardeando a 280 personas seis veces cada una.</p>
-<p><strong>Conclusión operativa: un solo público de retargeting, combinado.</strong> Vieron producto, agregaron al
-carro o iniciaron pago en los últimos 30 días, excluyendo compradores. Todo junto son unas 4.000–6.000 personas,
-que sí es un público con el que se puede trabajar. Segmentarlo en carro abandonado, visitantes y navegación por
-separado es exactamente lo que rompió la campaña anterior.</p></div>
-<div class="note warn"><h4>Y un aviso sobre el volumen de compras</h4>
-<p>56 compras en 27 días son unas 14 por semana en todo el sitio, sumando orgánico y pago. Meta pide cerca de 50
-semanales <em>por conjunto</em> para salir de aprendizaje. Con este volumen, dos conjuntos optimizados a compra no
-salen nunca de aprendizaje los dos. Si vas a abrir retargeting, dale como máximo el 20% del presupuesto y revísalo
-a los 7 días: si no junta al menos 5 compras, se pliega al conjunto amplio.</p></div>
+<p>Prácticamente el mismo dinero. Seis compras menos y un costo por compra 53% más alto.</p>
+<div class="note stop"><h4>Y el catálogo se está apagando por asfixia</h4>
+<p>ROAS mensual de Catálogo | Ventas: <strong>junio 2,17 → julio 2,41 → agosto 1,55</strong>. La caída empieza
+exactamente cuando entran las campañas por marca. En la semana del 21 al 27 de agosto la campaña gastó $22.723
+y no registró ninguna compra.</p>
+<p>No es que el catálogo se haya agotado: es que ahora compite contra cuatro campañas de la misma cuenta por
+las mismas personas, y el CPM que paga subió.</p></div>
 </section>
-<section id="nativo"><h2><span class="num">05</span>El retargeting correcto para una campaña de catálogo</h2>
-<p class="lead">Esto es lo que no se hizo en «Catálogo 2026» y es la mitad de la explicación del error 2.</p>
+<section id="probado"><h2><span class="num">05</span>Lo que la cuenta ya probó y no se está usando</h2>
+<p class="lead">Tres aprendizajes que están en los datos y que valen más que cualquier recomendación genérica.</p>
+<div class="err good"><h3>La mejor campaña de la cuenta duró cuatro días</h3>
+<p class="ev">Ventas - 20K · $25.554 por día · ROAS 3,58 · costo por compra $9.829 · 21 al 24 de julio</p>
+<p>Cuatro días con presupuesto concentrado: ROAS 6,13 el primer día, 5,56 el segundo, 1,83 el tercero, 2,57 el
+cuarto. Trece compras a $9.829 — menos de la mitad del costo por compra promedio de la cuenta.</p>
+<p>Y está apagada. Esa semana, la del 20 de julio, es la mejor de todo el periodo: 24 compras, ROAS 2,94,
+costo por compra $12.293. Nunca se volvió a acercar.</p>
+<p><strong>Si hay una pregunta que responder antes de rearmar nada, es por qué se apagó.</strong></p></div>
+<div class="err good"><h3>Las promociones cortas con presupuesto concentrado son lo más rentable</h3>
+<p class="ev">Liquidación Mine.Tan · 7 días · ROAS 3,99 · costo por compra $9.510</p>
+<p>Junto con Ventas - 20K y Gráficas | General - Copia (ROAS 3,13), forman un patrón: las campañas de duración
+corta y presupuesto alto rinden entre 2 y 4 veces más que las de presupuesto bajo y larga duración. Vale la pena
+construir el calendario comercial alrededor de esto.</p></div>
+<div class="err good"><h3>El ángulo de copy que gana ya está identificado</h3>
+<p class="ev">«Encuentra tu aroma» ROAS 3,46 y 2,62 · «Social Proof» 1,10 · «Comparación Precio» 1,56</p>
+<p>Dentro de la misma campaña de brumas, con el mismo público y el mismo presupuesto, el anuncio que invita a
+elegir entre variantes duplica al de prueba social y supera al de precio.</p>
+<p>Es exactamente el ángulo A del banco de copys — «elige tu formato e intensidad» — y ahora tiene respaldo con
+datos de la propia cuenta, no con teoría. Debería ser el primer texto que se carga en la campaña nueva.</p></div>
+</section>
+<section id="plan"><h2><span class="num">06</span>El plan, con montos</h2>
+<p class="lead">En orden. Los primeros tres liberan presupuesto sin tocar nada de lo que funciona.</p>
+<ol class="steps">
+<li><strong>Apagar Interacción IG | B.Wild</strong>
+<span>Libera $5.037 diarios. Si se quiere sostener presencia de marca, que sea con un presupuesto declarado y
+acotado — no con el 20,7% de la cuenta. Los anuncios «Ping Pong» y «A todas nos ha pasado» tienen CTR de 6% y
+3,4%: sirven como contenido orgánico o como creatividad de prospección dentro de una campaña de venta.</span></li>
+<li><strong>Fijar el rango de edad en 25-64</strong>
+<span>Recupera unos $1.554 diarios que hoy van a 18-24 y 65+ con ROAS 0,18. Ojo: si el conjunto usa público
+Advantage+, la edad funciona como sugerencia y Meta puede salirse. El control duro está en los Controles del
+público a nivel de cuenta.</span></li>
+<li><strong>Consolidar BTAN, BFRESH, Mousse y Geles en la campaña de catálogo</strong>
+<span>Son $371.165 rindiendo 1,31 que deberían estar en la estructura que rinde 2,04. El catálogo ya segmenta
+por producto solo: para eso está. Mantener campaña aparte por marca solo tiene sentido cuando cada una tenga
+volumen propio para salir de aprendizaje, y hoy ninguna lo tiene.</span></li>
+<li><strong>Reconstruir el presupuesto detrás del catálogo</strong>
+<span>Sumando lo liberado, la campaña de catálogo puede pasar de $4.700 a unos $18.000–20.000 diarios sin subir
+la inversión total de la cuenta. Es el orden de magnitud al que Ventas - 20K rindió 3,58.</span></li>
+<li><strong>Activar CAT_Autobronceantes_Ventas_2609</strong>
+<span>Está creada con $5.000 diarios y los conjuntos desactivados: lleva $0 gastados. Es la que debería recibir
+el conjunto de productos corregido de 22 SKUs y los textos del banco de copys.</span></li>
+<li><strong>Recién entonces, abrir el retargeting</strong>
+<span>Con máximo el 20% del presupuesto y la configuración de los puntos 07 a 09.</span></li>
+</ol>
+<div class="note ok"><h4>El tamaño del premio</h4>
+<p>Las dos primeras acciones liberan $448.298 sobre el periodo analizado — el 24,9% de la cuenta — que hoy
+producen prácticamente cero. Si ese monto rinde lo que ya rinde el catálogo (2,04), el ROAS de la cuenta pasa
+de <strong>1,59 a 2,09</strong>. Aun si rinde apenas el promedio actual (1,60), llega a <strong>1,98</strong>.</p>
+<p>No es lineal — meterle 2,5 veces más presupuesto a una campaña sube su costo por compra marginal — pero el
+orden de magnitud se sostiene incluso con supuestos conservadores, porque el punto de partida de esa plata es
+ROAS 0,18.</p></div>
+</section>
+<section id="nativo"><h2><span class="num">07</span>El retargeting correcto para una campaña de catálogo</h2>
+<p class="lead">Antes del paso a paso, la decisión de fondo: en catálogo, el retargeting no se arma con públicos personalizados.</p>
 <p>En una campaña de ventas con catálogo, el conjunto de anuncios trae su propio retargeting a nivel de
-producto. No usa un público personalizado del píxel: usa los eventos de catálogo, que asocian cada persona con
-el producto exacto que miró, y por eso puede mostrarle ese producto de vuelta. Es más preciso y no depende del
-umbral de 1.000 usuarios de los públicos personalizados.</p>
+producto. No usa un público del píxel: usa los eventos de catálogo, que asocian a cada persona con el producto
+exacto que miró y por eso pueden mostrárselo de vuelta. Es más preciso y no depende del mínimo de 1.000
+usuarios que exigen los públicos personalizados.</p>
 <p>En el conjunto, la sección de público ofrece dos caminos:</p>
 <ul class="plain">
 <li><strong>Encontrar clientes nuevos</strong> (prospección) — el conjunto amplio.</li>
-<li><strong>Volver a segmentar anuncios para personas que interactuaron con tus productos</strong> (retargeting),
-con estas opciones:
+<li><strong>Volver a segmentar anuncios para personas que interactuaron con tus productos</strong>, con estas
+opciones:
 <ul class="plain" style="margin-top:7px">
-<li><em>Vieron o agregaron al carrito, pero no compraron</em> — la que corresponde acá, ventana de 30 días.</li>
-<li><em>Agregaron al carrito pero no compraron</em> — demasiado chica con 861 eventos al mes.</li>
-<li><em>Venta cruzada</em> y <em>venta adicional</em> — para más adelante, cuando haya base de compradores.</li>
+<li><em>Vieron o agregaron al carrito, pero no compraron</em> — la que corresponde, ventana de 30 días.</li>
+<li><em>Agregaron al carrito pero no compraron</em> — demasiado chica, según el punto 08.</li>
+<li><em>Venta cruzada</em> y <em>venta adicional</em> — para cuando haya base de compradores.</li>
 <li><em>Combinación personalizada</em> — solo si necesitas mezclar con listas.</li>
 </ul></li>
 </ul>
 <div class="note ok"><h4>La configuración que corresponde</h4>
 <p><strong>Vieron o agregaron al carrito, pero no compraron · 30 días</strong>, sobre el conjunto de productos
-corregido de 22 SKUs. Sin públicos personalizados de por medio y sin capas de intereses encima.</p></div>
-<p>Los públicos personalizados del punto 06 siguen haciendo falta igual: para <strong>excluir compradores</strong>,
-para las campañas que no usan catálogo, y para tener la base lista cuando el volumen crezca.</p>
+corregido de 22 SKUs, sin públicos personalizados de por medio y sin capas de intereses encima.</p></div>
+<p>Los públicos personalizados del punto 08 siguen haciendo falta: para <strong>excluir compradores</strong>,
+para las campañas que no usan catálogo, y para tener la base acumulada cuando el volumen crezca.</p>
 </section>
-<section id="publicos"><h2><span class="num">06</span>Paso a paso: crear los públicos</h2>
-<p class="lead">Se hacen en el Administrador de anuncios, no en el editor de la campaña. Los nombres que uso son los del administrador en español; entre paréntesis va el equivalente en inglés por si la cuenta está en ese idioma.</p>
+<section id="publicos"><h2><span class="num">08</span>Paso a paso: crear los públicos</h2>
+<p class="lead">Se hacen en el Administrador de anuncios, no en el editor de la campaña. Los nombres son los del administrador en español; entre paréntesis el equivalente en inglés.</p>
+<div class="note warn"><h4>Primero, el dimensionamiento — por qué va un solo público y no cuatro</h4>
+<p>El píxel registró en los últimos 27 días: 9.791 ViewContent, 861 AddToCart, 331 InitiateCheckout y 56
+Purchase. Eso significa que un carro abandonado de 14 días son entre 250 y 400 personas, y Meta exige 1.000 para
+entregar. Separar el retargeting en carro abandonado, visitantes y navegación deja tres públicos que no pueden
+entregar. Todo junto son 4.000–6.000 personas, que sí funciona.</p></div>
 <span class="step-sub">Público 1 · Interesados 30 días — el del conjunto de retargeting</span>
 <ol class="steps">
 <li><strong>Abre el administrador de públicos</strong>
 <span>Administrador de anuncios → menú ☰ arriba a la izquierda → <em>Públicos</em> (Audiences). Confirma arriba
-que estás en la cuenta correcta.</span></li>
+que estás en B.Wild 2026.</span></li>
 <li><strong>Crear público → Público personalizado</strong>
 <span>(Create audience → Custom audience).</span></li>
 <li><strong>Origen: Sitio web</strong>
 <span>Elige <em>Sitio web</em> (Website) y selecciona el píxel <code>B Wild Brands's pixel</code>
-(<code>10050739041672658</code>). Es el único de la cuenta y está activo.</span></li>
+(<code>10050739041672658</code>). Está activo y disparó por última vez hoy, con evento de navegador y de
+servidor.</span></li>
 <li><strong>Primera condición: ViewContent, 30 días</strong>
-<span>En «Eventos» elige <em>ViewContent</em> y pon <strong>30</strong> en el campo de días. Esa es la ventana que
-la aritmética del punto 04 sostiene.</span></li>
+<span>En «Eventos» elige <em>ViewContent</em> y pon <strong>30</strong> en el campo de días.</span></li>
 <li><strong>Agrega dos condiciones más con «O» (OR), no con «Y»</strong>
-<span>Haz clic en <em>Incluir más personas</em> (Include more people) y repite con <em>AddToCart</em> 30 días, y
-otra vez con <em>InitiateCheckout</em> 30 días. Es crítico que sea «o»: si quedan como «y», el público exige que
-la persona haya hecho las tres cosas y se reduce a casi nadie. Ese error solo se ve cuando el conjunto no
+<span>Clic en <em>Incluir más personas</em> (Include more people) y repite con <em>AddToCart</em> 30 días, y otra
+vez con <em>InitiateCheckout</em> 30 días. Es crítico que sea «o»: si quedan como «y», el público exige que la
+persona haya hecho las tres cosas y se reduce a casi nadie. Ese error solo se detecta cuando el conjunto no
 entrega.</span></li>
 <li><strong>Excluye a los compradores</strong>
-<span><em>Excluir personas</em> (Exclude) → evento <em>Purchase</em> → 30 días. Así no le pagas impresiones a
-quien ya compró esta semana.</span></li>
+<span><em>Excluir personas</em> (Exclude) → evento <em>Purchase</em> → 30 días.</span></li>
 <li><strong>Nómbralo y créalo</strong>
-<span><code>RTG_Interesados_30d_sin-compra</code>. El prefijo importa: cuando tengas quince públicos, quieres
-distinguir de un vistazo los de retargeting (RTG) de los de exclusión (EXCL).</span></li>
+<span><code>RTG_Interesados_30d_sin-compra</code>. El prefijo importa cuando tengas quince públicos: distingue
+de un vistazo los de retargeting (RTG) de los de exclusión (EXCL).</span></li>
 </ol>
 <span class="step-sub">Público 2 · Compradores 180 días — para excluir</span>
 <ol class="steps">
-<li><strong>Repite el flujo con el evento Purchase</strong>
-<span>Público personalizado → Sitio web → mismo píxel → evento <em>Purchase</em> → <strong>180</strong> días.
-Nómbralo <code>EXCL_Compradores_180d</code>.</span></li>
-<li><strong>Súmale la lista de Shopify que ya existe</strong>
-<span>En la cuenta ya está <em>«B.Wild _ Compradores Shopify - customers_export»</em> con 1.200–1.500 personas, y
-es más completa que el píxel porque incluye compras anteriores a la instalación. Úsala junto con la anterior en la
-exclusión del conjunto: se pueden seleccionar las dos.</span></li>
-<li><strong>Actualiza la lista de Shopify cada 60 días</strong>
-<span>Es una lista estática subida en febrero: si no se resube, en unos meses estarás pagando por impactar a
-gente que ya te compró.</span></li>
+<li><strong>Mismo flujo, evento Purchase, 180 días</strong>
+<span>Público personalizado → Sitio web → mismo píxel → <em>Purchase</em> → <strong>180</strong> días. Nómbralo
+<code>EXCL_Compradores_180d</code>.</span></li>
+<li><strong>Súmale la lista de Shopify</strong>
+<span>En la cuenta antigua existe <em>«B.Wild _ Compradores Shopify - customers_export»</em> con 1.200–1.500
+personas, más completa que el píxel porque incluye compras anteriores a la instalación. Si no está disponible en
+B.Wild 2026, vuelve a exportarla desde Shopify y súbela acá.</span></li>
+<li><strong>Actualízala cada 60 días</strong>
+<span>Es una lista estática: si no se resube, en unos meses estarás pagando por impactar a gente que ya
+compró.</span></li>
 </ol>
 <span class="step-sub">Público 3 · Carro abandonado 14 días — créalo, pero todavía no lo uses solo</span>
 <ol class="steps">
 <li><strong>AddToCart 14 días, excluyendo Purchase 14 días</strong>
-<span>Nómbralo <code>RTG_ATC_14d</code>. Hoy son unas 250–400 personas: no alcanza para un conjunto propio.</span></li>
-<li><strong>Déjalo creado igual y en reposo</strong>
+<span>Nómbralo <code>RTG_ATC_14d</code>. Hoy son 250–400 personas: no alcanza para un conjunto propio.</span></li>
+<li><strong>Déjalo creado y en reposo</strong>
 <span>Los públicos personalizados se llenan solos con el tráfico que va llegando. Si lo creas hoy, cuando la
-campaña esté trayendo visitas ya tendrá historial acumulado. Si esperas a necesitarlo, empieza de cero.</span></li>
+campaña esté trayendo visitas ya tendrá historial. Si esperas a necesitarlo, empieza de cero.</span></li>
 <li><strong>Úsalo cuando pase de 1.000</strong>
-<span>Revísalo cada dos semanas en el administrador de públicos. Recién ahí tiene sentido darle un conjunto o una
-variante de copy propia — los seis textos de retargeting del banco de copys ya están escritos para eso.</span></li>
+<span>Revísalo cada dos semanas. Recién ahí tiene sentido darle conjunto propio y copy propio — los seis textos
+de retargeting del banco de copys están escritos para eso.</span></li>
 </ol>
-<div class="note"><h4>Lo que no hay que hacer</h4>
-<p>No recrees los ocho públicos que ya existen. Están bien construidos —revisé la regla de «Visitantes 30 días
-S/compra» y apunta al píxel correcto, con la retención correcta y la exclusión correcta— simplemente no tenían
-tamaño para el uso que se les dio. Verifica su tamaño actual en el administrador de públicos: si alguno ya pasó
-las 1.000 personas, reutilízalo en vez de duplicarlo.</p></div>
 </section>
-<section id="conjunto"><h2><span class="num">07</span>Configurar el conjunto de retargeting</h2>
-<p class="lead">Una vez creados los públicos, así queda el conjunto dentro de la campaña de catálogo.</p>
+<section id="conjunto"><h2><span class="num">09</span>Configurar el conjunto de retargeting</h2>
 <div class="scroll"><table>
 <thead><tr><th>Campo</th><th>Valor</th><th>Por qué</th></tr></thead>
 <tbody>
-<tr><td>Público</td><td><strong>Volver a segmentar → Vieron o agregaron al carrito, pero no compraron · 30 días</strong></td><td>Usa eventos de catálogo a nivel de producto, no depende del umbral de 1.000</td></tr>
+<tr><td>Público</td><td><strong>Volver a segmentar → Vieron o agregaron al carrito, pero no compraron · 30 días</strong></td><td>Usa eventos de catálogo a nivel de producto; no depende del mínimo de 1.000</td></tr>
 <tr><td>Exclusiones</td><td><code>EXCL_Compradores_180d</code> + lista de Shopify</td><td>Evita pagar por quien ya compró</td></tr>
-<tr><td>Conjunto de productos</td><td>Autobronceantes · 22 SKUs en stock</td><td>El del punto 02 del banco de copys</td></tr>
+<tr><td>Conjunto de productos</td><td>Autobronceantes · 22 SKUs en stock</td><td>El del punto 02 del banco de copys; el set actual solo captura 7</td></tr>
+<tr><td>Edad</td><td>25-64</td><td>18-24 y 65+ rindieron ROAS 0,18 con $115.022 invertidos</td></tr>
 <tr><td>Optimización</td><td>Compras</td><td>Bajar a «agregar al carro» solo si a los 7 días hay menos de 5 compras</td></tr>
-<tr><td>Presupuesto</td><td>Máximo 20% del total de la campaña</td><td>Con 14 compras semanales en todo el sitio, más que eso le quita señal al conjunto amplio</td></tr>
-<tr><td>Segmentación extra</td><td>Ninguna</td><td>Nada de intereses, edades ni comportamientos encima: el público ya está definido por conducta</td></tr>
+<tr><td>Presupuesto</td><td>Máximo 20% del total de la campaña</td><td>Con 8,4 compras semanales en toda la cuenta, más que eso le quita señal al conjunto amplio</td></tr>
+<tr><td>Segmentación extra</td><td>Ninguna</td><td>Sin intereses ni comportamientos: el público ya está definido por conducta</td></tr>
 <tr><td>Ubicaciones</td><td>Automáticas (Advantage+)</td><td>Restringirlas con este volumen sube el CPM sin contrapartida</td></tr>
-<tr><td>Límite de frecuencia</td><td>Revisar a los 7 días</td><td>Si pasa de 3, el público se está quedando corto: reduce presupuesto antes que ampliar la ventana</td></tr>
+<tr><td>Límite de frecuencia</td><td>Revisar a los 7 días</td><td>Si pasa de 3, el público se está quedando corto: baja presupuesto antes que ampliar la ventana</td></tr>
 </tbody></table></div>
-</section>
-<section id="checklist"><h2><span class="num">08</span>Antes de relanzar</h2>
-<p class="lead">En este orden. Los tres primeros son los que impidieron que la campaña anterior funcionara.</p>
-<ol class="steps">
-<li><strong>Corrige el conjunto de productos</strong>
-<span>De 7 a 22 SKUs con la regla de filtro del banco de copys. Sin esto, el algoritmo trabaja con un tercio del
-catálogo.</span></li>
-<li><strong>Verifica el tamaño real de los públicos en el administrador</strong>
-<span>Si «Visitantes 30 días S/compra» sigue bajo 1.000 con 28.955 PageViews al mes, hay algo más que revisar —
-avísame y lo miramos.</span></li>
-<li><strong>Una campaña, un conjunto amplio, y el retargeting solo si tiene con qué</strong>
-<span>El 80% del presupuesto al conjunto amplio. Es lo que hizo «Broad A+ | Compras» para llegar a ROAS 2,57.</span></li>
-<li><strong>Apaga y archiva las campañas en $0</strong>
-<span>DDM Sets, Aniversario, Black Sale, Prospecting 1 y las dos AC | 14 Días. También los conjuntos «- Copia».</span></li>
-<li><strong>Revisa el diagnóstico del catálogo</strong>
-<span>Hay productos bloqueados en dos conjuntos, incluido «Mine tan». Un producto bloqueado no se entrega aunque
-todo lo demás esté bien.</span></li>
-<li><strong>Deja correr 7 días completos sin tocar nada</strong>
-<span>Con 14 compras semanales en todo el sitio, cualquier lectura antes de los 7 días es ruido.</span></li>
-</ol>
+<div class="note"><h4>Cómo leer el resultado</h4>
+<p>La referencia no es un número de la industria, es la propia cuenta: <strong>ROAS 2,04 y costo por compra
+$15.169</strong>, que es lo que ya logra el catálogo. Si el conjunto de retargeting no supera eso en 14 días,
+no está aportando y su presupuesto rinde más en el conjunto amplio.</p></div>
 </section>
 <footer>
-Los datos de B.Wild 2026 (3294209047428250) fueron leídos del administrador de anuncios para el 21–27 de agosto
-de 2026; esa cuenta no está habilitada para el MCP y no pudo consultarse por API. El resto de la auditoría es
-sobre la cuenta B WILD BRANDS (689161317392308), píxel 10050739041672658 y catálogo 676225172035545,
-leídos el 27 de agosto de 2026. La cuenta B.Wild 2026 (3294209047428250) no está habilitada para el MCP y sus
-campañas no pudieron revisarse. Los tamaños de público estimados en el punto 04 se derivan del volumen de eventos
-del píxel y deben confirmarse en el administrador de públicos.
+Auditoría sobre el export histórico de la cuenta B.Wild 2026 (3294209047428250): 12.997 filas desglosadas por
+día, campaña, conjunto, anuncio, edad y sexo, del 10 de junio al 27 de agosto de 2026. Contrastado contra la
+captura del administrador para la semana del 21 al 27 de agosto: $213.513 contra $211.806 y 7 compras en ambos.
+Los datos de píxel y catálogo provienen del MCP de Meta, leídos el 27 de agosto de 2026.
 </footer>
 </div>
