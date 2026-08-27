@@ -1,0 +1,401 @@
+<title>Diagnóstico del Catálogo A+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#FBF8F5; --panel:#FFFFFF; --panel-2:#F4EDE6;
+  --ink:#1A1512; --muted:#6E635B; --line:#E7DED4;
+  --bronze:#9C5A28; --glow:#C07C22; --deep:#4A2A14;
+  --ok:#2E7D5B; --warn:#A8641A; --stop:#B03A2E;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Bricolage Grotesque Fallback",Georgia,serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+    --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+    --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+    --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+  --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+  --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+  --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:40px 22px 96px}
+
+/* header */
+.hero{display:flex; flex-direction:column; gap:14px; margin-bottom:10px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--bronze);
+}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(32px,6vw,54px);
+  line-height:1.02; letter-spacing:-.028em; margin:0; text-wrap:balance;
+}
+.dek{color:var(--muted); margin:0; max-width:62ch; font-size:18px}
+.gradbar{height:5px; border-radius:3px; margin:26px 0 8px;
+  background:linear-gradient(90deg,#F6E7D6 0%,#E3B380 28%,#C07C22 58%,#8A4A1E 82%,#3D2110 100%)}
+.meta-line{font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:.04em;
+  display:flex; gap:10px; flex-wrap:wrap}
+.meta-line span::after{content:" ·"; color:var(--line)}
+.meta-line span:last-child::after{content:""}
+
+/* toc */
+nav.toc{margin:34px 0 0; padding:18px 20px; background:var(--panel); border:1px solid var(--line); border-radius:10px}
+nav.toc h2{margin:0 0 10px; font-size:12px; font-family:var(--mono); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); border:0; padding:0}
+nav.toc ol{margin:0; padding:0; list-style:none; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:6px 22px; counter-reset:t}
+nav.toc li{counter-increment:t; font-size:15px}
+nav.toc li::before{content:counter(t,decimal-leading-zero); font-family:var(--mono); font-size:11px;
+  color:var(--bronze); margin-right:9px}
+nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{border-bottom-color:var(--bronze)}
+
+/* sections */
+section{margin-top:58px; scroll-margin-top:20px}
+h2{
+  font-family:var(--display); font-weight:600; font-size:27px; letter-spacing:-.02em;
+  margin:0 0 6px; padding-top:20px; border-top:1px solid var(--line); text-wrap:balance;
+}
+h2 .num{font-family:var(--mono); font-size:12px; color:var(--bronze); letter-spacing:.1em;
+  display:block; font-weight:400; margin-bottom:7px}
+h3{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.015em; margin:32px 0 4px}
+.lead{color:var(--muted); margin:0 0 20px; max-width:66ch}
+p{max-width:68ch}
+
+/* copy cards */
+.angle{margin-top:30px}
+.angle-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.badge{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em;
+  color:var(--paper); background:var(--bronze); padding:3px 8px; border-radius:4px}
+.angle-head h3{margin:0}
+.angle-note{color:var(--muted); font-size:15px; margin:0 0 14px; max-width:66ch}
+
+.cards{display:grid; gap:12px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+.card .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); display:flex; justify-content:space-between; gap:12px; margin-bottom:9px}
+.copy{font-family:var(--sans); font-size:15px; line-height:1.5; margin:0}
+.copy .rest{color:var(--muted)}
+.copy .more{font-family:var(--sans); color:var(--muted); font-size:14px}
+.cnt{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--muted)}
+.cnt.over{color:var(--stop); font-weight:600}
+.tok{font-family:var(--mono); font-size:13.5px; background:var(--panel-2); padding:1px 5px; border-radius:4px;
+  color:var(--deep)}
+
+/* compact list grid */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px}
+.line{background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:11px 14px; display:flex; justify-content:space-between; align-items:center; gap:14px}
+.line .txt{font-family:var(--sans); font-size:15px}
+.line .sub{display:block; color:var(--muted); font-size:13px; font-family:var(--body); margin-top:3px}
+
+/* tables */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--panel); margin-top:16px}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:15px; font-family:var(--sans)}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; background:var(--panel-2)}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* callouts */
+.note{border-left:3px solid var(--bronze); background:var(--panel); border-radius:0 9px 9px 0;
+  border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:14px 18px; margin:20px 0}
+.note.warn{border-left-color:var(--warn)}
+.note.stop{border-left-color:var(--stop)}
+.note.ok{border-left-color:var(--ok)}
+.note h4{margin:0 0 5px; font-family:var(--display); font-size:16px; font-weight:600; letter-spacing:-.01em}
+.note p{margin:0; font-size:15px; color:var(--muted)}
+.note p+p{margin-top:8px}
+code{font-family:var(--mono); font-size:13px; background:var(--panel-2); padding:2px 6px; border-radius:4px;
+  color:var(--deep); word-break:break-word}
+pre{font-family:var(--mono); font-size:12.5px; background:var(--panel-2); border:1px solid var(--line);
+  border-radius:9px; padding:14px 16px; overflow-x:auto; line-height:1.6; margin:14px 0}
+ul.plain{padding-left:20px; margin:12px 0; max-width:68ch}
+ul.plain li{margin-bottom:7px}
+ol.steps{padding-left:0; list-style:none; counter-reset:s; margin:18px 0 0}
+ol.steps li{counter-increment:s; position:relative; padding:13px 16px 13px 50px; background:var(--panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:9px}
+ol.steps li::before{content:counter(s); position:absolute; left:15px; top:13px; width:23px; height:23px;
+  border-radius:50%; background:var(--bronze); color:#fff; font-family:var(--mono); font-size:12px;
+  display:grid; place-items:center}
+ol.steps strong{display:block; font-family:var(--display); font-weight:600; letter-spacing:-.01em}
+ol.steps span{color:var(--muted); font-size:15px}
+footer{margin-top:70px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+a{color:var(--bronze)}
+:focus-visible{outline:2px solid var(--bronze); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+<style>
+.err{background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:18px 20px; margin-bottom:12px;
+  border-left:3px solid var(--stop)}
+.err.good{border-left-color:var(--ok)}
+.err h3{margin:0 0 4px; font-size:18px}
+.err .ev{font-family:var(--mono); font-size:12.5px; color:var(--bronze); letter-spacing:.02em; margin:0 0 9px;
+  font-variant-numeric:tabular-nums}
+.err p{margin:0; font-size:15.5px}
+.err p+p{margin-top:9px}
+.funnel{display:grid; gap:7px; margin:18px 0}
+.fr{display:grid; grid-template-columns:150px 1fr 92px; align-items:center; gap:12px; font-size:14.5px}
+.fr .fn{font-family:var(--sans)}
+.fr .fb{height:22px; border-radius:4px; background:linear-gradient(90deg,var(--bronze),var(--glow)); min-width:3px}
+.fr .fv{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; font-size:13.5px}
+.step-sub{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
+  display:block; margin:26px 0 10px}
+</style>
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">B.Wild · Meta Ads · Auditoría</span>
+  <h1>Por qué el catálogo A+ no rindió</h1>
+  <p class="dek">Qué se hizo mal en las campañas de catálogo de la cuenta, con el número que lo prueba en cada
+  caso, y el paso a paso para construir los públicos del conjunto de retargeting antes de relanzar.</p>
+</header>
+<div class="gradbar" role="presentation"></div>
+<div class="meta-line">
+  <span>Cuenta 689161317392308</span><span>Píxel 10050739041672658</span>
+  <span>Últimos 90 días</span><span>CLP</span><span>27 de agosto de 2026</span>
+</div>
+<nav class="toc"><h2>Contenido</h2><ol>
+<li><a href="#alcance">Qué pude revisar y qué no</a></li>
+<li><a href="#errores">Los seis errores</a></li>
+<li><a href="#contraste">Lo que sí funcionó</a></li>
+<li><a href="#aritmetica">La aritmética del retargeting</a></li>
+<li><a href="#nativo">El retargeting correcto para catálogo</a></li>
+<li><a href="#publicos">Paso a paso: crear los públicos</a></li>
+<li><a href="#conjunto">Configurar el conjunto</a></li>
+<li><a href="#checklist">Antes de relanzar</a></li>
+</ol></nav>
+<section id="alcance"><h2><span class="num">01</span>Qué pude revisar y qué no</h2>
+<div class="note warn"><h4>La campaña que apagaste la semana pasada no está en esta cuenta</h4>
+<p>En <strong>B WILD BRANDS</strong> (689161317392308) no hay gasto en los últimos 30 días y el último cambio
+registrado es del 22 de junio. La campaña que apagaste la semana pasada tiene que estar en
+<strong>B.Wild 2026</strong> (3294209047428250), que Meta todavía no habilita para el MCP: al consultarla
+devuelve <em>«This ad account is not enabled for the Ads MCP»</em>. No puedo leer sus números.</p>
+<p>Lo que sí revisé son las <strong>cinco campañas de catálogo y A+ de la cuenta antigua</strong>, que corrieron
+entre abril y junio con la misma operación, el mismo píxel, el mismo catálogo y las mismas audiencias. Los
+errores que salen ahí son estructurales, no de una campaña puntual — y todos siguen presentes hoy.</p>
+<p>Si me pasas el ID de la campaña que apagaste o un export de su desglose por conjunto y por anuncio, la
+comparo contra esto y confirmo cuáles de los seis errores aplican.</p></div>
+</section>
+<section id="errores"><h2><span class="num">02</span>Los seis errores</h2>
+<p class="lead">En orden de cuánta plata costó cada uno.</p>
+<div class="err"><h3>1. El presupuesto se repartió entre conjuntos que no alcanzaban a comprar</h3><p class="ev">«TOFU - Autobronceadores»: conjunto «Mujeres» $49.858 → ROAS 2,35 · conjunto «A+» $30.467 → 0 compras</p>
+<p>Dos conjuntos en la misma campaña, peleando el mismo presupuesto. Uno convirtió a ROAS 2,35 y el otro se gastó $30.467 sin una sola compra. Como el presupuesto era por conjunto, Meta no pudo mover plata del que no funcionaba al que sí.</p>
+<p>El patrón se repite en toda la cuenta: hay conjuntos con presupuestos de $879, $3.000 y $5.000 diarios. Con un CPM de $4.000–6.000 y un costo por compra real de $13.000–23.000, un conjunto de $3.000 al día tarda entre cinco y ocho días en conseguir <strong>una</strong> compra. Meta necesita alrededor de 50 por semana para salir de la fase de aprendizaje. Nunca sale.</p>
+</div>
+<div class="err"><h3>2. El retargeting corrió sobre audiencias que no tenían gente</h3><p class="ev">«Rmkt»: $0 gastados, nunca entregó · «Rmkt - Copia»: $9.729 para llegar a 280 personas, frecuencia 5,7, 0 compras</p>
+<p>Es el error más caro de los seis, porque además hace parecer que el retargeting «no funciona».</p>
+<p>«Rmkt - Copia» alcanzó 280 personas y les mostró el anuncio 5,7 veces cada una: $34,7 por persona alcanzada. Su conjunto gemelo, «Rmkt», nunca llegó a entregar. Las ocho audiencias de retargeting basadas en el píxel (Visitantes 30 días, Carro Abandonado 14 días, Compradores 30 y 180 días, y las demás) aparecen en la API por debajo del umbral de 1.000 usuarios que Meta exige para entregar, mientras que las basadas en listas (Klaviyo, Shopify) y la de catálogo aparecen sobre ese umbral.</p>
+<p>Revisé la regla de «Visitantes 30 días S/compra» y está bien escrita: apunta al píxel correcto, retención de 30 días, excluye compradores. El problema no es la regla, es el tamaño. Confírmalo en el Administrador de públicos antes de reutilizarlas — el punto 04 explica por qué la aritmética del sitio dice lo mismo.</p>
+</div>
+<div class="err"><h3>3. Se le exigió ROAS a una campaña que estaba optimizada a otra cosa</h3><p class="ev">«Ventas | Formulario Pre-cyber» → ROAS 0,77, pero su resultado optimizado era registro completado: 71 registros a $2.906</p>
+<p>Esta campaña no rindió mal: hizo exactamente lo que se le pidió. Estaba optimizada a <code>CompleteRegistration</code> y consiguió 71 registros a $2.906 cada uno, un costo razonable para captar base de datos antes de un Cyber.</p>
+<p>Al mirarla en la misma tabla que las de venta, aparece con ROAS 0,77 y contamina la lectura de toda la cuenta. Si el promedio de «lo que rinde el catálogo» se calculó incluyéndola, el diagnóstico de partida ya estaba mal.</p>
+</div>
+<div class="err"><h3>4. Frecuencia alta sobre públicos chicos, en todas las campañas</h3><p class="ev">Frecuencias de 3,11 · 3,24 · 3,43 y 5,71 con alcances de 280 a 17.994 personas</p>
+<p>Ninguna campaña de la cuenta baja de frecuencia 2. «Catálogo 2026» llegó a 4.559 personas y les mostró el anuncio 3,4 veces; el retargeting llegó a 5,7.</p>
+<p>Frecuencia alta con alcance chico significa que el público efectivo es más pequeño que el presupuesto que se le está poniendo encima. El costo sube porque se compite contra uno mismo por las mismas personas, y el rendimiento cae por saturación. Es la misma conclusión del punto 1 vista desde el otro lado.</p>
+</div>
+<div class="err"><h3>5. Campañas creadas que nunca entregaron, y duplicados sin apagar</h3><p class="ev">$0 gastados en «DDM Sets», «Aniversario B.Wild», «Black Sale Marzo», «Prospecting 1» y dos campañas «AC | 14 Días»</p>
+<p>Cinco campañas y varios conjuntos que se crearon, se dejaron activos y nunca gastaron un peso. Hay además dos campañas de carro abandonado idénticas y conjuntos llamados «Rmkt - Copia» y «Ad set 1 Catálogo - Copia».</p>
+<p>No cuesta dinero directo, pero sí cuesta lectura: la cuenta tiene 21 campañas de las que 7 gastaron. Cuando hay que decidir qué apagar, ese ruido hace que se apague lo equivocado.</p>
+</div>
+<div class="err"><h3>6. El conjunto de productos del catálogo dejaba fuera dos tercios del portafolio</h3><p class="ev">El set dinámico «Autobronceantes en stock» captura 7 de 22 productos disponibles</p>
+<p>Ya lo vimos al armar el banco de copys: el filtro usa <code>product_type = "autobronceante"</code>, un valor exacto que en el feed solo tienen 7 productos. Mousses, brumas, gotas, cremas graduales y sets quedan fuera.</p>
+<p>En una campaña de catálogo esto es directamente rendimiento perdido: el algoritmo elige qué producto mostrarle a cada persona, y se le está dando un tercio de las opciones. Con menos productos que rotar, además, sube la frecuencia — que es el error 4.</p>
+</div>
+</section>
+<section id="contraste"><h2><span class="num">03</span>Lo que sí funcionó</h2>
+<p class="lead">La cuenta tiene una prueba de que el catálogo A+ sí rinde en este negocio, y dice exactamente qué hacer distinto.</p>
+<div class="err good"><h3>«Broad A+ | Compras» — ROAS 2,57</h3>
+<p class="ev">$350.447 en un solo conjunto · 26 compras · $13.479 por compra · 277 agregados al carro</p>
+<p>Es la campaña del Cyber de junio. Un solo conjunto de anuncios, amplio, con todo el presupuesto encima.
+Gastó seis veces más que «Catálogo 2026» y consiguió trece veces más compras a un costo 41% menor.</p>
+<p>La diferencia no fue la creatividad ni el público: fue que el presupuesto estuvo concentrado en un lugar el
+tiempo suficiente para que el algoritmo aprendiera. Ese es el modelo a repetir, con el descuento de que corrió
+en semana de Cyber y la intención de compra estaba inflada.</p></div>
+<div class="scroll"><table>
+<thead><tr><th>Campaña</th><th>Inversión</th><th>Compras</th><th>Costo por compra</th><th>ROAS</th><th>Frec.</th></tr></thead>
+<tbody>
+<tr><td>Ventas | Cyber Junio — «Broad A+»</td><td class="num">$350.447</td><td class="num">26</td><td class="num">$13.479</td><td class="num">2,57</td><td class="num">3,24</td></tr>
+<tr><td>TOFU Autobronceadores — «Mujeres»</td><td class="num">$49.858</td><td class="num">3</td><td class="num">$16.619</td><td class="num">2,35</td><td class="num">2,41</td></tr>
+<tr><td>TOFU Autobronceadores — «A+»</td><td class="num">$30.467</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">2,03</td></tr>
+<tr><td>Catálogo 2026 — «A+»</td><td class="num">$45.901</td><td class="num">2</td><td class="num">$22.951</td><td class="num">1,03</td><td class="num">3,11</td></tr>
+<tr><td>Catálogo 2026 — «Rmkt - Copia»</td><td class="num">$9.729</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">5,71</td></tr>
+</tbody></table></div>
+<p style="margin-top:14px">Los dos conjuntos que convirtieron son los dos que recibieron más de $49.000. Los tres
+que no convirtieron recibieron menos de $46.000 repartidos entre varios. No es coincidencia.</p>
+</section>
+<section id="aritmetica"><h2><span class="num">04</span>La aritmética del retargeting</h2>
+<p class="lead">Antes de crear públicos hay que saber cuánta gente hay realmente. Estos son los eventos del píxel entre el 31 de julio y el 27 de agosto — 27 días.</p>
+<div class="funnel">
+<div class="fr"><span class="fn">PageView</span><span class="fb" style="width:100.00%"></span><span class="fv">28.955</span></div>
+<div class="fr"><span class="fn">ViewContent</span><span class="fb" style="width:33.81%"></span><span class="fv">9.791</span></div>
+<div class="fr"><span class="fn">AddToCart</span><span class="fb" style="width:2.97%"></span><span class="fv">861</span></div>
+<div class="fr"><span class="fn">InitiateCheckout</span><span class="fb" style="width:1.14%"></span><span class="fv">331</span></div>
+<div class="fr"><span class="fn">AddPaymentInfo</span><span class="fb" style="width:0.47%"></span><span class="fv">136</span></div>
+<div class="fr"><span class="fn">Purchase</span><span class="fb" style="width:0.30%"></span><span class="fv">56</span></div>
+</div>
+<p>El píxel está sano: disparó por última vez hoy, tiene el evento de navegador y el de servidor activos, y
+cookies de origen habilitadas. El problema nunca fue de medición.</p>
+<div class="scroll"><table>
+<thead><tr><th>Público candidato</th><th>Eventos en 27 días</th><th>Personas estimadas</th><th>¿Sirve como conjunto propio?</th></tr></thead>
+<tbody>
+<tr><td>Vieron producto · 30 días</td><td class="num">9.791</td><td class="num">~4.000 – 6.000</td><td>Sí</td></tr>
+<tr><td>Agregaron al carro · 30 días</td><td class="num">861</td><td class="num">~500 – 700</td><td>No, queda bajo el mínimo de 1.000</td></tr>
+<tr><td>Agregaron al carro · 14 días</td><td class="num">~450</td><td class="num">~250 – 400</td><td>No</td></tr>
+<tr><td>Iniciaron pago · 30 días</td><td class="num">331</td><td class="num">~200 – 300</td><td>No</td></tr>
+<tr><td>Compradores · 180 días</td><td class="num">~370</td><td class="num">~350</td><td>No, pero sirve para excluir</td></tr>
+</tbody></table></div>
+<div class="note stop"><h4>Esta es la razón de fondo del error 2</h4>
+<p>Un carro abandonado de 14 días tiene entre 250 y 400 personas. Meta exige 1.000 para entregar. Por eso «Rmkt»
+gastó $0 y su copia terminó bombardeando a 280 personas seis veces cada una.</p>
+<p><strong>Conclusión operativa: un solo público de retargeting, combinado.</strong> Vieron producto, agregaron al
+carro o iniciaron pago en los últimos 30 días, excluyendo compradores. Todo junto son unas 4.000–6.000 personas,
+que sí es un público con el que se puede trabajar. Segmentarlo en carro abandonado, visitantes y navegación por
+separado es exactamente lo que rompió la campaña anterior.</p></div>
+<div class="note warn"><h4>Y un aviso sobre el volumen de compras</h4>
+<p>56 compras en 27 días son unas 14 por semana en todo el sitio, sumando orgánico y pago. Meta pide cerca de 50
+semanales <em>por conjunto</em> para salir de aprendizaje. Con este volumen, dos conjuntos optimizados a compra no
+salen nunca de aprendizaje los dos. Si vas a abrir retargeting, dale como máximo el 20% del presupuesto y revísalo
+a los 7 días: si no junta al menos 5 compras, se pliega al conjunto amplio.</p></div>
+</section>
+<section id="nativo"><h2><span class="num">05</span>El retargeting correcto para una campaña de catálogo</h2>
+<p class="lead">Esto es lo que no se hizo en «Catálogo 2026» y es la mitad de la explicación del error 2.</p>
+<p>En una campaña de ventas con catálogo, el conjunto de anuncios trae su propio retargeting a nivel de
+producto. No usa un público personalizado del píxel: usa los eventos de catálogo, que asocian cada persona con
+el producto exacto que miró, y por eso puede mostrarle ese producto de vuelta. Es más preciso y no depende del
+umbral de 1.000 usuarios de los públicos personalizados.</p>
+<p>En el conjunto, la sección de público ofrece dos caminos:</p>
+<ul class="plain">
+<li><strong>Encontrar clientes nuevos</strong> (prospección) — el conjunto amplio.</li>
+<li><strong>Volver a segmentar anuncios para personas que interactuaron con tus productos</strong> (retargeting),
+con estas opciones:
+<ul class="plain" style="margin-top:7px">
+<li><em>Vieron o agregaron al carrito, pero no compraron</em> — la que corresponde acá, ventana de 30 días.</li>
+<li><em>Agregaron al carrito pero no compraron</em> — demasiado chica con 861 eventos al mes.</li>
+<li><em>Venta cruzada</em> y <em>venta adicional</em> — para más adelante, cuando haya base de compradores.</li>
+<li><em>Combinación personalizada</em> — solo si necesitas mezclar con listas.</li>
+</ul></li>
+</ul>
+<div class="note ok"><h4>La configuración que corresponde</h4>
+<p><strong>Vieron o agregaron al carrito, pero no compraron · 30 días</strong>, sobre el conjunto de productos
+corregido de 22 SKUs. Sin públicos personalizados de por medio y sin capas de intereses encima.</p></div>
+<p>Los públicos personalizados del punto 06 siguen haciendo falta igual: para <strong>excluir compradores</strong>,
+para las campañas que no usan catálogo, y para tener la base lista cuando el volumen crezca.</p>
+</section>
+<section id="publicos"><h2><span class="num">06</span>Paso a paso: crear los públicos</h2>
+<p class="lead">Se hacen en el Administrador de anuncios, no en el editor de la campaña. Los nombres que uso son los del administrador en español; entre paréntesis va el equivalente en inglés por si la cuenta está en ese idioma.</p>
+<span class="step-sub">Público 1 · Interesados 30 días — el del conjunto de retargeting</span>
+<ol class="steps">
+<li><strong>Abre el administrador de públicos</strong>
+<span>Administrador de anuncios → menú ☰ arriba a la izquierda → <em>Públicos</em> (Audiences). Confirma arriba
+que estás en la cuenta correcta.</span></li>
+<li><strong>Crear público → Público personalizado</strong>
+<span>(Create audience → Custom audience).</span></li>
+<li><strong>Origen: Sitio web</strong>
+<span>Elige <em>Sitio web</em> (Website) y selecciona el píxel <code>B Wild Brands's pixel</code>
+(<code>10050739041672658</code>). Es el único de la cuenta y está activo.</span></li>
+<li><strong>Primera condición: ViewContent, 30 días</strong>
+<span>En «Eventos» elige <em>ViewContent</em> y pon <strong>30</strong> en el campo de días. Esa es la ventana que
+la aritmética del punto 04 sostiene.</span></li>
+<li><strong>Agrega dos condiciones más con «O» (OR), no con «Y»</strong>
+<span>Haz clic en <em>Incluir más personas</em> (Include more people) y repite con <em>AddToCart</em> 30 días, y
+otra vez con <em>InitiateCheckout</em> 30 días. Es crítico que sea «o»: si quedan como «y», el público exige que
+la persona haya hecho las tres cosas y se reduce a casi nadie. Ese error solo se ve cuando el conjunto no
+entrega.</span></li>
+<li><strong>Excluye a los compradores</strong>
+<span><em>Excluir personas</em> (Exclude) → evento <em>Purchase</em> → 30 días. Así no le pagas impresiones a
+quien ya compró esta semana.</span></li>
+<li><strong>Nómbralo y créalo</strong>
+<span><code>RTG_Interesados_30d_sin-compra</code>. El prefijo importa: cuando tengas quince públicos, quieres
+distinguir de un vistazo los de retargeting (RTG) de los de exclusión (EXCL).</span></li>
+</ol>
+<span class="step-sub">Público 2 · Compradores 180 días — para excluir</span>
+<ol class="steps">
+<li><strong>Repite el flujo con el evento Purchase</strong>
+<span>Público personalizado → Sitio web → mismo píxel → evento <em>Purchase</em> → <strong>180</strong> días.
+Nómbralo <code>EXCL_Compradores_180d</code>.</span></li>
+<li><strong>Súmale la lista de Shopify que ya existe</strong>
+<span>En la cuenta ya está <em>«B.Wild _ Compradores Shopify - customers_export»</em> con 1.200–1.500 personas, y
+es más completa que el píxel porque incluye compras anteriores a la instalación. Úsala junto con la anterior en la
+exclusión del conjunto: se pueden seleccionar las dos.</span></li>
+<li><strong>Actualiza la lista de Shopify cada 60 días</strong>
+<span>Es una lista estática subida en febrero: si no se resube, en unos meses estarás pagando por impactar a
+gente que ya te compró.</span></li>
+</ol>
+<span class="step-sub">Público 3 · Carro abandonado 14 días — créalo, pero todavía no lo uses solo</span>
+<ol class="steps">
+<li><strong>AddToCart 14 días, excluyendo Purchase 14 días</strong>
+<span>Nómbralo <code>RTG_ATC_14d</code>. Hoy son unas 250–400 personas: no alcanza para un conjunto propio.</span></li>
+<li><strong>Déjalo creado igual y en reposo</strong>
+<span>Los públicos personalizados se llenan solos con el tráfico que va llegando. Si lo creas hoy, cuando la
+campaña esté trayendo visitas ya tendrá historial acumulado. Si esperas a necesitarlo, empieza de cero.</span></li>
+<li><strong>Úsalo cuando pase de 1.000</strong>
+<span>Revísalo cada dos semanas en el administrador de públicos. Recién ahí tiene sentido darle un conjunto o una
+variante de copy propia — los seis textos de retargeting del banco de copys ya están escritos para eso.</span></li>
+</ol>
+<div class="note"><h4>Lo que no hay que hacer</h4>
+<p>No recrees los ocho públicos que ya existen. Están bien construidos —revisé la regla de «Visitantes 30 días
+S/compra» y apunta al píxel correcto, con la retención correcta y la exclusión correcta— simplemente no tenían
+tamaño para el uso que se les dio. Verifica su tamaño actual en el administrador de públicos: si alguno ya pasó
+las 1.000 personas, reutilízalo en vez de duplicarlo.</p></div>
+</section>
+<section id="conjunto"><h2><span class="num">07</span>Configurar el conjunto de retargeting</h2>
+<p class="lead">Una vez creados los públicos, así queda el conjunto dentro de la campaña de catálogo.</p>
+<div class="scroll"><table>
+<thead><tr><th>Campo</th><th>Valor</th><th>Por qué</th></tr></thead>
+<tbody>
+<tr><td>Público</td><td><strong>Volver a segmentar → Vieron o agregaron al carrito, pero no compraron · 30 días</strong></td><td>Usa eventos de catálogo a nivel de producto, no depende del umbral de 1.000</td></tr>
+<tr><td>Exclusiones</td><td><code>EXCL_Compradores_180d</code> + lista de Shopify</td><td>Evita pagar por quien ya compró</td></tr>
+<tr><td>Conjunto de productos</td><td>Autobronceantes · 22 SKUs en stock</td><td>El del punto 02 del banco de copys</td></tr>
+<tr><td>Optimización</td><td>Compras</td><td>Bajar a «agregar al carro» solo si a los 7 días hay menos de 5 compras</td></tr>
+<tr><td>Presupuesto</td><td>Máximo 20% del total de la campaña</td><td>Con 14 compras semanales en todo el sitio, más que eso le quita señal al conjunto amplio</td></tr>
+<tr><td>Segmentación extra</td><td>Ninguna</td><td>Nada de intereses, edades ni comportamientos encima: el público ya está definido por conducta</td></tr>
+<tr><td>Ubicaciones</td><td>Automáticas (Advantage+)</td><td>Restringirlas con este volumen sube el CPM sin contrapartida</td></tr>
+<tr><td>Límite de frecuencia</td><td>Revisar a los 7 días</td><td>Si pasa de 3, el público se está quedando corto: reduce presupuesto antes que ampliar la ventana</td></tr>
+</tbody></table></div>
+</section>
+<section id="checklist"><h2><span class="num">08</span>Antes de relanzar</h2>
+<p class="lead">En este orden. Los tres primeros son los que impidieron que la campaña anterior funcionara.</p>
+<ol class="steps">
+<li><strong>Corrige el conjunto de productos</strong>
+<span>De 7 a 22 SKUs con la regla de filtro del banco de copys. Sin esto, el algoritmo trabaja con un tercio del
+catálogo.</span></li>
+<li><strong>Verifica el tamaño real de los públicos en el administrador</strong>
+<span>Si «Visitantes 30 días S/compra» sigue bajo 1.000 con 28.955 PageViews al mes, hay algo más que revisar —
+avísame y lo miramos.</span></li>
+<li><strong>Una campaña, un conjunto amplio, y el retargeting solo si tiene con qué</strong>
+<span>El 80% del presupuesto al conjunto amplio. Es lo que hizo «Broad A+ | Compras» para llegar a ROAS 2,57.</span></li>
+<li><strong>Apaga y archiva las campañas en $0</strong>
+<span>DDM Sets, Aniversario, Black Sale, Prospecting 1 y las dos AC | 14 Días. También los conjuntos «- Copia».</span></li>
+<li><strong>Revisa el diagnóstico del catálogo</strong>
+<span>Hay productos bloqueados en dos conjuntos, incluido «Mine tan». Un producto bloqueado no se entrega aunque
+todo lo demás esté bien.</span></li>
+<li><strong>Deja correr 7 días completos sin tocar nada</strong>
+<span>Con 14 compras semanales en todo el sitio, cualquier lectura antes de los 7 días es ruido.</span></li>
+</ol>
+</section>
+<footer>
+Auditoría sobre la cuenta B WILD BRANDS (689161317392308), píxel 10050739041672658 y catálogo 676225172035545,
+leídos el 27 de agosto de 2026. La cuenta B.Wild 2026 (3294209047428250) no está habilitada para el MCP y sus
+campañas no pudieron revisarse. Los tamaños de público estimados en el punto 04 se derivan del volumen de eventos
+del píxel y deben confirmarse en el administrador de públicos.
+</footer>
+</div>

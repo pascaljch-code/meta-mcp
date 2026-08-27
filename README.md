@@ -9,6 +9,7 @@ estático en Vercel.
 |---|---|
 | `index.html` | Reporte de rendimiento — Nativo El Plomo, julio 2026 |
 | `copys-autobronceantes.html` | Banco de copys — campaña de catálogo de autobronceantes, B.Wild |
+| `diagnostico-catalogo.html` | Auditoría del catálogo A+ y guía de públicos de retargeting — B.Wild |
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
 
 ## Despliegue
