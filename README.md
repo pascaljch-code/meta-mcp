@@ -11,6 +11,7 @@ estático en Vercel.
 | `copys-autobronceantes.html` | Banco de copys — campaña de catálogo de autobronceantes, B.Wild |
 | `diagnostico-catalogo.html` | Auditoría del catálogo A+ y guía de públicos de retargeting — B.Wild |
 | `stock-y-rendimiento.html` | Cruce de disponibilidad de catálogo contra rendimiento de campañas — B.Wild |
+| `plan-rentabilidad.html` | Plan de reorganización de la cuenta para volverla rentable — B.Wild |
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
 
 ## Despliegue

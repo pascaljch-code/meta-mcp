@@ -1,0 +1,391 @@
+<title>Volver a Rentabilidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#FBF8F5; --panel:#FFFFFF; --panel-2:#F4EDE6;
+  --ink:#1A1512; --muted:#6E635B; --line:#E7DED4;
+  --bronze:#9C5A28; --glow:#C07C22; --deep:#4A2A14;
+  --ok:#2E7D5B; --warn:#A8641A; --stop:#B03A2E;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Bricolage Grotesque Fallback",Georgia,serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+    --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+    --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+    --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+  --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+  --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+  --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:40px 22px 96px}
+
+/* header */
+.hero{display:flex; flex-direction:column; gap:14px; margin-bottom:10px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--bronze);
+}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(32px,6vw,54px);
+  line-height:1.02; letter-spacing:-.028em; margin:0; text-wrap:balance;
+}
+.dek{color:var(--muted); margin:0; max-width:62ch; font-size:18px}
+.gradbar{height:5px; border-radius:3px; margin:26px 0 8px;
+  background:linear-gradient(90deg,#F6E7D6 0%,#E3B380 28%,#C07C22 58%,#8A4A1E 82%,#3D2110 100%)}
+.meta-line{font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:.04em;
+  display:flex; gap:10px; flex-wrap:wrap}
+.meta-line span::after{content:" ·"; color:var(--line)}
+.meta-line span:last-child::after{content:""}
+
+/* toc */
+nav.toc{margin:34px 0 0; padding:18px 20px; background:var(--panel); border:1px solid var(--line); border-radius:10px}
+nav.toc h2{margin:0 0 10px; font-size:12px; font-family:var(--mono); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); border:0; padding:0}
+nav.toc ol{margin:0; padding:0; list-style:none; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:6px 22px; counter-reset:t}
+nav.toc li{counter-increment:t; font-size:15px}
+nav.toc li::before{content:counter(t,decimal-leading-zero); font-family:var(--mono); font-size:11px;
+  color:var(--bronze); margin-right:9px}
+nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{border-bottom-color:var(--bronze)}
+
+/* sections */
+section{margin-top:58px; scroll-margin-top:20px}
+h2{
+  font-family:var(--display); font-weight:600; font-size:27px; letter-spacing:-.02em;
+  margin:0 0 6px; padding-top:20px; border-top:1px solid var(--line); text-wrap:balance;
+}
+h2 .num{font-family:var(--mono); font-size:12px; color:var(--bronze); letter-spacing:.1em;
+  display:block; font-weight:400; margin-bottom:7px}
+h3{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.015em; margin:32px 0 4px}
+.lead{color:var(--muted); margin:0 0 20px; max-width:66ch}
+p{max-width:68ch}
+
+/* copy cards */
+.angle{margin-top:30px}
+.angle-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.badge{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em;
+  color:var(--paper); background:var(--bronze); padding:3px 8px; border-radius:4px}
+.angle-head h3{margin:0}
+.angle-note{color:var(--muted); font-size:15px; margin:0 0 14px; max-width:66ch}
+
+.cards{display:grid; gap:12px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+.card .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); display:flex; justify-content:space-between; gap:12px; margin-bottom:9px}
+.copy{font-family:var(--sans); font-size:15px; line-height:1.5; margin:0}
+.copy .rest{color:var(--muted)}
+.copy .more{font-family:var(--sans); color:var(--muted); font-size:14px}
+.cnt{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--muted)}
+.cnt.over{color:var(--stop); font-weight:600}
+.tok{font-family:var(--mono); font-size:13.5px; background:var(--panel-2); padding:1px 5px; border-radius:4px;
+  color:var(--deep)}
+
+/* compact list grid */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px}
+.line{background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:11px 14px; display:flex; justify-content:space-between; align-items:center; gap:14px}
+.line .txt{font-family:var(--sans); font-size:15px}
+.line .sub{display:block; color:var(--muted); font-size:13px; font-family:var(--body); margin-top:3px}
+
+/* tables */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--panel); margin-top:16px}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:15px; font-family:var(--sans)}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; background:var(--panel-2)}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* callouts */
+.note{border-left:3px solid var(--bronze); background:var(--panel); border-radius:0 9px 9px 0;
+  border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:14px 18px; margin:20px 0}
+.note.warn{border-left-color:var(--warn)}
+.note.stop{border-left-color:var(--stop)}
+.note.ok{border-left-color:var(--ok)}
+.note h4{margin:0 0 5px; font-family:var(--display); font-size:16px; font-weight:600; letter-spacing:-.01em}
+.note p{margin:0; font-size:15px; color:var(--muted)}
+.note p+p{margin-top:8px}
+code{font-family:var(--mono); font-size:13px; background:var(--panel-2); padding:2px 6px; border-radius:4px;
+  color:var(--deep); word-break:break-word}
+pre{font-family:var(--mono); font-size:12.5px; background:var(--panel-2); border:1px solid var(--line);
+  border-radius:9px; padding:14px 16px; overflow-x:auto; line-height:1.6; margin:14px 0}
+ul.plain{padding-left:20px; margin:12px 0; max-width:68ch}
+ul.plain li{margin-bottom:7px}
+ol.steps{padding-left:0; list-style:none; counter-reset:s; margin:18px 0 0}
+ol.steps li{counter-increment:s; position:relative; padding:13px 16px 13px 50px; background:var(--panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:9px}
+ol.steps li::before{content:counter(s); position:absolute; left:15px; top:13px; width:23px; height:23px;
+  border-radius:50%; background:var(--bronze); color:#fff; font-family:var(--mono); font-size:12px;
+  display:grid; place-items:center}
+ol.steps strong{display:block; font-family:var(--display); font-weight:600; letter-spacing:-.01em}
+ol.steps span{color:var(--muted); font-size:15px}
+footer{margin-top:70px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+a{color:var(--bronze)}
+:focus-visible{outline:2px solid var(--bronze); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+<style>
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:11px;margin:20px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--mono);font-size:23px;font-variant-numeric:tabular-nums;margin-top:6px;letter-spacing:-.02em}
+.kpi .n{font-size:13px;color:var(--muted);margin-top:3px}
+.kpi.hi{border-color:color-mix(in srgb,var(--bronze) 45%,var(--line))}
+.kpi.win .v{color:var(--ok)} .kpi.lose .v{color:var(--stop)}
+.err{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:18px 20px;margin-bottom:12px;
+  border-left:3px solid var(--stop)}
+.err.good{border-left-color:var(--ok)} .err.warn{border-left-color:var(--warn)}
+.err h3{margin:0 0 4px;font-size:18px}
+.err .ev{font-family:var(--mono);font-size:12.5px;color:var(--bronze);margin:0 0 10px;font-variant-numeric:tabular-nums}
+.err p{margin:0;font-size:15.5px} .err p+p{margin-top:9px}
+td.pos{color:var(--ok);font-weight:600} td.neg{color:var(--stop);font-weight:600}
+.spec{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:0;margin:16px 0;overflow:hidden}
+.spec h4{margin:0;padding:14px 18px;background:var(--panel-2);border-bottom:1px solid var(--line);
+  font-family:var(--display);font-size:16.5px;font-weight:600;display:flex;justify-content:space-between;gap:12px}
+.spec h4 span{font-family:var(--mono);font-size:12px;color:var(--bronze);font-weight:400}
+.spec dl{margin:0;padding:6px 18px 14px;display:grid;grid-template-columns:190px 1fr;gap:0}
+.spec dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
+  padding:9px 0;border-bottom:1px solid var(--line)}
+.spec dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.spec dl>dt:last-of-type,.spec dl>dd:last-of-type{border-bottom:none}
+.day{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:15px 0;border-top:1px solid var(--line)}
+.day:first-of-type{border-top:none}
+.day .d{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--bronze);
+  padding-top:2px}
+.day .b strong{display:block;font-family:var(--display);font-size:16.5px;font-weight:600;margin-bottom:3px}
+.day .b span{color:var(--muted);font-size:15px}
+</style>
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">B.Wild · Plan de reorganización</span>
+  <h1>Volver a rentabilidad</h1>
+  <p class="dek">Por qué separar las campañas no dio el control que buscabas, cuál es la palanca que sí lo da,
+  y la estructura exacta para armar de nuevo la cuenta — con menos inversión que hoy.</p>
+</header>
+<div class="gradbar" role="presentation"></div>
+<div class="meta-line">
+  <span>74 días de datos</span><span>Margen 72%</span><span>Equilibrio ROAS 1,65</span>
+  <span>Hoy 1,59</span><span>27 de agosto de 2026</span>
+</div>
+<nav class="toc"><h2>Contenido</h2><ol>
+<li><a href="#razon">Tenías razón a medias</a></li>
+<li><a href="#economia">Cuánto puedes pagar por venta</a></li>
+<li><a href="#palanca">La palanca que sí da control</a></li>
+<li><a href="#estructura">La estructura nueva</a></li>
+<li><a href="#cuenta">Dónde construirla</a></li>
+<li><a href="#plan">El plan, día por día</a></li>
+<li><a href="#visibilidad">Cómo lo voy a monitorear</a></li>
+<li><a href="#nohacer">Lo que no hay que hacer</a></li>
+</ol></nav>
+<section id="razon"><h2><span class="num">01</span>Tenías razón a medias, y esa mitad importa</h2>
+<p class="lead">Fuiste a mirar los anuncios dentro del conjunto y viste que unos se comían a los otros. Eso es real y lo confirmé. Lo que no funcionó fue la solución.</p>
+<div class="err good"><h3>La mitad correcta: Meta repartió mal</h3>
+<p class="ev">Anuncios de «Gráficas | General» — mismo conjunto, mismo público, mismo periodo</p>
+<div class="scroll"><table>
+<thead><tr><th>Anuncio</th><th>% del presupuesto</th><th>ROAS</th><th>Ticket</th></tr></thead>
+<tbody>
+<tr><td>IG Brumas</td><td class="num">17,0%</td><td class="num neg">1,35</td><td class="num">$25.942</td></tr>
+<tr><td>Brumas V2 · Social Proof</td><td class="num">14,5%</td><td class="num neg">1,15</td><td class="num">$25.183</td></tr>
+<tr><td>Brumas V1 · Encuentra tu aroma</td><td class="num">12,6%</td><td class="num pos">2,68</td><td class="num">$30.601</td></tr>
+<tr><td><strong>Brumas V2 · Encuentra tu aroma</strong></td><td class="num">12,4%</td><td class="num pos">3,97</td><td class="num">$44.375</td></tr>
+<tr><td>Brumas V1 · Comparación Precio</td><td class="num">11,5%</td><td class="num neg">1,63</td><td class="num">$21.207</td></tr>
+</tbody></table></div>
+<p>Los dos anuncios que más presupuesto recibieron rinden <strong>1,35 y 1,15</strong>, por debajo del punto de
+equilibrio de 1,65. El que mejor rinde —ROAS 3,97, con un ticket de $44.375, un 38% sobre el promedio de la
+cuenta— recibió apenas el 12,4%.</p>
+<p>Así que sí: el reparto estaba mal. No lo imaginaste.</p></div>
+<div class="err"><h3>La mitad cara: separar campañas lo empeoró</h3>
+<p class="ev">Consolidado en catálogo ROAS 2,04 · Separado por marca y formato ROAS 1,31</p>
+<p>Al separar, cada campaña quedó con su presupuesto asegurado — pero también con su propio proceso de
+aprendizaje y con 1,4 compras semanales para alimentarlo. El resultado está medido: prácticamente el mismo
+dinero, seis compras menos y un costo por compra 53% más alto.</p>
+<p>Y el problema de fondo no se resolvió, solo cambió de nivel: antes competían anuncios dentro de un conjunto;
+ahora compiten campañas dentro de la misma subasta, por las mismas personas. La suma de alcances de las siete
+campañas supera el alcance real de la cuenta en 5.057 personas.</p></div>
+<div class="note"><h4>La causa real no era la estructura</h4>
+<p>El conjunto estaba optimizado a <strong>compras</strong>. Con ese objetivo Meta busca la compra
+<em>más barata</em>, no la más valiosa — y no tiene ninguna razón para preferir un pedido de $44.375 sobre uno
+de $25.942, porque ambos cuentan como una compra.</p>
+<p>Por eso el presupuesto fue a parar a los anuncios de ticket bajo. Meta hizo exactamente lo que se le pidió.
+El problema es lo que se le pidió.</p></div>
+</section>
+<section id="economia"><h2><span class="num">02</span>Cuánto puedes pagar por venta</h2>
+<p class="lead">Con el margen real que salió del informe de inventario, esto deja de ser opinión.</p>
+<div class="scroll"><table>
+<thead><tr><th>Concepto</th><th>Monto</th><th></th></tr></thead>
+<tbody>
+<tr><td>Ticket promedio</td><td class="num">$32.211</td><td>89 compras en 74 días</td></tr>
+<tr><td>Neto de IVA</td><td class="num">$27.068</td><td>÷ 1,19</td></tr>
+<tr><td><strong>Contribución con margen 72%</strong></td><td class="num"><strong>$19.489</strong></td><td><strong>este es el CPA máximo</strong></td></tr>
+<tr><td>CPA actual de la cuenta</td><td class="num neg">$20.201</td><td>pierde $712 por venta</td></tr>
+<tr><td>CPA de «Catálogo | Ventas»</td><td class="num pos">$15.169</td><td>gana $4.320 por venta</td></tr>
+<tr><td>CPA objetivo</td><td class="num">$15.000</td><td>ROAS 2,15 · $4.489 por venta</td></tr>
+</tbody></table></div>
+<p>El objetivo no es inventado: es exactamente lo que la campaña de catálogo ya logra hace 71 días. No hay que
+descubrir nada nuevo, hay que dejar de diluirlo.</p>
+<div class="kpis">
+<div class="kpi lose"><div class="k">Hoy · 7 campañas</div><div class="v">−$34.755</div><div class="n">al mes, con $915.000 de inversión</div></div>
+<div class="kpi win hi"><div class="k">Consolidado en catálogo</div><div class="v">+$154.629</div><div class="n">al mes, con $660.000 de inversión</div></div>
+</div>
+<p>Son <strong>$189.384 de diferencia mensual invirtiendo $255.000 menos</strong>. El cálculo aplica el ROAS
+histórico de cada estructura sobre el margen de 72%, y no descuenta despacho ni comisiones de pasarela — que
+afectan a los dos escenarios por igual.</p>
+</section>
+<section id="palanca"><h2><span class="num">03</span>La palanca que sí da control: optimizar a valor</h2>
+<p class="lead">Es un cambio de una casilla, y ataca exactamente el problema que detectaste.</p>
+<p>En el conjunto de anuncios, el objetivo de optimización deja de ser <em>compras</em> y pasa a ser
+<strong>valor de conversión</strong> (maximizar el valor de las compras). Con eso Meta deja de perseguir la
+compra más barata y empieza a perseguir el pedido más grande.</p>
+<p>Aplicado a los datos de arriba: el anuncio con ticket de $44.375 pasa a ser el que Meta quiere alimentar, no
+el de $25.942. El reparto que te molestaba se corrige solo, sin separar nada.</p>
+<div class="scroll"><table>
+<thead><tr><th>Lo que querías controlar</th><th>Lo que hiciste</th><th>Lo que corresponde</th></tr></thead>
+<tbody>
+<tr><td>Que un anuncio no se coma el presupuesto</td><td>Separar en campañas</td><td>Optimizar a valor, para que la concentración vaya a lo que deja más</td></tr>
+<tr><td>Que ciertos productos tengan salida</td><td>Campaña por marca</td><td>Conjunto de productos en el catálogo, que define qué es elegible</td></tr>
+<tr><td>Que el CPA baje</td><td>Presupuestos chicos por campaña</td><td>Consolidar hasta tener volumen, y recién ahí poner límite de costo</td></tr>
+<tr><td>Que no se agote el stock fino</td><td>—</td><td>Filtro de disponibilidad en el conjunto de productos</td></tr>
+</tbody></table></div>
+<div class="note warn"><h4>Una condición para que valor funcione</h4>
+<p>La optimización a valor necesita que el píxel mande bien el parámetro de valor en el evento de compra. Ya lo
+está haciendo: los 74 días de datos traen valor de conversión en todas las compras, así que la señal existe.
+Aun así, conviene verificar en el primer día que las compras nuevas siguen llegando con valor.</p></div>
+</section>
+<section id="estructura"><h2><span class="num">04</span>La estructura nueva</h2>
+<p class="lead">Tres campañas, no siete. Y solo una de ellas está siempre encendida.</p>
+<div class="spec"><h4>1 · CAT | Autobronceantes | Ventas <span>siempre activa · $22.000/día</span></h4>
+<dl>
+<dt>Objetivo</dt><dd>Ventas, con catálogo (Advantage+ catálogo)</dd>
+<dt>Presupuesto</dt><dd>A nivel de campaña, $22.000 diarios. Es el orden de magnitud al que «Ventas - 20K» hizo ROAS 3,58</dd>
+<dt>Optimización</dt><dd><strong>Valor de conversión</strong>, no compras</dd>
+<dt>Conjuntos</dt><dd>Uno solo, amplio. Sin intereses, sin comportamientos, sin públicos personalizados encima</dd>
+<dt>Edad y país</dt><dd>Chile, 25-64. Los tramos 18-24 y 65+ rindieron ROAS 0,18 con $115.022</dd>
+<dt>Conjunto de productos</dt><dd>Autobronceantes en stock — la regla corregida que captura 22 SKUs en vez de 7, con filtro de disponibilidad</dd>
+<dt>Ubicaciones</dt><dd>Automáticas</dd>
+<dt>Anuncios</dt><dd>Dos, cada uno con 5 textos principales, 5 títulos y 5 descripciones del banco de copys.<br>
+<strong>AD_Categoria</strong> con los ángulos A, B y C · <strong>AD_Comercial</strong> con D, E y F</dd>
+<dt>Creatividad</dt><dd>Construida sobre los 7 SKUs con stock profundo: guante, Darkest Tan Possible, Gel Shimmer, Mousse Tanned AF, Gel Glow Your Own Way, Just Glow With It y Bruma Gimme The Glow Down</dd>
+</dl></div>
+<div class="spec"><h4>2 · RTG | Autobronceantes <span>desde la semana 2 · $4.000/día</span></h4>
+<dl>
+<dt>Cuándo</dt><dd>Solo después de que la campaña base lleve 7 días corriendo</dd>
+<dt>Público</dt><dd>Retargeting nativo del catálogo: vieron o agregaron al carrito y no compraron, 30 días</dd>
+<dt>Exclusiones</dt><dd>Compradores 180 días + lista de Shopify</dd>
+<dt>Presupuesto</dt><dd>Máximo 20% del total. Si a los 7 días no junta 5 compras, se pliega a la campaña base</dd>
+</dl></div>
+<div class="spec"><h4>3 · SEA | 18 de septiembre <span>del 10 al 18 de septiembre · $25.000/día</span></h4>
+<dl>
+<dt>Por qué</dt><dd>Es el patrón que ya funcionó dos veces: «Ventas - 20K» ROAS 3,58 en 4 días y «Liquidación Mine.Tan» ROAS 3,99 en 7</dd>
+<dt>Formato</dt><dd>Presupuesto concentrado, pocos días, oferta con fecha de término</dd>
+<dt>Encima, no en vez de</dt><dd>La campaña base sigue corriendo. Esta es una capa de evento</dd>
+</dl></div>
+<div class="note stop"><h4>Y lo que se apaga</h4>
+<p><strong>Interacción IG</strong> ($5.037/día, 0 compras en 74 días), <strong>BFRESH - Ventas</strong>
+(ROAS 1,34 con el 48% de su catálogo agotado), <strong>Mousse</strong> y <strong>Geles</strong> (0 compras),
+y <strong>BTAN - Ventas</strong>, que se absorbe en la campaña de catálogo.</p>
+<p>La inversión diaria total baja de $30.500 a $22.000. Menos plata, en un solo lugar, con la optimización
+correcta.</p></div>
+</section>
+<section id="cuenta"><h2><span class="num">05</span>Dónde construirla</h2>
+<p class="lead">Mi recomendación es armarla en la cuenta antigua, B WILD BRANDS (689161317392308). Acá está el porqué y lo que cuesta.</p>
+<div class="scroll"><table>
+<thead><tr><th></th><th>B.Wild 2026 (actual)</th><th>B WILD BRANDS (antigua)</th></tr></thead>
+<tbody>
+<tr><td>Mi acceso</td><td class="neg">Solo exports que me mandes</td><td class="pos">Lectura y escritura completas</td></tr>
+<tr><td>Píxel</td><td>10050739041672658</td><td class="pos">El mismo — no se pierde señal</td></tr>
+<tr><td>Catálogo</td><td>676225172035545</td><td class="pos">El mismo</td></tr>
+<tr><td>Business</td><td>B Wild Brands</td><td class="pos">El mismo</td></tr>
+<tr><td>Públicos personalizados</td><td>Sin crear</td><td class="pos">15 ya creados</td></tr>
+<tr><td>Páginas</td><td>B.Wild</td><td class="pos">B.Wild y B.Wild Brands</td></tr>
+<tr><td>Historial que se pierde</td><td>—</td><td>El de la cuenta actual: 89 compras, ninguna campaña fuera de aprendizaje</td></tr>
+<tr><td>Puntuación de oportunidad</td><td>68</td><td>100</td></tr>
+</tbody></table></div>
+<div class="note ok"><h4>Por qué el costo de mover es bajo</h4>
+<p>Lo que de verdad acumula aprendizaje —el píxel, el catálogo y el historial de conversiones— vive en el
+<em>business</em>, no en la cuenta publicitaria. Los dos comparten los tres. Lo que se pierde es el historial de
+gasto de la cuenta actual, y ahí no hay nada que rescatar: ninguna de las siete campañas alcanzó a salir de fase
+de aprendizaje.</p>
+<p>Además la cuenta antigua ya demostró que puede: «Broad A+ | Compras» hizo ROAS 2,57 con 26 compras a $13.479
+en junio.</p></div>
+<div class="note warn"><h4>Lo que hay que verificar antes de mover</h4>
+<p>Que el método de pago de la cuenta antigua esté vigente, y que no tenga límite de gasto de cuenta cargado de
+antes. Ambas cosas se revisan en Configuración de la cuenta y toman dos minutos. Si prefieres quedarte en
+B.Wild 2026, el plan es idéntico — solo cambia que tú lo construyes y yo trabajo con exports semanales.</p></div>
+</section>
+<section id="plan"><h2><span class="num">06</span>El plan, día por día</h2>
+<p class="lead">Todo lo que requiere decisión tuya está en el día 0. El resto es ejecución y espera.</p>
+<div class="day"><div class="d">Hoy</div><div class="b"><strong>Decisión de cuenta y limpieza</strong><span>Me confirmas dónde construir. En paralelo: apagar y archivar las campañas que pierden, y revisar en Shopify si los seis sets de b.tan son packs sin inventario propio o están habilitados para venderse sin stock.</span></div></div>
+<div class="day"><div class="d">Día 1</div><div class="b"><strong>Corregir el catálogo</strong><span>Creo el conjunto de productos «Autobronceantes en stock» con la regla corregida — 22 SKUs en vez de 7 — y verifico el diagnóstico del catálogo. Esto va primero porque la campaña se construye encima.</span></div></div>
+<div class="day"><div class="d">Día 1</div><div class="b"><strong>Construir la campaña base</strong><span>Campaña, conjunto y los dos anuncios con los textos del banco de copys. Optimización a valor. Arranca con $22.000 diarios.</span></div></div>
+<div class="day"><div class="d">Días 2 a 7</div><div class="b"><strong>No tocar nada</strong><span>Ni presupuesto, ni textos, ni públicos. Cualquier edición reinicia el aprendizaje. Yo reviso todos los días y te aviso solo si hay algo roto: entrega detenida, producto bloqueado, error de catálogo.</span></div></div>
+<div class="day"><div class="d">Día 8</div><div class="b"><strong>Primera lectura, con cuidado</strong><span>Ocho compras esperadas y ±34% de margen de error. Solo sirve para confirmar que entrega y que el CPA no está desbocado. No para apagar ni cambiar nada.</span></div></div>
+<div class="day"><div class="d">Día 8</div><div class="b"><strong>Sumar retargeting</strong><span>Si la base entrega bien, se abre la campaña de retargeting con $4.000 diarios.</span></div></div>
+<div class="day"><div class="d">Días 10 a 14</div><div class="b"><strong>Preparar el 18</strong><span>Creatividad y oferta de la campaña estacional, para que salga el 10 de septiembre con presupuesto concentrado.</span></div></div>
+<div class="day"><div class="d">Día 21</div><div class="b"><strong>Primera decisión real</strong><span>25 compras acumuladas, ±20% de margen. Acá sí se decide: escalar presupuesto, cambiar textos, o ajustar el conjunto de productos.</span></div></div>
+<div class="day"><div class="d">Cada lunes</div><div class="b"><strong>Revisión de stock</strong><span>Con el reporte que programaste: qué entró, qué se agotó, y si hay que mover el conjunto de productos. Es lo único que se toca entre semana.</span></div></div>
+</section>
+<section id="visibilidad"><h2><span class="num">07</span>Cómo lo voy a monitorear</h2>
+<p class="lead">Esto es lo que cambia según dónde construyamos.</p>
+<p><strong>En la cuenta antigua</strong> puedo hacer todo esto sin que me mandes nada:</p>
+<ul class="plain">
+<li>Leer rendimiento diario por campaña, conjunto, anuncio, edad, sexo y ubicación</li>
+<li>Crear y pausar campañas, conjuntos y anuncios; subir creatividades</li>
+<li>Crear y ajustar el conjunto de productos del catálogo</li>
+<li>Revisar diagnósticos del catálogo, salud del píxel y volumen de eventos</li>
+<li>Crear y revisar públicos personalizados</li>
+</ul>
+<p><strong>En B.Wild 2026</strong>, hasta que Meta habilite la cuenta, sigo con lo que ya funciona: catálogo,
+píxel y diagnósticos por API, más los exports que me pases. Es viable, pero el ciclo se alarga de horas a
+días.</p>
+<div class="note"><h4>Lo que sí puedo dejar armado en cualquiera de los dos casos</h4>
+<p>Un chequeo periódico que revise entrega, CPA acumulado y estado del catálogo, y que te avise solo cuando
+haya algo que decidir — no un reporte diario que nadie lee.</p></div>
+</section>
+<section id="nohacer"><h2><span class="num">08</span>Lo que no hay que hacer</h2>
+<p class="lead">Cada uno de estos costó plata en los últimos 74 días.</p>
+<ol class="steps">
+<li><strong>No separar campañas para repartir presupuesto</strong>
+<span>Es la lección del punto 01. Si un anuncio se come el presupuesto, se corrige con la optimización o con la
+creatividad, nunca partiendo la campaña.</span></li>
+<li><strong>No leer resultados antes de los 21 días</strong>
+<span>Con 1,2 compras diarias, una semana mala y una buena son estadísticamente el mismo número. Reaccionar a
+eso fue lo que impidió que cualquier campaña acumulara aprendizaje.</span></li>
+<li><strong>No editar el anuncio o el conjunto que está funcionando</strong>
+<span>Reinicia el aprendizaje. Si hay que sacar algo, se apaga; si hay que probar algo, se crea nuevo al
+lado.</span></li>
+<li><strong>No pautar marcas con el catálogo caído</strong>
+<span>B.FRESH tiene 48% de sus SKUs agotados y Carroten 54%. Vuelven cuando el reporte del lunes muestre
+reposición.</span></li>
+<li><strong>No empujar SKUs de stock fino en la creatividad</strong>
+<span>El Gel Next Level tiene 4 unidades con 2 comprometidas. Ponerlo al centro de un anuncio es pagar tráfico
+para agotarlo en dos días.</span></li>
+<li><strong>No mantener campañas de interacción con presupuesto de venta</strong>
+<span>$372.715 en 74 días, cero compras. Si se quiere construir marca, va con presupuesto declarado y
+acotado.</span></li>
+</ol>
+</section>
+<footer>
+Plan construido sobre el export histórico de B.Wild 2026 (10 de junio al 27 de agosto de 2026, 12.997 filas),
+el inventario y los costos de Shopify, y los datos de catálogo, píxel y cuentas leídos por API el 27 de agosto
+de 2026. Las proyecciones aplican el ROAS histórico de cada estructura sobre un margen bruto de 72% y no
+descuentan despacho ni comisiones de pasarela.
+</footer>
+</div>
