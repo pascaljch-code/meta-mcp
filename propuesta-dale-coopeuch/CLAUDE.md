@@ -14,9 +14,12 @@ resolver.
 - **No rediseñes.** Se replica la línea gráfica de las propuestas base de Intothecom:
   Be Vietnam Pro, naranjo `#E57000`, formato 10 × 5,625 pulgadas. Los helpers están en
   `generadores/deck_lib.py` y `generadores/slides.py`.
-- **Bloqueante abierto:** puede que Google Search esté cerrado para crédito de consumo en
-  Chile por el requisito de divulgación. Sección 3 de `ESTADO.md`. No presentar la
-  propuesta afirmando que Search es viable hasta resolverlo.
+- **Google Search es viable**, verificado con anuncios reales de la competencia. Lo que
+  falta es que el cliente publique el bloque de ejemplo representativo en su landing:
+  especificación en la sección 3 de `ESTADO.md`.
+- **Hay siete correcciones redactadas y sin aplicar** a los documentos entregados
+  (sección 4 de `ESTADO.md`). Verifica cuáles ya fueron pegadas antes de regenerar nada
+  desde los scripts, o vas a pisar el trabajo manual del equipo.
 - **Monteclaro no se menciona** en ningún documento. Es contexto interno.
 - **Sin grabación de contenidos.** No es un servicio de esta propuesta.
 
