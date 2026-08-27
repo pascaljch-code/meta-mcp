@@ -1,0 +1,570 @@
+<title>Banco de Copys Autobronceantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#FBF8F5; --panel:#FFFFFF; --panel-2:#F4EDE6;
+  --ink:#1A1512; --muted:#6E635B; --line:#E7DED4;
+  --bronze:#9C5A28; --glow:#C07C22; --deep:#4A2A14;
+  --ok:#2E7D5B; --warn:#A8641A; --stop:#B03A2E;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Bricolage Grotesque Fallback",Georgia,serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+    --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+    --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+    --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+  --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+  --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+  --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:40px 22px 96px}
+
+/* header */
+.hero{display:flex; flex-direction:column; gap:14px; margin-bottom:10px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--bronze);
+}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(32px,6vw,54px);
+  line-height:1.02; letter-spacing:-.028em; margin:0; text-wrap:balance;
+}
+.dek{color:var(--muted); margin:0; max-width:62ch; font-size:18px}
+.gradbar{height:5px; border-radius:3px; margin:26px 0 8px;
+  background:linear-gradient(90deg,#F6E7D6 0%,#E3B380 28%,#C07C22 58%,#8A4A1E 82%,#3D2110 100%)}
+.meta-line{font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:.04em;
+  display:flex; gap:10px; flex-wrap:wrap}
+.meta-line span::after{content:" ·"; color:var(--line)}
+.meta-line span:last-child::after{content:""}
+
+/* toc */
+nav.toc{margin:34px 0 0; padding:18px 20px; background:var(--panel); border:1px solid var(--line); border-radius:10px}
+nav.toc h2{margin:0 0 10px; font-size:12px; font-family:var(--mono); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); border:0; padding:0}
+nav.toc ol{margin:0; padding:0; list-style:none; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:6px 22px; counter-reset:t}
+nav.toc li{counter-increment:t; font-size:15px}
+nav.toc li::before{content:counter(t,decimal-leading-zero); font-family:var(--mono); font-size:11px;
+  color:var(--bronze); margin-right:9px}
+nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{border-bottom-color:var(--bronze)}
+
+/* sections */
+section{margin-top:58px; scroll-margin-top:20px}
+h2{
+  font-family:var(--display); font-weight:600; font-size:27px; letter-spacing:-.02em;
+  margin:0 0 6px; padding-top:20px; border-top:1px solid var(--line); text-wrap:balance;
+}
+h2 .num{font-family:var(--mono); font-size:12px; color:var(--bronze); letter-spacing:.1em;
+  display:block; font-weight:400; margin-bottom:7px}
+h3{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.015em; margin:32px 0 4px}
+.lead{color:var(--muted); margin:0 0 20px; max-width:66ch}
+p{max-width:68ch}
+
+/* copy cards */
+.angle{margin-top:30px}
+.angle-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.badge{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em;
+  color:var(--paper); background:var(--bronze); padding:3px 8px; border-radius:4px}
+.angle-head h3{margin:0}
+.angle-note{color:var(--muted); font-size:15px; margin:0 0 14px; max-width:66ch}
+
+.cards{display:grid; gap:12px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+.card .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); display:flex; justify-content:space-between; gap:12px; margin-bottom:9px}
+.copy{font-family:var(--sans); font-size:15px; line-height:1.5; margin:0}
+.copy .rest{color:var(--muted)}
+.copy .more{font-family:var(--sans); color:var(--muted); font-size:14px}
+.cnt{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--muted)}
+.cnt.over{color:var(--stop); font-weight:600}
+.tok{font-family:var(--mono); font-size:13.5px; background:var(--panel-2); padding:1px 5px; border-radius:4px;
+  color:var(--deep)}
+
+/* compact list grid */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px}
+.line{background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:11px 14px; display:flex; justify-content:space-between; align-items:center; gap:14px}
+.line .txt{font-family:var(--sans); font-size:15px}
+.line .sub{display:block; color:var(--muted); font-size:13px; font-family:var(--body); margin-top:3px}
+
+/* tables */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--panel); margin-top:16px}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:15px; font-family:var(--sans)}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; background:var(--panel-2)}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* callouts */
+.note{border-left:3px solid var(--bronze); background:var(--panel); border-radius:0 9px 9px 0;
+  border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:14px 18px; margin:20px 0}
+.note.warn{border-left-color:var(--warn)}
+.note.stop{border-left-color:var(--stop)}
+.note.ok{border-left-color:var(--ok)}
+.note h4{margin:0 0 5px; font-family:var(--display); font-size:16px; font-weight:600; letter-spacing:-.01em}
+.note p{margin:0; font-size:15px; color:var(--muted)}
+.note p+p{margin-top:8px}
+code{font-family:var(--mono); font-size:13px; background:var(--panel-2); padding:2px 6px; border-radius:4px;
+  color:var(--deep); word-break:break-word}
+pre{font-family:var(--mono); font-size:12.5px; background:var(--panel-2); border:1px solid var(--line);
+  border-radius:9px; padding:14px 16px; overflow-x:auto; line-height:1.6; margin:14px 0}
+ul.plain{padding-left:20px; margin:12px 0; max-width:68ch}
+ul.plain li{margin-bottom:7px}
+ol.steps{padding-left:0; list-style:none; counter-reset:s; margin:18px 0 0}
+ol.steps li{counter-increment:s; position:relative; padding:13px 16px 13px 50px; background:var(--panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:9px}
+ol.steps li::before{content:counter(s); position:absolute; left:15px; top:13px; width:23px; height:23px;
+  border-radius:50%; background:var(--bronze); color:#fff; font-family:var(--mono); font-size:12px;
+  display:grid; place-items:center}
+ol.steps strong{display:block; font-family:var(--display); font-weight:600; letter-spacing:-.01em}
+ol.steps span{color:var(--muted); font-size:15px}
+footer{margin-top:70px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+a{color:var(--bronze)}
+:focus-visible{outline:2px solid var(--bronze); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">B.Wild · Meta Ads · Campaña de catálogo</span>
+  <h1>Banco de copys para autobronceantes</h1>
+  <p class="dek">Textos listos para cargar y testear en una campaña de catálogo sobre el portafolio completo
+  de autobronceantes: 6 ángulos de texto principal, títulos, descripciones, overlays, tarjetas de carrusel
+  y las correcciones de feed que la campaña necesita antes de salir.</p>
+</header>
+<div class="gradbar" role="presentation"></div>
+<div class="meta-line">
+  <span>Cuenta 689161317392308</span><span>Catálogo 676225172035545</span>
+  <span>22 SKUs en stock</span><span>5 formatos</span><span>CLP</span><span>Agosto 2026</span>
+</div>
+<nav class="toc"><h2>Contenido</h2><ol>
+<li><a href="#ctx">Qué entra en el catálogo</a></li>
+<li><a href="#feed">Arreglar el conjunto de productos</a></li>
+<li><a href="#estructura">Estructura del test</a></li>
+<li><a href="#principal">Texto principal · prospecting</a></li>
+<li><a href="#retarget">Texto principal · retargeting</a></li>
+<li><a href="#titulos">Títulos</a></li>
+<li><a href="#desc">Descripciones</a></li>
+<li><a href="#formatos">Copy por formato</a></li>
+<li><a href="#carrusel">Tarjeta de introducción</a></li>
+<li><a href="#overlay">Overlays y CTA</a></li>
+<li><a href="#nombres">Nombres cortos para el feed</a></li>
+<li><a href="#naming">Nomenclatura</a></li>
+<li><a href="#medicion">Qué medir</a></li>
+<li><a href="#qa">QA y políticas</a></li>
+</ol></nav>
+<section id="ctx"><h2><span class="num">01</span>Qué entra en el catálogo</h2>
+<p class="lead">El criterio es la promesa, no la categoría del feed: entra todo lo que da color <em>sin sol</em>, más lo que hace falta para aplicarlo bien. Los aceites y geles bronceadores solares (Carroten, Tanned AF, Bronzed AF) quedan fuera: prometen otra cosa, se usan con sol y en agosto no tienen temporada.</p>
+<div class="scroll"><table>
+<thead><tr><th>Formato</th><th>SKUs en stock</th><th>Rango de precio</th><th>Rol en la campaña</th></tr></thead>
+<tbody>
+<tr><td>Geles transparentes</td><td class="num">3</td><td class="num">$24.990 – $26.990</td><td>Producto ancla, es el que ya tiene demanda probada</td></tr>
+<tr><td>Mousses</td><td class="num">4</td><td class="num">$21.990 – $29.990</td><td>Máxima intensidad; convierte al que ya usa autobronceante</td></tr>
+<tr><td>Rostro (brumas y gotas)</td><td class="num">4</td><td class="num">$19.990 – $23.990</td><td>Ticket de entrada más bajo y menor barrera de uso</td></tr>
+<tr><td>Graduales e hidratantes</td><td class="num">2</td><td class="num">$21.990 – $22.790</td><td>Para quien le teme al autobronceante clásico</td></tr>
+<tr><td>Sets y accesorios</td><td class="num">5</td><td class="num">$13.490 – $29.990</td><td>Sube ticket promedio y mejora el resultado de uso</td></tr>
+<tr><td><strong>Total</strong></td><td class="num"><strong>22</strong></td><td class="num">$13.490 – $29.990</td><td>Volumen suficiente para que el catálogo tenga con qué rotar</td></tr>
+</tbody></table></div>
+<div class="note ok"><h4>Dos marcas, dos precios, un mismo mensaje</h4>
+<p>b.tan está a precio lista y MineTan tiene toda su línea entre 34% y 40% de descuento en el feed
+($49.990 → $29.990 en mousses, $37.990 → $22.790 en gotas y brumas). Eso permite correr el ángulo de precio
+sin tocar los precios de b.tan. <strong>Antes de usar los textos de promo, confirma que esos
+<code>sale_price</code> están vigentes y no son restos de un Cyber anterior.</strong></p></div>
+<div class="note warn"><h4>Tres SKUs sin stock</h4>
+<p>Invisible Glow Super Dark, Spray Tanned AF y Love at First Tan están <code>out of stock</code>. Con el filtro
+de disponibilidad del punto 02 salen solos del set y no queman impresiones.</p></div>
+</section>
+<section id="feed"><h2><span class="num">02</span>Arreglar el conjunto de productos</h2>
+<p class="lead">Esto va primero que el copy, porque es la razón por la que hoy no hay volumen suficiente para la campaña.</p>
+<div class="note stop"><h4>El conjunto que existe hoy solo captura 7 de 22 productos</h4>
+<p>El set dinámico <em>«Autobronceantes en stock»</em> (<code>1370031381601265</code>) filtra por
+<code>product_type = "autobronceante"</code>. En el feed ese valor exacto lo tienen apenas 7 productos: los
+mousses están cargados como <code>Mousse autobronceante</code>, las brumas como
+<code>mist facial autobronceante</code>, las cremas graduales como <code>Crema corporal</code> y los sets como
+<code>Packs</code>. El filtro exacto los deja fuera a todos.</p></div>
+<h3>Regla de filtro corregida</h3>
+<p>Un solo set, dinámico, que se actualiza solo cuando entra o sale stock:</p>
+<pre>{"and":[
+  {"availability":{"eq":"in stock"}},
+  {"or":[
+    {"name":{"i_contains":"autobronceante"}},
+    {"name":{"i_contains":"glow butter"}},
+    {"name":{"i_contains":"guante"}},
+    {"name":{"i_contains":"set glow your own way"}},
+    {"name":{"i_contains":"perfect bronze"}}
+  ]}
+]}</pre>
+<ul class="plain">
+<li><code>i_contains "autobronceante"</code> recoge geles, mousses, brumas, gotas, la crema gradual y el borrador
+Erase Tan Repeat en una sola condición, sin depender de <code>product_type</code>.</li>
+<li>Las tres cláusulas siguientes suman lo que no lleva la palabra en el nombre: Glow Butter, los dos guantes
+aplicadores y los tres sets.</li>
+<li><code>availability in stock</code> saca automáticamente los tres SKUs agotados y los que se agoten durante
+el vuelo, sin tener que editar el anuncio.</li>
+</ul>
+<div class="note"><h4>Nómbralo distinto de los sets que ya existen</h4>
+<p>En el catálogo ya conviven <em>«Autobronceantes»</em> (21, estático), <em>«Autobronceantes en stock»</em> (7)
+y <em>«Bronceadores y Autobronceantes»</em> (27, mezcla solares). Para no confundirlos, algo como
+<code>Autobronceantes · Campaña Catálogo 09-2026</code>.</p></div>
+</section>
+<section id="estructura"><h2><span class="num">03</span>Estructura del test</h2>
+<p class="lead">El algoritmo de Meta hoy premia concentrar señal, no repartirla. Con el nivel de inversión de esta cuenta (el anuncio de mayor gasto de los últimos 90 días acumuló $198.988 CLP), abrir muchos conjuntos parte la señal y ninguno sale de fase de aprendizaje.</p>
+<ol class="steps">
+<li><strong>Una campaña de Ventas con Advantage+ catálogo</strong>
+<span>Optimizada a compra, con el conjunto de productos del punto 02. No dupliques campañas por marca: b.tan y
+MineTan compiten en la misma subasta y se encarecen entre ellas.</span></li>
+<li><strong>Máximo dos conjuntos de anuncios</strong>
+<span>Uno amplio de prospección (sin intereses, dejando que el catálogo haga el trabajo de segmentación) y uno
+de retargeting con visitantes y carros de 14–30 días. Si el retargeting no junta ~50 conversiones semanales,
+déjalo fuera y corre solo el amplio.</span></li>
+<li><strong>Dos o tres anuncios, no quince</strong>
+<span>La variación va dentro del anuncio, no en anuncios separados.</span></li>
+<li><strong>Cinco textos principales, cinco títulos y cinco descripciones por anuncio</strong>
+<span>Meta permuta las combinaciones y aprende cuál le sirve a cada persona. Es la forma más barata de testear
+seis ángulos: entrega más señal por peso invertido que seis anuncios separados peleándose el presupuesto.</span></li>
+<li><strong>Deja correr 7 a 14 días sin editar</strong>
+<span>Cualquier edición del anuncio ganador reinicia el aprendizaje. Si hay que apagar algo, apaga; no edites.</span></li>
+</ol>
+<div class="note warn"><h4>Cómo repartir los 6 ángulos en 2 anuncios</h4>
+<p><strong>Anuncio 1 — categoría:</strong> ángulos A, B y C (formato/intensidad, sin sol, objeción del naranja).
+<strong>Anuncio 2 — comercial:</strong> ángulos D, E y F (prueba social, temporada, precio). Así cada anuncio
+tiene una hipótesis clara y el resultado se puede leer.</p></div>
+</section>
+<section id="principal"><h2><span class="num">04</span>Texto principal · prospección</h2>
+<p class="lead">18 variantes en 6 ángulos. En negro va lo que se ve en el feed móvil antes del «Ver más» (~125 caracteres); en gris, lo que queda escondido. Todo lo decisivo está en la parte visible.</p>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo A</span><h3>Elige tu formato e intensidad</h3></div>
+<p class="angle-note">El ángulo nativo del catálogo: justifica que Meta muestre 22 productos distintos a la misma persona.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>A1 · texto principal</span><span class="cnt">232</span> car.</div>
+<p class="copy">Gel, mousse, bruma o gotas: el bronceado ya no viene en un solo formato. Elige el que calza con tu rutina y decide la<span class="rest"> intensidad, del glow diario al tono más oscuro posible. Sin sol y sin cama solar. Todo el portafolio en bwild.cl ✨</span></p></div>
+<div class="card"><div class="tag">
+<span>A2 · texto principal</span><span class="cnt">200</span> car.</div>
+<p class="copy">¿Bronceado sutil o «volví de Brasil»? El tono lo eliges tú. Geles transparentes, mousses que revelan color en 1 hora, brumas<span class="rest"> para el rostro y gotas para mezclar con tu crema. Desde $19.990 en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>A3 · texto principal</span><span class="cnt">203</span> car.</div>
+<p class="copy">Un portafolio completo de autobronceantes para elegir cómo, dónde y cuánto: cuerpo, rostro, uso diario o máxima intensidad.<span class="rest"> Veganos, cruelty free y sin una hora de sol. Desliza y elige el tuyo 👉 bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo B</span><h3>Bronceado sin sol</h3></div>
+<p class="angle-note">La promesa madre de la categoría. Funciona con público frío que aún no conoce el producto.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>B1 · texto principal</span><span class="cnt">177</span> car.</div>
+<p class="copy">Bronceado sin una sola hora de sol. Sin cama solar, sin quemaduras y sin esperar al verano: el color lo pones tú, el día que<span class="rest"> quieras. Geles, mousses y brumas veganos en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>B2 · texto principal</span><span class="cnt">198</span> car.</div>
+<p class="copy">El sol se va, el daño queda. Por eso el bronceado ahora se aplica: fórmulas que dan color real en horas y se van difuminando<span class="rest"> solas, sin marcas de bikini ni piel quemada. Elige tu formato en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>B3 · texto principal</span><span class="cnt">182</span> car.</div>
+<p class="copy">Broncearte ya no tiene por qué costarte la piel. Hay fórmulas que revelan color en 1 hora y otras que lo construyen de a<span class="rest"> poco, todas sin sol. Cuerpo y rostro desde $19.990 · bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo C</span><h3>Objeción: naranja, manchas y espera</h3></div>
+<p class="angle-note">Ataca el motivo #1 por el que alguien no vuelve a comprar autobronceante. Ideal para público que ya probó otras marcas.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>C1 · texto principal</span><span class="cnt">207</span> car.</div>
+<p class="copy">Si tu último autobronceante te dejó naranja, no era el correcto. Esta generación se aplica pareja, desarrolla un tono café<span class="rest"> natural y se absorbe rápido. Con guante aplicador para un acabado uniforme. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>C2 · texto principal</span><span class="cnt">181</span> car.</div>
+<p class="copy">Tres cosas que ya no tienes que aguantarle a un autobronceante: el tono naranja, las manchas en rodillas y tobillos, y<span class="rest"> esperar horas para poder vestirte. Míralo tú misma en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>C3 · texto principal</span><span class="cnt">171</span> car.</div>
+<p class="copy">El bronceado parejo no depende solo del producto, depende de cómo se aplica: exfoliar, aplicar con guante, dejar actuar. Las<span class="rest"> tres partes están en un mismo pedido. bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo D</span><h3>Prueba social y marcas</h3></div>
+<p class="angle-note">Reutiliza el gancho que hoy rinde en la cuenta («#1 en Amazon EE.UU.»), ahora a nivel de portafolio.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>D1 · texto principal</span><span class="cnt">184</span> car.</div>
+<p class="copy">El gel autobronceante #1 en Amazon EE.UU. ya está en Chile 🇺🇸🇨🇱 y no viene solo: b.tan y MineTan, con mousses, brumas<span class="rest"> faciales y gotas para mezclar. Vegano y cruelty free en bwild.cl ✨</span></p></div>
+<div class="card"><div class="tag">
+<span>D2 · texto principal</span><span class="cnt">154</span> car.</div>
+<p class="copy">Las dos marcas de autobronceante que todas piden, en un mismo lugar: b.tan y MineTan, con despacho a todo Chile. Cuerpo y<span class="rest"> rostro desde $19.990 en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>D3 · texto principal</span><span class="cnt">156</span> car.</div>
+<p class="copy">«Pensé que iba a quedar naranja y no pasó.» Es lo que más se repite entre quienes lo prueban. Geles, mousses y gotas<span class="rest"> veganas, sin sol de por medio. bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo E</span><h3>Temporada: primavera y el 18</h3></div>
+<p class="angle-note">Ancla la compra a una fecha concreta. Es el ángulo con más urgencia real en agosto–septiembre.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>E1 · texto principal</span><span class="cnt">161</span> car.</div>
+<p class="copy">Faltan semanas para el 18 y las piernas ya salen a la calle. El bronceado no espera al verano: se aplica hoy y amanece<span class="rest"> listo. Geles, mousses y brumas en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>E2 · texto principal</span><span class="cnt">147</span> car.</div>
+<p class="copy">Primavera con piel de enero. Elige tu formato de autobronceante y llega al primer asado del año con color, sin haber tomado<span class="rest"> nada de sol. bwild.cl ✨</span></p></div>
+<div class="card"><div class="tag">
+<span>E3 · texto principal</span><span class="cnt">176</span> car.</div>
+<p class="copy">Empieza la temporada de vestidos, shorts y fotos. Un mousse de 1 hora o unas gotas en tu crema de noche y el color aparece<span class="rest"> sin que hayas visto el sol. Desde $19.990 en bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo F</span><h3>Precio y ahorro</h3></div>
+<p class="angle-note">Solo mientras la promo de MineTan esté vigente. Es el ángulo que suele ganar en retargeting frío-tibio.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>F1 · texto principal</span><span class="cnt">156</span> car.</div>
+<p class="copy">MineTan con hasta 40% de descuento: mousses, gotas faciales y geles transparentes desde $22.790. Stock limitado y despacho a<span class="rest"> todo Chile. Míralos en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>F2 · texto principal</span><span class="cnt">164</span> car.</div>
+<p class="copy">El set sale menos que comprar por separado: autobronceante + guante aplicador desde $27.990, listo para aplicar bien desde<span class="rest"> la primera vez. Elige el tuyo en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>F3 · texto principal</span><span class="cnt">115</span> car.</div>
+<p class="copy">Autobronceantes para cuerpo y rostro desde $19.990. Elige formato, elige intensidad y recíbelo en tu casa. bwild.cl<span class="rest"></span></p></div>
+</div></div>
+</section>
+<section id="retarget"><h2><span class="num">05</span>Texto principal · retargeting</h2>
+<p class="lead">Más cortos, porque a quien ya vio el producto no hay que explicarle la categoría. Todos caben completos en el feed sin cortarse.</p>
+<div class="cards">
+<div class="card"><div class="tag">
+<span>Carro abandonado</span><span class="cnt">101</span> car.</div><p class="copy">Lo dejaste en el carro y el 18 no se mueve de fecha 😅 Tu autobronceante sigue esperándote en bwild.cl</p></div>
+<div class="card"><div class="tag">
+<span>Urgencia de uso</span><span class="cnt">84</span> car.</div><p class="copy">Todavía estás a tiempo: se aplica hoy y amanece listo. Termina tu compra en bwild.cl</p></div>
+<div class="card"><div class="tag">
+<span>Promo vigente</span><span class="cnt">89</span> car.</div><p class="copy">Seguimos guardando tu tono. MineTan con hasta 40% OFF y stock limitado. Vuelve a bwild.cl</p></div>
+<div class="card"><div class="tag">
+<span>Duda de elección</span><span class="cnt">144</span> car.</div><p class="copy">¿Te quedaste pensando cuál elegir? Si es tu primera vez, parte por el mousse de 1 hora o por el gel transparente. Los dos te esperan en bwild.cl</p></div>
+<div class="card"><div class="tag">
+<span>Última llamada</span><span class="cnt">76</span> car.</div><p class="copy">Última llamada antes de que se agote tu tono. Completa tu pedido en bwild.cl</p></div>
+<div class="card"><div class="tag">
+<span>Order bump</span><span class="cnt">114</span> car.</div><p class="copy">Suma el guante aplicador y olvídate de las palmas naranjas. Está por $13.490 junto a tu autobronceante en bwild.cl</p></div>
+</div>
+<div class="note"><h4>Una condición para el ángulo de carro abandonado</h4>
+<p>«Lo dejaste en el carro» solo debe salir al público que efectivamente agregó al carro. Si el conjunto mezcla
+visitantes de producto con carros, usa la versión «Duda de elección», que funciona para ambos.</p></div>
+</section>
+<section id="titulos"><h2><span class="num">06</span>Títulos</h2>
+<p class="lead">Meta recomienda hasta 40 caracteres antes de cortar. En catálogo el título por defecto es el nombre del producto, y varios de estos nombres pasan los 60 caracteres: por eso conviene testear títulos fijos contra el token corto del punto 11.</p>
+<h3>Fijos</h3><div class="grid2">
+<div class="line"><span class="txt">Bronceado sin sol</span><span class="cnt">17/40</span></div>
+<div class="line"><span class="txt">Elige tu formato e intensidad</span><span class="cnt">29/40</span></div>
+<div class="line"><span class="txt">Del glow diario al más oscuro</span><span class="cnt">29/40</span></div>
+<div class="line"><span class="txt">Color real, cero cama solar</span><span class="cnt">27/40</span></div>
+<div class="line"><span class="txt">Sin sol. Sin naranja. Sin espera.</span><span class="cnt">33/40</span></div>
+<div class="line"><span class="txt">Cuerpo y rostro, tú eliges</span><span class="cnt">26/40</span></div>
+<div class="line"><span class="txt">Tu bronceado, a tu intensidad</span><span class="cnt">29/40</span></div>
+<div class="line"><span class="txt">Vegano y cruelty free</span><span class="cnt">21/40</span></div>
+<div class="line"><span class="txt">Se aplica hoy, amanece listo</span><span class="cnt">28/40</span></div>
+<div class="line"><span class="txt">Hasta 40% OFF en MineTan</span><span class="cnt">24/40</span></div>
+<div class="line"><span class="txt">Desde $19.990 con despacho</span><span class="cnt">26/40</span></div>
+<div class="line"><span class="txt">Autobronceantes b.tan y MineTan</span><span class="cnt">31/40</span></div>
+<div class="line"><span class="txt">Llega al 18 con color</span><span class="cnt">21/40</span></div>
+<div class="line"><span class="txt">Gel, mousse, bruma o gotas</span><span class="cnt">26/40</span></div>
+</div>
+<h3>Con tokens dinámicos</h3><div class="cards">
+<div class="card"><div class="tag"><span>Título dinámico</span><span>largo variable</span></div>
+<p class="copy"><span class="tok">{{product.name}}</span></p>
+<p class="copy more" style="margin-top:8px">Default de Meta. Cuidado: varios nombres pasan los 60 caracteres y se cortan.</p></div>
+<div class="card"><div class="tag"><span>Título dinámico</span><span>largo variable</span></div>
+<p class="copy"><span class="tok">{{product.custom_label_0}}</span></p>
+<p class="copy more" style="margin-top:8px">Recomendado: nombre corto cargado por regla de feed (ver sección Feed).</p></div>
+<div class="card"><div class="tag"><span>Título dinámico</span><span>largo variable</span></div>
+<p class="copy"><span class="tok">{{product.brand}} · Bronceado sin sol</span></p>
+<p class="copy more" style="margin-top:8px">Solo 2 marcas en el set, así que rinde bien y siempre calza.</p></div>
+<div class="card"><div class="tag"><span>Título dinámico</span><span>largo variable</span></div>
+<p class="copy"><span class="tok">{{product.custom_label_0}} · {{product.price}}</span></p>
+<p class="copy more" style="margin-top:8px">Precio visible en el título; sirve para el ángulo de promo.</p></div>
+<div class="card"><div class="tag"><span>Título dinámico</span><span>largo variable</span></div>
+<p class="copy"><span class="tok">{{product.brand}} desde {{product.price}}</span></p>
+<p class="copy more" style="margin-top:8px">Combina autoridad de marca y precio en una línea.</p></div>
+</div>
+<div class="note warn"><h4>El token largo se corta</h4>
+<p><code>{{product.name}}</code> renderiza «Gel Autobronceante Glow Your Own Way Next Level 473 ml - B.TAN»:
+62 caracteres para un espacio de 40. Se ve cortado a media palabra y se pierde justamente el diferenciador
+(«Next Level»). El punto 11 lo resuelve.</p></div>
+</section>
+<section id="desc"><h2><span class="num">07</span>Descripciones</h2>
+<p class="lead">Máximo 30 caracteres. En varias ubicaciones Meta reemplaza la descripción por el precio, así que no pongas acá nada que sea imprescindible para entender el anuncio.</p>
+<div class="grid2">
+<div class="line"><span class="txt">Despacho a todo Chile</span><span class="cnt">21/30</span></div>
+<div class="line"><span class="txt">Vegano · cruelty free</span><span class="cnt">21/30</span></div>
+<div class="line"><span class="txt">Desde $19.990</span><span class="cnt">13/30</span></div>
+<div class="line"><span class="txt">Sin sol ni cama solar</span><span class="cnt">21/30</span></div>
+<div class="line"><span class="txt">Hasta 40% OFF en MineTan</span><span class="cnt">24/30</span></div>
+<div class="line"><span class="txt">Elige tu intensidad</span><span class="cnt">19/30</span></div>
+<div class="line"><span class="txt">Color en 1 hora</span><span class="cnt">15/30</span></div>
+<div class="line"><span class="txt">Cuerpo y rostro</span><span class="cnt">15/30</span></div>
+<div class="line"><span class="txt">Con guante aplicador</span><span class="cnt">20/30</span></div>
+<div class="line"><span class="txt">Se absorbe rápido</span><span class="cnt">17/30</span></div>
+<div class="line"><span class="txt">b.tan · MineTan</span><span class="cnt">15/30</span></div>
+<div class="line"><span class="txt"><span class="tok">{{product.price}}</span></span><span class="cnt">17/30</span></div>
+</div></section>
+<section id="formatos"><h2><span class="num">08</span>Copy por formato</h2>
+<p class="lead">Si más adelante el volumen permite abrir conjuntos por formato, cada bloque ya trae su texto principal y su título. Mientras tanto sirven como variantes extra dentro del anuncio de categoría.</p>
+<div class="cards">
+<div class="card"><div class="tag">
+<span>Geles transparentes · 3 SKUs · $24.990 – $26.990</span><span class="cnt">165</span> car.</div>
+<p class="copy">Transparente, se absorbe rápido y sin ese rato incómodo esperando para vestirte. Elige el tono: original, Next Level más oscuro o Shimmer con brillo dorado. bwild.cl</p>
+<p class="copy more" style="margin-top:9px"><strong>Título:</strong> Gel transparente, color real <span class="cnt">28/40</span></p></div>
+<div class="card"><div class="tag">
+<span>Mousses · 4 SKUs · $21.990 – $29.990</span><span class="cnt">145</span> car.</div>
+<p class="copy">Un mousse, una hora, el bronceado más oscuro que vas a lograr sin sol. Se aplica con guante, se difumina solo y no deja subtono naranja. bwild.cl</p>
+<p class="copy more" style="margin-top:9px"><strong>Título:</strong> Bronceado oscuro en 1 hora <span class="cnt">26/40</span></p></div>
+<div class="card"><div class="tag">
+<span>Rostro: brumas y gotas · 4 SKUs · $19.990 – $23.990</span><span class="cnt">156</span> car.</div>
+<p class="copy">El bronceado facial más fácil de todos: una bruma que se rocía y listo, o unas gotas que mezclas con tu crema de noche. Tú controlas la intensidad. bwild.cl</p>
+<p class="copy more" style="margin-top:9px"><strong>Título:</strong> Glow facial sin base ni sol <span class="cnt">27/40</span></p></div>
+<div class="card"><div class="tag">
+<span>Graduales y hidratantes · 2 SKUs · $21.990 – $22.790</span><span class="cnt">139</span> car.</div>
+<p class="copy">Hidrata de día, broncea de a poco. Sin tiempo de desarrollo, sin planificar cuándo ducharte: se usa como cualquier crema corporal. bwild.cl</p>
+<p class="copy more" style="margin-top:9px"><strong>Título:</strong> Crema que broncea de a poco <span class="cnt">27/40</span></p></div>
+<div class="card"><div class="tag">
+<span>Sets y accesorios · 5 SKUs · $13.490 – $29.990</span><span class="cnt">151</span> car.</div>
+<p class="copy">El bronceado parejo empieza por el guante. Sets con autobronceante + aplicador desde $27.990, y el borrador para volver a cero cuando quieras. bwild.cl</p>
+<p class="copy more" style="margin-top:9px"><strong>Título:</strong> Set completo desde $27.990 <span class="cnt">26/40</span></p></div>
+</div></section>
+<section id="carrusel"><h2><span class="num">09</span>Tarjeta de introducción del carrusel</h2>
+<p class="lead">La tarjeta fija que va antes de los productos. Su trabajo es uno solo: dar la razón para deslizar.</p>
+<div class="cards">
+<div class="card"><div class="tag"><span>Tarjeta de introducción</span>
+<span>título 18/40 · desc. 24/30</span></div>
+<p class="copy"><strong>Elige tu bronceado</strong><br>22 productos, 5 formatos</p>
+<p class="copy more" style="margin-top:8px">La más honesta con lo que viene después.</p></div>
+<div class="card"><div class="tag"><span>Tarjeta de introducción</span>
+<span>título 17/40 · desc. 23/30</span></div>
+<p class="copy"><strong>Bronceado sin sol</strong><br>Desliza y elige el tuyo</p>
+<p class="copy more" style="margin-top:8px">Neutra, sirve todo el año.</p></div>
+<div class="card"><div class="tag"><span>Tarjeta de introducción</span>
+<span>título 32/40 · desc. 13/30</span></div>
+<p class="copy"><strong>¿Primera vez con autobronceante?</strong><br>Parte por acá</p>
+<p class="copy more" style="margin-top:8px">Baja la barrera del que nunca compró.</p></div>
+<div class="card"><div class="tag"><span>Tarjeta de introducción</span>
+<span>título 24/40 · desc. 14/30</span></div>
+<p class="copy"><strong>Hasta 40% OFF en MineTan</strong><br>Stock limitado</p>
+<p class="copy more" style="margin-top:8px">Solo mientras la promo esté vigente.</p></div>
+</div>
+<div class="note"><h4>Ordena las tarjetas por rendimiento, no a mano</h4>
+<p>Deja activado el orden dinámico de tarjetas para que Meta ponga primero el producto con más probabilidad de
+compra para cada persona. Fijar el orden manualmente en un catálogo de 22 SKUs es apostar contra el algoritmo.</p></div>
+</section>
+<section id="overlay"><h2><span class="num">10</span>Overlays y botón</h2>
+<p class="lead">El overlay es texto que Meta pinta sobre la imagen del producto. Es el único elemento del anuncio que se lee sin leer nada.</p>
+<div class="scroll"><table><thead><tr><th>Tipo</th><th>Texto</th><th>Cuándo usarlo</th></tr></thead><tbody>
+<tr><td>Descuento porcentual</td><td><strong>40% OFF</strong></td><td>Solo para el conjunto MineTan; evita aplicarlo a b.tan que no está en promo.</td></tr>
+<tr><td>Precio</td><td><code>{{product.price}}</code></td><td>Overlay nativo de Meta. Es el que menos riesgo tiene de quedar desactualizado.</td></tr>
+<tr><td>Ahorro</td><td><strong>Ahorra $20.000</strong></td><td>Requiere que sale_price esté vigente en el feed.</td></tr>
+<tr><td>Envío</td><td><strong>Despacho a todo Chile</strong></td><td>Neutro, sirve para todo el catálogo y no caduca.</td></tr>
+<tr><td>Escasez</td><td><strong>Últimas unidades</strong></td><td>Usar solo con regla de inventario real; si no, es riesgo de política.</td></tr>
+</tbody></table></div>
+<h3>Botón de llamada a la acción</h3>
+<div class="scroll"><table><thead><tr><th>Botón</th><th>Valor</th><th>Nota</th></tr></thead><tbody>
+<tr><td><strong>Comprar</strong></td><td class="num">SHOP_NOW</td><td>Primera opción para catálogo con objetivo de ventas.</td></tr>
+<tr><td><strong>Ver más</strong></td><td class="num">LEARN_MORE</td><td>Es el que está corriendo hoy (WATCH_MORE / Ver más). Sirve como control del test.</td></tr>
+<tr><td><strong>Ver oferta</strong></td><td class="num">GET_OFFER</td><td>Solo mientras la promo de MineTan esté activa.</td></tr>
+</tbody></table></div>
+<div class="note warn"><h4>Los anuncios de catálogo activos usan «Ver más»</h4>
+<p>Las creatividades de catálogo que corren hoy tienen <code>WATCH_MORE</code> como llamada a la acción. Para una
+campaña de ventas eso pide un clic de curiosidad, no de compra: vale la pena testear <code>SHOP_NOW</code>
+contra él como primera variable.</p></div>
+</section>
+<section id="nombres"><h2><span class="num">11</span>Nombres cortos para el feed</h2>
+<p class="lead">El campo <code>custom_label_0</code> está vacío en los 69 productos del catálogo. Cargarlo con un nombre corto permite usar <code>{{product.custom_label_0}}</code> como título y dejar de perder el diferenciador por corte de texto. Se hace con una regla de feed, sin tocar Shopify.</p>
+<div class="scroll"><table><thead><tr><th>SKU</th><th>Nombre en el feed</th><th>Nombre corto propuesto</th><th>Car.</th></tr></thead><tbody>
+<tr><td class="num">41974063104105</td><td>Gel Autobronceante Glow Your Own Way 473 ml - B.TAN <span class="cnt">51</span></td><td><strong>Gel Glow Your Own Way · Medio</strong></td><td class="num">29</td></tr>
+<tr><td class="num">41974063399017</td><td>Gel Autobronceante Glow Your Own Way Next Level 473 ml - B.TAN <span class="cnt">62</span></td><td><strong>Gel Glow Your Own Way · Next Level</strong></td><td class="num">34</td></tr>
+<tr><td class="num">42757012062313</td><td>Gel Autobronceante Glow Your Own Way Shimmer 473 ml - B.TAN <span class="cnt">59</span></td><td><strong>Gel Glow Your Own Way · Shimmer</strong></td><td class="num">31</td></tr>
+<tr><td class="num">42545150754921</td><td>Tanned AF - Mousse Autobronceante 200 ML B.TAN <span class="cnt">46</span></td><td><strong>Mousse Tanned AF · Oscuro</strong></td><td class="num">25</td></tr>
+<tr><td class="num">43142733725801</td><td>I Want The Darkest Tan Possible - Mousse Autobronceante 200 ML B.TAN <span class="cnt">68</span></td><td><strong>Mousse Darkest Tan · Muy oscuro</strong></td><td class="num">31</td></tr>
+<tr><td class="num">41974060482665</td><td>Bruma Facial Autobronceante Gimme The Glow Down 190 ML - B.TAN <span class="cnt">62</span></td><td><strong>Bruma facial Gimme The Glow Down</strong></td><td class="num">32</td></tr>
+<tr><td class="num">42545176772713</td><td>Just Glow With It - Gotas Faciales Autobronceantes 30 ml <span class="cnt">56</span></td><td><strong>Gotas faciales Just Glow With It</strong></td><td class="num">32</td></tr>
+<tr><td class="num">42545175134313</td><td>Plump up the bronze - Crema gradual autobronceante 236 ML B.TAN <span class="cnt">63</span></td><td><strong>Crema gradual Plump Up The Bronze</strong></td><td class="num">33</td></tr>
+<tr><td class="num">42645980250217</td><td>Invisible Glow Dark - Gel Autobronceante Medio 237 ML MineTan <span class="cnt">61</span></td><td><strong>Gel Invisible Glow · Medio</strong></td><td class="num">26</td></tr>
+<tr><td class="num">42645905834089</td><td>Mousse Autobronceante Moroccan 200 ML MineTan <span class="cnt">45</span></td><td><strong>Mousse Moroccan · Argán</strong></td><td class="num">23</td></tr>
+<tr><td class="num">42645898002537</td><td>Mousse Autobronceante Coconut Water 200 ML MineTan <span class="cnt">50</span></td><td><strong>Mousse Coconut Water</strong></td><td class="num">20</td></tr>
+<tr><td class="num">42645902131305</td><td>Mousse Autobronceante Wonder Tan 200 ML MineTan <span class="cnt">47</span></td><td><strong>Mousse Wonder Tan · Vitaminas</strong></td><td class="num">29</td></tr>
+<tr><td class="num">42645948825705</td><td>Glow Butter - Manteca Corporal Autobronceante 198 ML MineTan <span class="cnt">60</span></td><td><strong>Glow Butter · Manteca bronceadora</strong></td><td class="num">33</td></tr>
+<tr><td class="num">42645971763305</td><td>Bruma Facial Autobronceante Rose - Agua de Rosas 100 ML MineTan <span class="cnt">63</span></td><td><strong>Bruma facial Rose</strong></td><td class="num">17</td></tr>
+<tr><td class="num">42645958754409</td><td>Illuminating Glow Drops - Gotas Faciales Autobronceantes 40 ML MineTan <span class="cnt">70</span></td><td><strong>Gotas Illuminating Glow</strong></td><td class="num">23</td></tr>
+<tr><td class="num">42645966127209</td><td>Bronzed Drops - Gotas Faciales Autobronceantes Iluminadoras 40 ML MineTan <span class="cnt">73</span></td><td><strong>Gotas Bronzed Drops</strong></td><td class="num">19</td></tr>
+</tbody></table></div>
+<div class="note ok"><h4>Beneficio secundario</h4>
+<p>Un nombre limpio también mejora el emparejamiento del catálogo con las señales del píxel y la calidad del
+diagnóstico. Además, el catálogo hoy reporta productos bloqueados en dos conjuntos (incluido «Mine tan»):
+conviene revisar el diagnóstico antes de lanzar, porque un producto bloqueado no se entrega aunque el copy
+sea perfecto.</p></div>
+</section>
+<section id="naming"><h2><span class="num">12</span>Nomenclatura</h2>
+<p class="lead">Para poder leer el test después sin adivinar. Los nombres actuales de la cuenta («Cyber General», «Catálogo Secuencia 1») no dicen qué se estaba probando.</p>
+<pre>Campaña   CAT_Autobronceantes_Ventas_2609
+Conjunto  CAT_Amplio_ADV+_CL_18-55
+          CAT_Retgt_VC-ATC-30d_CL_18-55
+Anuncio   AD_Categoria_A-B-C_v1
+          AD_Comercial_D-E-F_v1</pre>
+<ul class="plain">
+<li>La letra del ángulo en el nombre del anuncio permite cruzar resultados con este documento sin abrir la
+creatividad.</li>
+<li>Sube el número de versión (<code>v2</code>) al cambiar textos, en un anuncio nuevo. Editar el anuncio
+existente reinicia el aprendizaje y mezcla los datos de las dos versiones.</li>
+</ul></section>
+<section id="medicion"><h2><span class="num">13</span>Qué medir</h2>
+<p class="lead">Referencias tomadas de los propios anuncios de la cuenta en los últimos 90 días, para no fijar metas inventadas.</p>
+<div class="scroll"><table>
+<thead><tr><th>Métrica</th><th>Referencia de la cuenta</th><th>Meta del test</th></tr></thead>
+<tbody>
+<tr><td>ROAS de compra</td><td class="num">2,03 · «Catálogo Cyber»</td><td class="num">&gt; 2,0</td></tr>
+<tr><td>CTR</td><td class="num">3,83% · «Catálogo Cyber»<br>2,39% · «Catálogo Secuencia 1»</td><td class="num">&gt; 2,4%</td></tr>
+<tr><td>CPM</td><td class="num">$3.273 – $7.117 CLP</td><td class="num">&lt; $6.000 CLP</td></tr>
+<tr><td>Decisión</td><td>—</td><td class="num">7–14 días o ~50 compras</td></tr>
+</tbody></table></div>
+<div class="note warn"><h4>La referencia viene de una semana de Cyber</h4>
+<p>El ROAS de 2,03 y el CTR de 3,83% se lograron en periodo promocional, con intención de compra inflada. Para
+una campaña siempre activa en agosto, tomar 2,0 como piso es exigente pero correcto; si el primer tramo cae a
+1,4–1,6 no es motivo para apagar antes de los 7 días.</p></div>
+<ul class="plain">
+<li>Lee el rendimiento <strong>por combinación de texto</strong> en el desglose de recursos creativos, no solo
+por anuncio: es donde se ve qué ángulo está ganando.</li>
+<li>Mira también el desglose por producto. Si el 80% de las compras se concentra en 3 SKUs, el siguiente test
+es un conjunto de productos más chico, no un copy nuevo.</li>
+<li>Apaga ángulos, no anuncios completos: sacar los dos textos peores y dejar correr es más barato que
+relanzar.</li>
+</ul></section>
+<section id="qa"><h2><span class="num">14</span>QA y políticas</h2>
+<p class="lead">Revisar antes de cargar. Las dos primeras son causa habitual de rechazo en categoría belleza.</p>
+<ol class="steps">
+<li><strong>Nada que suene a atributo personal</strong>
+<span>Meta rechaza el copy que da a entender que conoce una característica del usuario. «¿Tienes la piel muy
+pálida?» se rechaza; «bronceado sin sol» no. Los 18 textos de este documento están escritos con esa regla:
+hablan del producto y de la categoría, nunca del cuerpo de quien lee.</span></li>
+<li><strong>Sin antes y después</strong>
+<span>El comparativo de piel antes/después está restringido en salud y belleza. Si la creatividad lo trae, se
+cambia por una demostración de aplicación o de resultado final solo.</span></li>
+<li><strong>Claims que necesitan respaldo antes de salir</strong>
+<span>«#1 en Amazon EE.UU.» (pedir captura o fecha del ranking a la marca), «hasta 40% OFF» (que el
+<code>sale_price</code> del feed esté vigente), «vegano y cruelty free» (certificación de b.tan y MineTan) y la
+reseña del ángulo D3 (usar solo si existe textual en Judge.me; si no, se elimina esa variante).</span></li>
+<li><strong>Claims que no se están haciendo, a propósito</strong>
+<span>Ningún texto promete que no mancha la ropa ni las sábanas: en el feed esa propiedad solo está declarada
+para el gel Shimmer («resistente a las transferencias»). Tampoco se promete ausencia de olor, que la marca
+declara únicamente para Tanned AF. Si marketing confirma que aplica a toda la línea, son dos ángulos más para
+testear.</span></li>
+<li><strong>Precio, stock y enlace</strong>
+<span>Los precios del texto ($19.990 de entrada, $27.990 en sets, $22.790 en MineTan) tienen que coincidir con
+el feed el día del lanzamiento. Si cambian, es preferible sacar el precio del copy y dejarlo en el overlay
+dinámico, que se actualiza solo.</span></li>
+<li><strong>Ortografía y ubicaciones</strong>
+<span>Revisar los textos en la vista previa de Reels y Stories, donde se corta bastante antes que en el feed, y
+confirmar que las comillas angulares y los emoji se rendericen bien en Android.</span></li>
+</ol>
+</section>
+<footer>
+Documento de trabajo · Datos de catálogo y rendimiento leídos de la cuenta B Wild Brands (689161317392308) y
+del catálogo Shopify 676225172035545 el 27 de agosto de 2026. Los textos son propuestas para testear, no
+copys aprobados: el punto 14 lista lo que hay que confirmar antes de publicar.
+</footer>
+</div>

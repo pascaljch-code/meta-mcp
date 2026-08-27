@@ -8,6 +8,7 @@ estático en Vercel.
 | Ruta | Descripción |
 |---|---|
 | `index.html` | Reporte de rendimiento — Nativo El Plomo, julio 2026 |
+| `copys-autobronceantes.html` | Banco de copys — campaña de catálogo de autobronceantes, B.Wild |
 | `vercel.json` | Configuración de Vercel (URLs limpias, cabeceras `noindex`) |
 
 ## Despliegue
