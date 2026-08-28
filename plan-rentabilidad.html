@@ -172,6 +172,44 @@ td.pos{color:var(--ok);font-weight:600} td.neg{color:var(--stop);font-weight:600
   padding-top:2px}
 .day .b strong{display:block;font-family:var(--display);font-size:16.5px;font-weight:600;margin-bottom:3px}
 .day .b span{color:var(--muted);font-size:15px}
+.tree{font-family:var(--mono);font-size:13px;line-height:1.5;background:var(--panel);
+  border:1px solid var(--line);border-radius:11px;padding:20px 22px;overflow-x:auto;margin:18px 0}
+.tree .lvl{padding-left:26px;border-left:1px solid var(--line);margin-left:9px}
+.tree .node{margin:14px 0 0}
+.tree .hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.tree .nm{font-weight:600;font-size:13.5px;letter-spacing:-.01em}
+.tree .pill{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;
+  border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tree .pill.on{color:var(--paper);background:var(--ok);border-color:var(--ok)}
+.tree .pill.later{color:var(--paper);background:var(--bronze);border-color:var(--bronze)}
+.tree .pill.off{color:var(--paper);background:var(--stop);border-color:var(--stop)}
+.tree .bud{font-family:var(--mono);color:var(--bronze);font-size:13px;font-variant-numeric:tabular-nums}
+.tree .attr{color:var(--muted);font-size:12.5px;margin-top:5px}
+.tree .attr b{color:var(--ink);font-weight:600}
+.tree .txts{margin:8px 0 0;padding:10px 12px;background:var(--panel-2);border-radius:7px;
+  font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--muted)}
+.tree .txts i{font-family:var(--mono);font-style:normal;color:var(--bronze);margin-right:7px}
+.tree .txts div+div{margin-top:5px}
+.tree .kind{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tree{font-family:var(--mono);font-size:13px;line-height:1.5;background:var(--panel);
+  border:1px solid var(--line);border-radius:11px;padding:20px 22px;overflow-x:auto;margin:18px 0}
+.tree .lvl{padding-left:26px;border-left:1px solid var(--line);margin-left:9px}
+.tree .node{margin:14px 0 0}
+.tree .hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.tree .nm{font-weight:600;font-size:13.5px;letter-spacing:-.01em}
+.tree .pill{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:4px;
+  border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tree .pill.on{color:var(--paper);background:var(--ok);border-color:var(--ok)}
+.tree .pill.later{color:var(--paper);background:var(--bronze);border-color:var(--bronze)}
+.tree .pill.off{color:var(--paper);background:var(--stop);border-color:var(--stop)}
+.tree .bud{font-family:var(--mono);color:var(--bronze);font-size:13px;font-variant-numeric:tabular-nums}
+.tree .attr{color:var(--muted);font-size:12.5px;margin-top:5px}
+.tree .attr b{color:var(--ink);font-weight:600}
+.tree .txts{margin:8px 0 0;padding:10px 12px;background:var(--panel-2);border-radius:7px;
+  font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--muted)}
+.tree .txts i{font-family:var(--mono);font-style:normal;color:var(--bronze);margin-right:7px}
+.tree .txts div+div{margin-top:5px}
+.tree .kind{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 </style>
 <div class="wrap">
 <header class="hero">
@@ -271,6 +309,204 @@ Aun así, conviene verificar en el primer día que las compras nuevas siguen lle
 </section>
 <section id="estructura"><h2><span class="num">04</span>La estructura nueva</h2>
 <p class="lead">Tres campañas, no siete. Y solo una de ellas está siempre encendida.</p>
+<figure><p class="fig-title" style="font-family:var(--display);font-weight:600;font-size:17px;margin:0 0 3px">
+Dónde se reparte el presupuesto</p>
+<p class="fig-sub" style="font-size:13.5px;color:var(--muted);margin:0 0 14px">
+Hoy el reparto ocurre antes de la subasta y lo decides tú. En la propuesta ocurre dentro del conjunto y lo
+decide el valor de cada compra.</p>
+<svg viewBox="0 0 940 452" role="img" style="width:100%;height:auto;overflow:visible"
+ aria-label="Comparación: hoy el presupuesto se divide en siete campañas que no juntan señal; en la propuesta un solo presupuesto entra a una campaña y se reparte entre dos anuncios según el valor de conversión">
+<defs>
+<marker id="ar" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="7" orient="auto">
+<polygon points="0,0 10,4 0,8" fill="currentColor"/></marker>
+<marker id="arb" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="7" orient="auto">
+<polygon points="0,0 10,4 0,8" fill="#C07C22"/></marker>
+</defs>
+
+<text x="20" y="20" font-size="12" font-family="monospace" letter-spacing="1.4" fill="currentColor" opacity=".6">HOY</text>
+<text x="510" y="20" font-size="12" font-family="monospace" letter-spacing="1.4" fill="#C07C22">PROPUESTO</text>
+<line x1="470" y1="8" x2="470" y2="444" stroke="currentColor" stroke-width="1" opacity=".18"/>
+
+<rect x="20" y="40" width="128" height="42" rx="7" fill="none" stroke="currentColor" stroke-width="1.5"/>
+<text x="84" y="58" text-anchor="middle" font-size="12" fill="currentColor">Presupuesto</text>
+<text x="84" y="73" text-anchor="middle" font-size="13" font-family="monospace" fill="currentColor">$30.500/día</text>
+<text x="84" y="100" text-anchor="middle" font-size="11" fill="currentColor" opacity=".65">lo divides tú</text>
+
+<rect x="240" y="34" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="51" font-size="11.5" fill="currentColor">Interacción IG · 0 compras</text>
+<rect x="240" y="66" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="83" font-size="11.5" fill="currentColor">Catálogo · 2,04</text>
+<rect x="240" y="98" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="115" font-size="11.5" fill="currentColor">BTAN · 1,59</text>
+<rect x="240" y="130" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="147" font-size="11.5" fill="currentColor">BFRESH · 1,34</text>
+<rect x="240" y="162" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="179" font-size="11.5" fill="currentColor">Mousse · 0 compras</text>
+<rect x="240" y="194" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="211" font-size="11.5" fill="currentColor">Geles · 0 compras</text>
+<rect x="240" y="226" width="212" height="26" rx="5" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>
+<text x="250" y="243" font-size="11.5" fill="currentColor">Gráficas · 1,69</text>
+
+<g stroke="currentColor" stroke-width="1.1" fill="none" marker-end="url(#ar)" opacity=".55">
+<path d="M148 61 C 195 61, 195 47, 236 47"/><path d="M148 61 C 195 61, 195 79, 236 79"/>
+<path d="M148 61 C 200 61, 200 111, 236 111"/><path d="M148 61 C 205 61, 205 143, 236 143"/>
+<path d="M148 61 C 210 61, 210 175, 236 175"/><path d="M148 61 C 215 61, 215 207, 236 207"/>
+<path d="M148 61 C 220 61, 220 239, 236 239"/>
+</g>
+<text x="192" y="272" text-anchor="middle" font-size="10.5" font-family="monospace" fill="currentColor" opacity=".6">7 ramas</text>
+
+<line x1="240" y1="292" x2="452" y2="292" stroke="currentColor" stroke-width="1" opacity=".25"/>
+<text x="240" y="312" font-size="11.5" fill="currentColor">8,4 compras por semana</text>
+<text x="240" y="330" font-size="11.5" fill="currentColor">÷ 7 campañas</text>
+<text x="240" y="352" font-size="13" font-family="monospace" fill="currentColor">= 1,4 cada una</text>
+<text x="240" y="374" font-size="11.5" fill="currentColor" opacity=".7">Meta necesita ~50</text>
+<text x="240" y="392" font-size="11.5" fill="currentColor" opacity=".7">Ninguna sale de aprendizaje</text>
+<text x="240" y="422" font-size="11.5" fill="currentColor" opacity=".7">Y las 7 compiten entre sí:</text>
+<text x="240" y="440" font-size="11.5" fill="currentColor" opacity=".7">5.057 personas solapadas</text>
+
+<rect x="500" y="40" width="128" height="42" rx="7" fill="none" stroke="#C07C22" stroke-width="1.5"/>
+<text x="564" y="58" text-anchor="middle" font-size="12" fill="currentColor">Presupuesto</text>
+<text x="564" y="73" text-anchor="middle" font-size="13" font-family="monospace" fill="currentColor">$22.000/día</text>
+
+<line x1="628" y1="61" x2="686" y2="61" stroke="#C07C22" stroke-width="1.4" marker-end="url(#arb)"/>
+<rect x="690" y="40" width="228" height="42" rx="7" fill="none" stroke="#C07C22" stroke-width="1.5"/>
+<text x="704" y="58" font-size="12" fill="currentColor">1 campaña de catálogo</text>
+<text x="704" y="74" font-size="11" fill="currentColor" opacity=".7">presupuesto a nivel de campaña</text>
+
+<line x1="804" y1="82" x2="804" y2="112" stroke="#C07C22" stroke-width="1.4" marker-end="url(#arb)"/>
+<rect x="690" y="116" width="228" height="52" rx="7" fill="none" stroke="#C07C22" stroke-width="1.5"/>
+<text x="704" y="134" font-size="12" fill="currentColor">1 conjunto amplio</text>
+<text x="704" y="150" font-size="11" fill="currentColor" opacity=".7">22 SKUs en stock · Chile 25-64</text>
+<text x="704" y="163" font-size="11" font-family="monospace" fill="#C07C22">optimiza a VALOR</text>
+
+<line x1="804" y1="168" x2="804" y2="200" stroke="#C07C22" stroke-width="1.4"/>
+<path d="M804 200 L 804 214 L 690 214 L 690 228" stroke="#C07C22" stroke-width="1.4" fill="none" marker-end="url(#arb)"/>
+<path d="M804 200 L 804 214 L 855 214 L 855 228" stroke="#C07C22" stroke-width="1.4" fill="none" marker-end="url(#arb)"/>
+<text x="804" y="192" text-anchor="middle" font-size="10.5" font-family="monospace" fill="#C07C22">reparte según el valor de cada compra</text>
+
+<rect x="615" y="232" width="150" height="44" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="626" y="250" font-size="11.5" fill="currentColor">AD_Categoria</text>
+<text x="626" y="266" font-size="10.5" fill="currentColor" opacity=".7">5 textos · ángulos A B C</text>
+<rect x="780" y="232" width="150" height="44" rx="6" fill="none" stroke="currentColor" stroke-width="1.2"/>
+<text x="791" y="250" font-size="11.5" fill="currentColor">AD_Comercial</text>
+<text x="791" y="266" font-size="10.5" fill="currentColor" opacity=".7">5 textos · ángulos D E F</text>
+
+<line x1="500" y1="292" x2="918" y2="292" stroke="#C07C22" stroke-width="1" opacity=".3"/>
+<text x="500" y="312" font-size="11.5" fill="currentColor">8,4 compras por semana</text>
+<text x="500" y="330" font-size="11.5" fill="currentColor">en 1 solo conjunto</text>
+<text x="500" y="352" font-size="13" font-family="monospace" fill="#C07C22">= toda la señal junta</text>
+<text x="500" y="374" font-size="11.5" fill="currentColor" opacity=".7">Sigue lejos de 50, pero es</text>
+<text x="500" y="392" font-size="11.5" fill="currentColor" opacity=".7">7 veces más señal por rama</text>
+<text x="500" y="422" font-size="11.5" fill="currentColor" opacity=".7">Sin competencia interna:</text>
+<text x="500" y="440" font-size="11.5" fill="currentColor" opacity=".7">una sola campaña en la subasta</text>
+</svg>
+<figcaption>El cambio no es cuántas cajas hay: es quién decide el reparto y con qué criterio. Hoy lo decides tú
+antes de la subasta, en partes fijas. En la propuesta lo decide Meta dentro del conjunto, y con la optimización
+a valor persigue el pedido más grande en vez del más barato.</figcaption></figure>
+<h3>La cuenta, explícita</h3>
+<div class="tree">
+<div class="hd"><span class="kind">Cuenta</span><span class="nm">B WILD BRANDS · 689161317392308</span></div>
+<div class="attr">Píxel <b>10050739041672658</b> · Catálogo <b>676225172035545</b> · Página <b>B.Wild</b> ·
+Inversión diaria total <b>$22.000</b> (los otros $29.000 diarios se suman solo en los días de campaña estacional)</div>
+
+<div class="lvl">
+
+<div class="node"><div class="hd"><span class="kind">Campaña 1</span>
+<span class="nm">CAT_Autobronceantes_Ventas_2609</span>
+<span class="pill on">siempre activa</span><span class="bud">$22.000/día</span></div>
+<div class="attr">Objetivo <b>Ventas</b> · Catálogo (Advantage+) · Presupuesto a nivel de campaña ·
+Optimización <b>valor de conversión</b> · Atribución 7 días clic / 1 día visualización</div>
+
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Conjunto</span>
+<span class="nm">CAT_Amplio_ADV_CL_25-64</span></div>
+<div class="attr">Público <b>amplio</b>, Chile, 25-64, sin intereses ni comportamientos ·
+Conjunto de productos <b>Autobronceantes en stock</b> (22 SKUs, filtro de disponibilidad) ·
+Ubicaciones automáticas · Sin límite de costo las primeras 3 semanas</div>
+
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Anuncio 1</span>
+<span class="nm">AD_Categoria_ABC_v1</span></div>
+<div class="attr">Formato catálogo con tarjeta de introducción · Título <b>{{product.custom_label_0}}</b> ·
+Descripción <b>{{product.price}}</b> · Botón <b>Comprar</b> · Overlay <b>{{product.price}}</b></div>
+<div class="txts">
+<div><i>A1</i>Gel, mousse, bruma o gotas: el bronceado ya no viene en un solo formato…</div>
+<div><i>A2</i>¿Bronceado sutil o «volví de Brasil»? El tono lo eliges tú…</div>
+<div><i>B1</i>Bronceado sin una sola hora de sol. Sin cama solar, sin quemaduras…</div>
+<div><i>C1</i>Si tu último autobronceante te dejó naranja, no era el correcto…</div>
+<div><i>C2</i>Tres cosas que ya no tienes que aguantarle a un autobronceante…</div>
+</div></div>
+
+<div class="node"><div class="hd"><span class="kind">Anuncio 2</span>
+<span class="nm">AD_Comercial_DEF_v1</span></div>
+<div class="attr">Mismo formato y mismos campos dinámicos · La diferencia está solo en el ángulo del texto</div>
+<div class="txts">
+<div><i>D1</i>El gel autobronceante #1 en Amazon EE.UU. ya está en Chile…</div>
+<div><i>D2</i>Las dos marcas de autobronceante que todas piden, en un mismo lugar…</div>
+<div><i>E1</i>Faltan semanas para el 18 y las piernas ya salen a la calle…</div>
+<div><i>E2</i>Primavera con piel de enero…</div>
+<div><i>F1</i>MineTan con hasta 40% de descuento…</div>
+</div></div>
+</div></div></div></div>
+
+<div class="node"><div class="hd"><span class="kind">Campaña 2</span>
+<span class="nm">RTG_Autobronceantes_2609</span>
+<span class="pill later">desde el día 8</span><span class="bud">$4.000/día</span></div>
+<div class="attr">Objetivo <b>Ventas</b> · Catálogo · Optimización compras · Solo si la campaña 1 ya entrega bien</div>
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Conjunto</span>
+<span class="nm">RTG_Catalogo_VC-ATC-30d</span></div>
+<div class="attr">Público <b>retargeting nativo del catálogo</b>: vieron o agregaron al carrito y no compraron, 30 días ·
+Exclusión <b>EXCL_Compradores_180d</b> + lista de Shopify · Mismo conjunto de productos · Chile 25-64</div>
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Anuncio</span><span class="nm">AD_Retargeting_v1</span></div>
+<div class="attr">Título <b>{{product.custom_label_0}}</b> · Botón <b>Comprar</b></div>
+<div class="txts">
+<div><i>R1</i>Lo dejaste en el carro y el 18 no se mueve de fecha 😅</div>
+<div><i>R2</i>Todavía estás a tiempo: se aplica hoy y amanece listo.</div>
+<div><i>R4</i>¿Te quedaste pensando cuál elegir? Si es tu primera vez…</div>
+<div><i>R6</i>Suma el guante aplicador y olvídate de las palmas naranjas.</div>
+</div></div>
+</div></div></div></div>
+
+<div class="node"><div class="hd"><span class="kind">Campaña 3</span>
+<span class="nm">SEA_18Septiembre_2609</span>
+<span class="pill later">10 al 18 de septiembre</span><span class="bud">$25.000/día</span></div>
+<div class="attr">Capa de evento, <b>encima</b> de la campaña 1, no en reemplazo · Es el patrón que hizo ROAS 3,58 y 3,99</div>
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Conjunto</span>
+<span class="nm">SEA_Amplio_CL_25-64</span></div>
+<div class="attr">Mismo público y mismo conjunto de productos que la campaña 1 · Optimización valor</div>
+<div class="lvl">
+<div class="node"><div class="hd"><span class="kind">Anuncio</span><span class="nm">AD_18Sept_v1</span></div>
+<div class="attr">Oferta con fecha de término explícita en el texto y en el overlay</div>
+<div class="txts">
+<div><i>E1</i>Faltan semanas para el 18 y las piernas ya salen a la calle…</div>
+<div><i>E3</i>Empieza la temporada de vestidos, shorts y fotos…</div>
+<div><i>F2</i>El set sale menos que comprar por separado…</div>
+</div></div>
+</div></div></div></div>
+
+</div></div>
+<div class="tree" style="border-color:color-mix(in srgb,var(--stop) 35%,var(--line))">
+<div class="hd"><span class="kind">Se apaga y se archiva</span><span class="pill off">día 1</span></div>
+<div class="attr" style="margin-top:10px">
+<b>Interacción IG | B.Wild</b> — $5.037/día, 0 compras en 74 días<br>
+<b>BFRESH - Ventas</b> — ROAS 1,34 con el 48% de su catálogo agotado<br>
+<b>Mousse Autobronceante - Ventas</b> — $31.398 sin compras<br>
+<b>Geles Autobronceantes - Ventas</b> — $11.837 sin compras<br>
+<b>BTAN - Ventas</b> — se absorbe en la campaña de catálogo<br>
+<b>Liquidación Mine.Tan</b> — termina el 31 de agosto por calendario propio<br>
+<b>Ventas - 20K, Ventas - 20K - Copia, Body Sticks, Gráficas - Copia</b> — ya apagadas, quitarles el presupuesto
+guardado ($25.000/día cada una de las 20K)</div></div>
+<div class="note"><h4>Cómo leer la estructura</h4>
+<p>Tres campañas en total, pero <strong>una sola encendida de forma permanente</strong>. La segunda entra
+recién cuando la primera demuestre que entrega, y la tercera vive nueve días. En ningún momento hay más de tres
+campañas compitiendo, contra las siete de hoy.</p>
+<p>Todos los conjuntos apuntan al mismo público y al mismo conjunto de productos. Lo único que cambia entre
+ellos es el momento del embudo. Esa es la diferencia con la estructura actual, donde cada campaña definía su
+propio recorte de catálogo.</p></div>
+<h3>Ficha técnica de cada campaña</h3>
 <div class="spec"><h4>1 · CAT | Autobronceantes | Ventas <span>siempre activa · $22.000/día</span></h4>
 <dl>
 <dt>Objetivo</dt><dd>Ventas, con catálogo (Advantage+ catálogo)</dd>
