@@ -1,0 +1,364 @@
+<title>Últimas Horas MineTan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --paper:#FBF8F5; --panel:#FFFFFF; --panel-2:#F4EDE6;
+  --ink:#1A1512; --muted:#6E635B; --line:#E7DED4;
+  --bronze:#9C5A28; --glow:#C07C22; --deep:#4A2A14;
+  --ok:#2E7D5B; --warn:#A8641A; --stop:#B03A2E;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Bricolage Grotesque Fallback",Georgia,serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+    --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+    --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+    --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#13100E; --panel:#1B1714; --panel-2:#221C18;
+  --ink:#EDE5DC; --muted:#9C9089; --line:#2C2520;
+  --bronze:#D08A45; --glow:#E5A855; --deep:#F0D9BE;
+  --ok:#4FB289; --warn:#D69A46; --stop:#E0705F;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:17px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px; margin:0 auto; padding:40px 22px 96px}
+
+/* header */
+.hero{display:flex; flex-direction:column; gap:14px; margin-bottom:10px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--bronze);
+}
+h1{
+  font-family:var(--display); font-weight:800; font-size:clamp(32px,6vw,54px);
+  line-height:1.02; letter-spacing:-.028em; margin:0; text-wrap:balance;
+}
+.dek{color:var(--muted); margin:0; max-width:62ch; font-size:18px}
+.gradbar{height:5px; border-radius:3px; margin:26px 0 8px;
+  background:linear-gradient(90deg,#F6E7D6 0%,#E3B380 28%,#C07C22 58%,#8A4A1E 82%,#3D2110 100%)}
+.meta-line{font-family:var(--mono); font-size:11.5px; color:var(--muted); letter-spacing:.04em;
+  display:flex; gap:10px; flex-wrap:wrap}
+.meta-line span::after{content:" ·"; color:var(--line)}
+.meta-line span:last-child::after{content:""}
+
+/* toc */
+nav.toc{margin:34px 0 0; padding:18px 20px; background:var(--panel); border:1px solid var(--line); border-radius:10px}
+nav.toc h2{margin:0 0 10px; font-size:12px; font-family:var(--mono); letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted); border:0; padding:0}
+nav.toc ol{margin:0; padding:0; list-style:none; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:6px 22px; counter-reset:t}
+nav.toc li{counter-increment:t; font-size:15px}
+nav.toc li::before{content:counter(t,decimal-leading-zero); font-family:var(--mono); font-size:11px;
+  color:var(--bronze); margin-right:9px}
+nav.toc a{color:var(--ink); text-decoration:none; border-bottom:1px solid transparent}
+nav.toc a:hover,nav.toc a:focus-visible{border-bottom-color:var(--bronze)}
+
+/* sections */
+section{margin-top:58px; scroll-margin-top:20px}
+h2{
+  font-family:var(--display); font-weight:600; font-size:27px; letter-spacing:-.02em;
+  margin:0 0 6px; padding-top:20px; border-top:1px solid var(--line); text-wrap:balance;
+}
+h2 .num{font-family:var(--mono); font-size:12px; color:var(--bronze); letter-spacing:.1em;
+  display:block; font-weight:400; margin-bottom:7px}
+h3{font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.015em; margin:32px 0 4px}
+.lead{color:var(--muted); margin:0 0 20px; max-width:66ch}
+p{max-width:68ch}
+
+/* copy cards */
+.angle{margin-top:30px}
+.angle-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+.badge{font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em;
+  color:var(--paper); background:var(--bronze); padding:3px 8px; border-radius:4px}
+.angle-head h3{margin:0}
+.angle-note{color:var(--muted); font-size:15px; margin:0 0 14px; max-width:66ch}
+
+.cards{display:grid; gap:12px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+.card .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); display:flex; justify-content:space-between; gap:12px; margin-bottom:9px}
+.copy{font-family:var(--sans); font-size:15px; line-height:1.5; margin:0}
+.copy .rest{color:var(--muted)}
+.copy .more{font-family:var(--sans); color:var(--muted); font-size:14px}
+.cnt{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--muted)}
+.cnt.over{color:var(--stop); font-weight:600}
+.tok{font-family:var(--mono); font-size:13.5px; background:var(--panel-2); padding:1px 5px; border-radius:4px;
+  color:var(--deep)}
+
+/* compact list grid */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:10px}
+.line{background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:11px 14px; display:flex; justify-content:space-between; align-items:center; gap:14px}
+.line .txt{font-family:var(--sans); font-size:15px}
+.line .sub{display:block; color:var(--muted); font-size:13px; font-family:var(--body); margin-top:3px}
+
+/* tables */
+.scroll{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--panel); margin-top:16px}
+table{border-collapse:collapse; width:100%; min-width:600px; font-size:15px; font-family:var(--sans)}
+th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); font-weight:600; background:var(--panel-2)}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* callouts */
+.note{border-left:3px solid var(--bronze); background:var(--panel); border-radius:0 9px 9px 0;
+  border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:14px 18px; margin:20px 0}
+.note.warn{border-left-color:var(--warn)}
+.note.stop{border-left-color:var(--stop)}
+.note.ok{border-left-color:var(--ok)}
+.note h4{margin:0 0 5px; font-family:var(--display); font-size:16px; font-weight:600; letter-spacing:-.01em}
+.note p{margin:0; font-size:15px; color:var(--muted)}
+.note p+p{margin-top:8px}
+code{font-family:var(--mono); font-size:13px; background:var(--panel-2); padding:2px 6px; border-radius:4px;
+  color:var(--deep); word-break:break-word}
+pre{font-family:var(--mono); font-size:12.5px; background:var(--panel-2); border:1px solid var(--line);
+  border-radius:9px; padding:14px 16px; overflow-x:auto; line-height:1.6; margin:14px 0}
+ul.plain{padding-left:20px; margin:12px 0; max-width:68ch}
+ul.plain li{margin-bottom:7px}
+ol.steps{padding-left:0; list-style:none; counter-reset:s; margin:18px 0 0}
+ol.steps li{counter-increment:s; position:relative; padding:13px 16px 13px 50px; background:var(--panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:9px}
+ol.steps li::before{content:counter(s); position:absolute; left:15px; top:13px; width:23px; height:23px;
+  border-radius:50%; background:var(--bronze); color:#fff; font-family:var(--mono); font-size:12px;
+  display:grid; place-items:center}
+ol.steps strong{display:block; font-family:var(--display); font-weight:600; letter-spacing:-.01em}
+ol.steps span{color:var(--muted); font-size:15px}
+footer{margin-top:70px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:14px}
+a{color:var(--bronze)}
+:focus-visible{outline:2px solid var(--bronze); outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+<style>
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin:20px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--mono);font-size:23px;font-variant-numeric:tabular-nums;margin-top:6px;letter-spacing:-.02em}
+.kpi .n{font-size:13px;color:var(--muted);margin-top:3px}
+.kpi.hi{border-color:color-mix(in srgb,var(--stop) 50%,var(--line))}
+.kpi.hi .v{color:var(--stop)}
+</style>
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">B.Wild · Liquidación MineTan · Meta Ads</span>
+  <h1>Últimas horas</h1>
+  <p class="dek">Textos principales para el cierre de la liquidación MineTan, con el stock real que queda y
+  cuánta pauta aguanta ese saldo.</p>
+</header>
+<div class="gradbar" role="presentation"></div>
+<div class="meta-line">
+  <span>Cierra lunes 31 de agosto</span><span>53 unidades</span><span>ROAS actual 3,99</span>
+  <span>27 de agosto de 2026</span>
+</div>
+<nav class="toc"><h2>Contenido</h2><ol>
+<li><a href="#contexto">Lo que queda y cuánto aguanta</a></li>
+<li><a href="#textos">Textos principales</a></li>
+<li><a href="#campos">Títulos, descripciones y overlays</a></li>
+<li><a href="#ejecucion">Cómo lanzarlo</a></li>
+<li><a href="#qa">Antes de publicar</a></li>
+</ol></nav>
+<section id="contexto"><h2><span class="num">01</span>Lo que queda y cuánta pauta aguanta</h2>
+<p class="lead">Los textos usan estos números, así que conviene tenerlos a la vista. Salen del export de inventario de hoy y cambian cada día que la campaña siga corriendo.</p>
+<div class="kpis">
+<div class="kpi hi"><div class="k">Unidades en total</div><div class="v">53</div><div class="n">toda la línea MineTan</div></div>
+<div class="kpi"><div class="k">Venta posible</div><div class="v">$1.503.670</div><div class="n">si se vende todo</div></div>
+<div class="kpi"><div class="k">Ahorro para el cliente</div><div class="v">$1.002.800</div><div class="n">sumando las 53 unidades</div></div>
+<div class="kpi"><div class="k">Días restantes</div><div class="v">4</div><div class="n">cierra el lunes 31</div></div>
+</div>
+<div class="scroll"><table>
+<thead><tr><th>Producto</th><th>Unidades</th><th>Lista</th><th>Oferta</th><th>Ahorro</th><th>Saldo</th></tr></thead>
+<tbody>
+<tr><td>Mousse Moroccan</td><td class="num">11</td><td class="num">$49.990</td><td class="num">$29.990</td><td class="num">$20.000</td><td class="num">$329.890</td></tr>
+<tr><td>Mousse Coconut Water</td><td class="num">11</td><td class="num">$49.990</td><td class="num">$29.990</td><td class="num">$20.000</td><td class="num">$329.890</td></tr>
+<tr><td>Mousse Wonder Tan</td><td class="num">11</td><td class="num">$49.990</td><td class="num">$29.990</td><td class="num">$20.000</td><td class="num">$329.890</td></tr>
+<tr><td>Perfect Bronze Set</td><td class="num">6</td><td class="num">$49.990</td><td class="num">$29.990</td><td class="num">$20.000</td><td class="num">$179.940</td></tr>
+<tr><td>Invisible Glow Dark · gel</td><td class="num">3</td><td class="num">$44.990</td><td class="num">$26.990</td><td class="num">$18.000</td><td class="num">$80.970</td></tr>
+<tr><td>Glow Butter</td><td class="num">3</td><td class="num">$37.990</td><td class="num">$22.790</td><td class="num">$15.200</td><td class="num">$68.370</td></tr>
+<tr><td>Bruma Facial Rose</td><td class="num">3</td><td class="num">$37.990</td><td class="num">$22.790</td><td class="num">$15.200</td><td class="num">$68.370</td></tr>
+<tr><td>Illuminating Glow Drops</td><td class="num">3</td><td class="num">$37.990</td><td class="num">$22.790</td><td class="num">$15.200</td><td class="num">$68.370</td></tr>
+<tr><td>Bronzed Drops</td><td class="num">2</td><td class="num">$39.990</td><td class="num">$23.990</td><td class="num">$16.000</td><td class="num">$47.980</td></tr>
+</tbody></table></div>
+<div class="note"><h4>Los tres mousses y el set son el 78% del saldo</h4>
+<p>39 de las 53 unidades y $1.169.610 de los $1.503.670. Todo lo demás está en dos o tres unidades. La
+creatividad debería liderar con los mousses: es donde hay con qué responder si el anuncio funciona.</p></div>
+<div class="note warn"><h4>El techo de la campaña</h4>
+<p>Con el ROAS de 3,99 que la campaña ya viene logrando, vender el saldo completo soportaría $376.860 de
+inversión. Pero es un techo teórico: nadie liquida el 100%. <strong>Con una expectativa realista de colocar el
+40% del saldo, la pauta de estos cuatro días no debería pasar de $10.000 a $12.000 diarios.</strong> Ponerle más
+compra tráfico para un inventario que no existe.</p></div>
+</section>
+<section id="textos"><h2><span class="num">02</span>Textos principales</h2>
+<p class="lead">Quince variantes en cinco ángulos. En negro va lo que se ve en el feed antes del «Ver más»; en gris, lo que queda escondido. En este formato el gancho importa más que nunca: lo que no está en los primeros 125 caracteres, no existe.</p>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo A</span><h3>El reloj manda</h3></div>
+<p class="angle-note">La fecha explícita. Es el ángulo base de cualquier «últimas horas».</p><div class="cards">
+<div class="card"><div class="tag">
+<span>A1 · texto principal</span><span class="cnt">173</span> car.</div>
+<p class="copy">Últimas horas: el lunes 31 a medianoche termina el 40% en todo MineTan. Es liquidación, no promoción de temporada — cuando<span class="rest"> se acaba, no vuelve. Mousses a $29.990 en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>A2 · texto principal</span><span class="cnt">137</span> car.</div>
+<p class="copy">Mañana ya no. El 40% de MineTan se cierra el lunes 31 y estos precios no se repiten. Mousse autobronceante de $49.990 a<span class="rest"> $29.990. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>A3 · texto principal</span><span class="cnt">145</span> car.</div>
+<p class="copy">Se acaba el lunes y vuelve a precio lista, sin excepción. Si lo tenías en el carro, este es el momento. Toda la línea<span class="rest"> MineTan con 40% en bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo B</span><h3>Stock real, no cuenta regresiva de marketing</h3></div>
+<p class="angle-note">El más fuerte, porque es verificable. Usar solo mientras los números sean ciertos.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>B1 · texto principal</span><span class="cnt">155</span> car.</div>
+<p class="copy">Quedan 53 unidades en toda la liquidación MineTan, y de varias referencias quedan menos de cinco. Cuando se agota no hay<span class="rest"> reposición a este precio. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>B2 · texto principal</span><span class="cnt">162</span> car.</div>
+<p class="copy">De las gotas faciales quedan 2. Del gel Invisible Glow, 3. Esto no es una cuenta regresiva de marketing: es el stock que<span class="rest"> queda de la liquidación MineTan. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>B3 · texto principal</span><span class="cnt">160</span> car.</div>
+<p class="copy">Los tres mousses son lo único que queda con stock de verdad: 11 unidades de cada uno a $29.990. Del resto quedan últimas<span class="rest"> unidades. Hasta el lunes 31 en bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo C</span><h3>El ahorro en pesos</h3></div>
+<p class="angle-note">Convierte el 40% en un número que se entiende sin calcular.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>C1 · texto principal</span><span class="cnt">164</span> car.</div>
+<p class="copy">$20.000 menos en cada mousse autobronceante MineTan: de $49.990 a $29.990. Hasta el lunes 31, o hasta que se acaben las 11<span class="rest"> unidades que quedan de cada uno. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>C2 · texto principal</span><span class="cnt">162</span> car.</div>
+<p class="copy">Es el mismo mousse que cuesta $49.990 el resto del año. Hasta el lunes vale $29.990. Agua de coco, aceite de argán o ácido<span class="rest"> hialurónico — elige el tuyo en bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>C3 · texto principal</span><span class="cnt">133</span> car.</div>
+<p class="copy">40% en todo MineTan son $20.000 menos en los mousses y $15.200 en gotas y brumas faciales. Termina el lunes 31 a medianoche.<span class="rest"> bwild.cl</span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo D</span><h3>Arrepentimiento anticipado</h3></div>
+<p class="angle-note">Para retargeting: gente que ya vio el producto o lo dejó en el carro.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>D1 · texto principal</span><span class="cnt">138</span> car.</div>
+<p class="copy">El lunes vas a entrar a comprarlo a precio normal y te vas a acordar de este anuncio. MineTan con 40% hasta la medianoche<span class="rest"> del 31. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>D2 · texto principal</span><span class="cnt">111</span> car.</div>
+<p class="copy">Lo miraste tres veces esta semana. Quedan cuatro días y menos de cinco unidades de varias referencias. bwild.cl<span class="rest"></span></p></div>
+<div class="card"><div class="tag">
+<span>D3 · texto principal</span><span class="cnt">104</span> car.</div>
+<p class="copy">Ese carro que dejaste tiene fecha de vencimiento: lunes 31 a medianoche. Después, precio lista. bwild.cl<span class="rest"></span></p></div>
+</div></div>
+<div class="angle"><div class="angle-head">
+<span class="badge">Ángulo E</span><h3>El producto que sí queda</h3></div>
+<p class="angle-note">Concentra el mensaje en los mousses y el set, que son el 78% del saldo.</p><div class="cards">
+<div class="card"><div class="tag">
+<span>E1 · texto principal</span><span class="cnt">142</span> car.</div>
+<p class="copy">Mousse Wonder Tan, Coconut Water o Moroccan: los tres a $29.990 hasta el lunes. Bronceado de una hora, sin sol y sin subtono<span class="rest"> naranja. bwild.cl</span></p></div>
+<div class="card"><div class="tag">
+<span>E2 · texto principal</span><span class="cnt">115</span> car.</div>
+<p class="copy">El Perfect Bronze Set trae todo para partir bien: de $49.990 a $29.990 y quedan 6. Se termina el lunes 31. bwild.cl<span class="rest"></span></p></div>
+<div class="card"><div class="tag">
+<span>E3 · texto principal</span><span class="cnt">130</span> car.</div>
+<p class="copy">Las gotas faciales que se mezclan con tu crema de noche: de $37.990 a $22.790. Quedan 3 y la liquidación cierra el lunes.<span class="rest"> bwild.cl</span></p></div>
+</div></div>
+<div class="note ok"><h4>Cuál poner primero</h4>
+<p><strong>B2</strong> («De las gotas faciales quedan 2. Del gel Invisible Glow, 3…») es el más fuerte, porque
+dice un número que se puede verificar y se distingue de la urgencia genérica que todo el mundo usa. Después
+<strong>C1</strong>, que convierte el 40% en $20.000, y <strong>A1</strong> como ancla de fecha.</p>
+<p>Los tres del ángulo D son para el conjunto de retargeting, no para público frío: dan por hecho que la persona
+ya vio el producto.</p></div>
+</section>
+<section id="campos"><h2><span class="num">03</span>Títulos, descripciones y overlays</h2>
+<h3>Títulos · máximo 40</h3><div class="grid2">
+<div class="line"><span class="txt">Últimas horas · 40% MineTan</span><span class="cnt">27/40</span></div>
+<div class="line"><span class="txt">Termina el lunes 31</span><span class="cnt">19/40</span></div>
+<div class="line"><span class="txt">Quedan 53 unidades</span><span class="cnt">18/40</span></div>
+<div class="line"><span class="txt">Mousse $49.990 → $29.990</span><span class="cnt">24/40</span></div>
+<div class="line"><span class="txt">40% OFF · últimas unidades</span><span class="cnt">26/40</span></div>
+<div class="line"><span class="txt">$20.000 menos por mousse</span><span class="cnt">24/40</span></div>
+<div class="line"><span class="txt">Se acaba y no vuelve</span><span class="cnt">20/40</span></div>
+<div class="line"><span class="txt">Última oportunidad MineTan</span><span class="cnt">26/40</span></div>
+<div class="line"><span class="txt"><span class="tok">{{product.custom_label_0}}</span></span><span class="cnt">26/40</span></div>
+</div>
+<h3>Descripciones · máximo 30</h3><div class="grid2">
+<div class="line"><span class="txt">Hasta el lunes 31</span><span class="cnt">17/30</span></div>
+<div class="line"><span class="txt">Últimas unidades</span><span class="cnt">16/30</span></div>
+<div class="line"><span class="txt">40% OFF en MineTan</span><span class="cnt">18/30</span></div>
+<div class="line"><span class="txt">Ahorra hasta $20.000</span><span class="cnt">20/30</span></div>
+<div class="line"><span class="txt">Despacho a todo Chile</span><span class="cnt">21/30</span></div>
+<div class="line"><span class="txt">Liquidación · no vuelve</span><span class="cnt">23/30</span></div>
+<div class="line"><span class="txt"><span class="tok">{{product.price}}</span></span><span class="cnt">17/30</span></div>
+</div>
+<h3>Overlays del catálogo</h3><div class="grid2">
+<div class="line"><span class="txt"><strong>40% OFF</strong></span></div>
+<div class="line"><span class="txt"><strong>ÚLTIMAS UNIDADES</strong></span></div>
+<div class="line"><span class="txt"><strong>TERMINA EL 31/08</strong></span></div>
+<div class="line"><span class="txt"><span class="tok">{{product.price}}</span></span></div>
+</div>
+<div class="note"><h4>Botón</h4>
+<p><strong>Comprar</strong>. En un anuncio de últimas horas, «Ver más» pide un clic de curiosidad cuando lo que
+queda es cerrar la venta.</p></div>
+</section>
+<section id="ejecucion"><h2><span class="num">04</span>Cómo lanzarlo</h2>
+<p class="lead">La campaña «Liquidación Mine.Tan» ya existe y viene con ROAS 3,99. No hay que crear nada nuevo.</p>
+<ol class="steps">
+<li><strong>Anuncio nuevo dentro del conjunto que ya corre</strong>
+<span>Se agrega <code>AD_MT_UltimasHoras_v1</code> al conjunto existente, no una campaña aparte. Así hereda la
+señal acumulada en vez de partir de cero — que es justo lo que no conviene con cuatro días por delante.</span></li>
+<li><strong>Cinco textos en un solo anuncio</strong>
+<span>B2, C1, A1, A2 y E1. Meta permuta y encuentra cuál funciona para cada persona. Los del ángulo D van en el
+anuncio de retargeting, si el conjunto existe.</span></li>
+<li><strong>El conjunto de productos tiene que filtrar por disponibilidad</strong>
+<span>Es lo más importante de toda la ejecución. Con referencias en dos y tres unidades, algo se va a agotar
+durante el vuelo; si el conjunto es estático, el anuncio va a seguir mostrando productos que ya no se pueden
+comprar.</span></li>
+<li><strong>Encenderlo el domingo 30, no antes</strong>
+<span>«Últimas horas» el jueves no es últimas horas. Hasta el sábado sigue corriendo el mensaje de liquidación
+normal; el cambio de tono es lo que da el salto.</span></li>
+<li><strong>$10.000 a $12.000 diarios, domingo y lunes</strong>
+<span>Es aproximadamente el doble de lo que la campaña viene gastando ($5.400 diarios) y queda holgadamente bajo
+el techo que el inventario soporta.</span></li>
+<li><strong>Apagarlo el lunes a medianoche</strong>
+<span>Con fecha de término programada en la campaña, no a mano. Un anuncio de últimas horas que sigue corriendo
+el martes quema la credibilidad de la próxima liquidación.</span></li>
+</ol>
+<div class="note ok"><h4>El formato ya demostró que funciona en esta cuenta</h4>
+<p>El anuncio «Cyber Últimas Horas» fue el de mejor ROAS de toda la cuenta antigua: <strong>6,84</strong>, con
+$17.836 invertidos. Es el mismo mecanismo — fecha real, cierre real, y un mensaje que cambia de tono en las
+últimas horas.</p></div>
+</section>
+<section id="qa"><h2><span class="num">05</span>Antes de publicar</h2>
+<p class="lead">Cuatro cosas que hay que confirmar, porque los textos dependen de datos que se mueven.</p>
+<ol class="steps">
+<li><strong>La fecha</strong>
+<span>Los textos dicen <em>lunes 31 a medianoche</em>, tomado del correo del 19 de agosto: «Hasta el 31/08 o
+hasta que se acabe». Si la fecha cambió, cambian los quince textos.</span></li>
+<li><strong>Los números de stock, el mismo día que se publica</strong>
+<span>B1 dice 53 unidades, B2 dice 2 y 3, B3 dice 11, E2 dice 6. Son ciertos hoy. Si se publica el domingo hay
+que volver a mirarlos: un número inflado en un anuncio de escasez es exactamente lo que destruye la confianza
+que este ángulo necesita.</span></li>
+<li><strong>Que sea liquidación de verdad</strong>
+<span>Varios textos dicen que el precio no vuelve. Si MineTan se sigue vendiendo después con promociones
+parecidas, hay que suavizarlo a «hasta el lunes» y sacar el «no vuelve».</span></li>
+<li><strong>Los seis sets de b.tan</strong>
+<span>No entran en esta campaña, pero sigue pendiente revisar si se pueden despachar. Vender en las últimas
+horas algo que después se cancela es peor que no venderlo.</span></li>
+</ol>
+<div class="note warn"><h4>Sobre el ángulo B</h4>
+<p>Decir el número exacto de unidades es lo que hace fuerte a este ángulo, y también lo que lo hace frágil. Si
+no hay forma de actualizar los números el domingo, usa B1 en su versión sin cifras —«quedan menos de cinco
+unidades de varias referencias»— y deja B2 y B3 fuera.</p></div>
+</section>
+<footer>
+Inventario y precios leídos del export de Shopify y del catálogo 676225172035545 el 27 de agosto de 2026.
+La fecha de cierre proviene del correo de campaña del 19 de agosto. El ROAS de 3,99 corresponde a la campaña
+«Liquidación Mine.Tan» entre el 21 y el 27 de agosto, y el de 6,84 al anuncio «Cyber Últimas Horas» de la cuenta
+B WILD BRANDS.
+</footer>
+</div>
